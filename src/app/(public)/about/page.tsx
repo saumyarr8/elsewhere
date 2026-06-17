@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import SiteNav from '@/components/public/nav/SiteNav'
+import SiteFooter from '@/components/public/SiteFooter'
 
 export const metadata: Metadata = {
   title: 'About Me',
@@ -8,6 +10,8 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
+    <>
+    <SiteNav />
     <article className="min-h-[calc(100vh-4rem)] px-6 md:px-10 py-28 md:py-36">
       <div className="mx-auto max-w-4xl space-y-12">
         <header className="space-y-6">
@@ -58,5 +62,7 @@ export default function AboutPage() {
         </div>
       </div>
     </article>
+    <SiteFooter />
+    </>
   )
 }

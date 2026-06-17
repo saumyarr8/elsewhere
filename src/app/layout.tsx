@@ -4,14 +4,14 @@ import './globals.css'
 
 const montserrat = Montserrat({
   subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
+  weight: ['400', '500', '600', '700', '800'],
   variable: '--font-sans',
   display: 'swap',
 })
 
 const dmSans = DM_Sans({
   subsets: ['latin'],
-  weight: ['500'],
+  weight: ['400', '500', '700'],
   variable: '--font-serif',
   display: 'swap',
 })

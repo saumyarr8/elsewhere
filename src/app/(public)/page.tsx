@@ -1,4 +1,5 @@
 import { prisma } from '@/lib/prisma'
+import SiteNav from '@/components/public/nav/SiteNav'
 import HomepageCanvas from '@/components/public/canvas/HomepageCanvas'
 
 export const revalidate = 60
@@ -14,5 +15,10 @@ export default async function HomePage() {
 
   const published = items.filter((i: typeof items[number]) => !i.project || i.project.published)
 
-  return <HomepageCanvas items={published} />
+  return (
+    <>
+      <SiteNav />
+      <HomepageCanvas items={published} />
+    </>
+  )
 }

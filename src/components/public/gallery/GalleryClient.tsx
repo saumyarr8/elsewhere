@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from 'react'
 import GalleryGrid, { type GalleryItemData } from './GalleryGrid'
-import GalleryFooter from './GalleryFooter'
+import SiteFooter from '@/components/public/SiteFooter'
 import type { Note } from '@/actions/note.actions'
 
 type MediaFilter = 'all' | 'PHOTO' | 'VIDEO'
@@ -88,7 +88,7 @@ export default function GalleryClient({
         <GalleryGrid items={filtered} notes={notes} />
       </div>
 
-      <GalleryFooter />
+      <SiteFooter />
     </div>
   )
 }

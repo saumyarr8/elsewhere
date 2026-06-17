@@ -1,0 +1,1 @@
+chrome-extension://cimighlppcgcoapaliogpjjdehbnofhn/js/scripting/isolated-api.js

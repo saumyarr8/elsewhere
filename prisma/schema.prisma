@@ -27,6 +27,9 @@ model Project {
   slug        String    @unique
   description String?   @db.Text
 
+  template    ProjectTemplate @default(CUSTOM)
+  templateData Json?
+
   heroImageId String?
   heroImage   MediaAsset? @relation("ProjectHero", fields: [heroImageId], references: [id], onDelete: SetNull)
 
@@ -46,6 +49,14 @@ model Project {
 
   @@index([slug])
   @@index([published, publishedAt])
+}
+
+enum ProjectTemplate {
+  CUSTOM
+  TEMPLATE_1
+  TEMPLATE_2
+  TEMPLATE_3
+  TEMPLATE_4
 }
 
 // ─── Content Blocks ───────────────────────────────────────────────────────────

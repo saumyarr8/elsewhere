@@ -1,6 +1,8 @@
 import { prisma } from '@/lib/prisma'
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
+import SiteNav from '@/components/public/nav/SiteNav'
+import SiteFooter from '@/components/public/SiteFooter'
 import ProjectHero from '@/components/public/project/ProjectHero'
 import BlockRenderer from '@/components/public/project/BlockRenderer'
 import type { BlockPayload } from '@/lib/types/blocks'
@@ -61,12 +63,24 @@ export default async function ProjectPage({ params }: Props) {
 
   if (!project) notFound()
 
+  if (project.template === 'TEMPLATE_1') {
+    const Template1 = (await import('@/components/templates/Template1')).default
+    return (
+      <>
+        <SiteNav />
+        <Template1 project={project} />
+      </>
+    )
+  }
+
   const blocks = project.blocks.map((b) => ({
     ...b,
     payload: { type: b.type, ...(b.payload as object) } as BlockPayload,
   }))
 
   return (
+    <>
+    <SiteNav />
     <article>
       <ProjectHero project={project} />
       <div className="max-w-screen-xl mx-auto">
@@ -74,15 +88,8 @@ export default async function ProjectPage({ params }: Props) {
           <BlockRenderer key={block.id} block={block} />
         ))}
       </div>
-      <footer className="py-24 text-center">
-        <a
-          href="/"
-          className="text-4xl md:text-6xl tracking-tight text-[var(--color-ink)] hover:opacity-60 transition-opacity"
-          style={{ fontFamily: 'var(--font-heading)' }}
-        >
-          .elsewhere
-        </a>
-      </footer>
     </article>
+    <SiteFooter />
+    </>
   )
 }

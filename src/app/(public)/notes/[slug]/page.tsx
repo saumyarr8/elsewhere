@@ -2,6 +2,8 @@ import { prisma } from '@/lib/prisma'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import type { Metadata } from 'next'
+import SiteNav from '@/components/public/nav/SiteNav'
+import SiteFooter from '@/components/public/SiteFooter'
 
 export const revalidate = 300
 
@@ -40,6 +42,8 @@ export default async function NotePage({ params }: Props) {
   if (!note) notFound()
 
   return (
+    <>
+    <SiteNav />
     <article className="max-w-2xl mx-auto px-6 py-24 md:py-36">
       <div className="mb-12">
         <Link href="/gallery" className="text-xs uppercase tracking-widest text-[var(--color-ink-muted)] hover:text-[var(--color-ink)] transition-colors">
@@ -68,15 +72,8 @@ export default async function NotePage({ params }: Props) {
         dangerouslySetInnerHTML={{ __html: note.content }}
       />
 
-      <footer className="py-24 text-center mt-20 border-t border-[var(--color-border)]">
-        <Link
-          href="/gallery"
-          className="text-4xl md:text-6xl tracking-tight text-[var(--color-ink)] hover:opacity-60 transition-opacity"
-          style={{ fontFamily: 'var(--font-heading)' }}
-        >
-          .elsewhere
-        </Link>
-      </footer>
     </article>
+    <SiteFooter />
+    </>
   )
 }

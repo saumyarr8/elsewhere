@@ -54,7 +54,14 @@ export type SpacerBlockPayload = {
   heightRem: number
 }
 
-export type BlockPayload =
+export type BaseLayoutOptions = {
+  watermark?: string
+  align?: 'left' | 'center' | 'right'
+  marginLeft?: string
+  marginTop?: string
+}
+
+export type BlockPayload = (
   | ({ type: 'INTRO' } & IntroBlockPayload)
   | ({ type: 'RICH_TEXT' } & RichTextBlockPayload)
   | ({ type: 'FULL_WIDTH_IMAGE' } & FullWidthImageBlockPayload)
@@ -65,5 +72,6 @@ export type BlockPayload =
   | ({ type: 'QUOTE' } & QuoteBlockPayload)
   | ({ type: 'DIVIDER' } & DividerBlockPayload)
   | ({ type: 'SPACER' } & SpacerBlockPayload)
+) & { layoutOptions?: BaseLayoutOptions }
 
 export type BlockType = BlockPayload['type']

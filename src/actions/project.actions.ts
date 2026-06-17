@@ -31,11 +31,14 @@ export async function createProject(_prevState: { error?: string } | undefined, 
   const rawSlug = (formData.get('slug') as string) || slugify(title)
   const slug = slugify(rawSlug)
 
+  const templateStr = formData.get('template') as string
+  const template = (['CUSTOM', 'TEMPLATE_1', 'TEMPLATE_2', 'TEMPLATE_3', 'TEMPLATE_4'].includes(templateStr) ? templateStr : 'CUSTOM') as 'CUSTOM' | 'TEMPLATE_1' | 'TEMPLATE_2' | 'TEMPLATE_3' | 'TEMPLATE_4'
+
   const existing = await prisma.project.findUnique({ where: { slug } })
   if (existing) return { error: 'A project with this slug already exists.' }
 
   const project = await prisma.project.create({
-    data: { title: title.trim(), slug },
+    data: { title: title.trim(), slug, template },
   })
 
   revalidatePath('/admin/projects')
@@ -46,6 +49,7 @@ export async function updateProject(id: string, data: {
   title?: string
   slug?: string
   description?: string
+  templateData?: any
   heroImageId?: string | null
   seoTitle?: string | null
   seoDescription?: string | null

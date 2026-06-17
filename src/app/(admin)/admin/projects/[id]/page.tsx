@@ -1,6 +1,7 @@
 import { prisma } from '@/lib/prisma'
 import { notFound } from 'next/navigation'
 import ProjectEditor from './ProjectEditor'
+import Template1Editor from './Template1Editor'
 
 type Props = { params: Promise<{ id: string }> }
 
@@ -23,6 +24,10 @@ export default async function ProjectEditorPage({ params }: Props) {
   })
 
   if (!project) notFound()
+
+  if (project.template === 'TEMPLATE_1') {
+    return <Template1Editor project={project} />
+  }
 
   return <ProjectEditor project={project} />
 }
