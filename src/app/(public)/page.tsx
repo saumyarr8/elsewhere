@@ -1,24 +1,43 @@
 import { prisma } from '@/lib/prisma'
 import SiteNav from '@/components/public/nav/SiteNav'
-import HomepageCanvas from '@/components/public/canvas/HomepageCanvas'
+import HomeCanvas from '@/components/public/home/HomeCanvas'
+import type { HomeProject } from '@/components/public/home/HomeCanvas'
 
 export const revalidate = 60
 
 export default async function HomePage() {
-  const items = await prisma.homepageCanvasItem.findMany({
-    include: {
-      image: true,
-      project: { select: { id: true, title: true, slug: true, published: true } },
+  const projects = await prisma.project.findMany({
+    where: { published: true },
+    select: {
+      slug: true,
+      title: true,
+      template: true,
+      templateData: true,
+      heroImage: { select: { cloudinaryId: true } },
     },
-    orderBy: { zIndex: 'asc' },
+    orderBy: { publishedAt: 'asc' },
+    take: 11,
   }).catch(() => [])
 
-  const published = items.filter((i: typeof items[number]) => !i.project || i.project.published)
+  const mapped: HomeProject[] = projects.map((p) => {
+    let heroImageId: string | null = null
+
+    if (p.template === 'TEMPLATE_1' && p.templateData) {
+      const data = typeof p.templateData === 'string'
+        ? JSON.parse(p.templateData)
+        : p.templateData as Record<string, unknown>
+      heroImageId = (data.heroImage as string | undefined) ?? null
+    } else {
+      heroImageId = p.heroImage?.cloudinaryId ?? null
+    }
+
+    return { slug: p.slug, title: p.title, heroImageId }
+  })
 
   return (
     <>
       <SiteNav />
-      <HomepageCanvas items={published} />
+      <HomeCanvas projects={mapped} />
     </>
   )
 }
