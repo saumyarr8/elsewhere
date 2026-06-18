@@ -19,7 +19,7 @@ import {
 import { createGalleryImage, reorderGalleryImages } from '@/actions/gallery.actions'
 import MediaPicker from '@/components/admin/media/MediaPicker'
 import SortableGalleryItem from './SortableGalleryItem'
-import type { GalleryImage, MediaAsset } from '@/generated/prisma/client'
+import type { GalleryImage, MediaAsset } from '@prisma/client'
 
 type Item = GalleryImage & { image: MediaAsset }
 

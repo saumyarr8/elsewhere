@@ -4,7 +4,7 @@ import { auth } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
 import { revalidatePath } from 'next/cache'
 import type { BlockType } from '@/lib/types/blocks'
-import type { BlockType as PrismaBlockType } from '@/generated/prisma/client'
+import type { BlockType as PrismaBlockType } from '@prisma/client'
 
 async function requireAdmin() {
   const session = await auth()

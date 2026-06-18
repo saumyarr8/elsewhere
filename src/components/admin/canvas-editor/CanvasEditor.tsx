@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { saveCanvasLayout } from '@/actions/canvas.actions'
 import MediaPicker from '@/components/admin/media/MediaPicker'
 import { cloudinaryUrl } from '@/lib/utils/cloudinary-url'
-import type { MediaAsset } from '@/generated/prisma/client'
+import type { MediaAsset } from '@prisma/client'
 import type { CanvasItem } from '@/lib/types/canvas'
 
 type EditorItem = CanvasItem & { _tempId?: string }

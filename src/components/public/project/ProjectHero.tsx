@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import { cloudinaryUrl } from '@/lib/utils/cloudinary-url'
-import type { Project, MediaAsset } from '@/generated/prisma/client'
+import type { Project, MediaAsset } from '@prisma/client'
 
 type Props = {
   project: Project & { heroImage: MediaAsset | null }

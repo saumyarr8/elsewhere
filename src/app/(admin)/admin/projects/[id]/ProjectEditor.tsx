@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { updateProject, publishProject, unpublishProject, deleteProject } from '@/actions/project.actions'
 import BlockBuilder from '@/components/admin/block-builder/BlockBuilder'
 import MediaPicker from '@/components/admin/media/MediaPicker'
-import type { Project, ContentBlock, MediaAsset } from '@/generated/prisma/client'
+import type { Project, ContentBlock, MediaAsset } from '@prisma/client'
 
 type FullProject = Project & {
   blocks: ContentBlock[]

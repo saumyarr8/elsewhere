@@ -1,4 +1,4 @@
-import type { ContentBlock } from '@/generated/prisma/client'
+import type { ContentBlock } from '@prisma/client'
 import type { BlockPayload } from '@/lib/types/blocks'
 import IntroBlock from './blocks/IntroBlock'
 import RichTextBlock from './blocks/RichTextBlock'

@@ -5,7 +5,7 @@ import Image from 'next/image'
 import MediaPicker from '@/components/admin/media/MediaPicker'
 import { cloudinaryUrl } from '@/lib/utils/cloudinary-url'
 import type { GalleryBlockPayload, ImageRef } from '@/lib/types/blocks'
-import type { MediaAsset } from '@/generated/prisma/client'
+import type { MediaAsset } from '@prisma/client'
 
 type Props = {
   payload: { type: 'GALLERY' } & GalleryBlockPayload

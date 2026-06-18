@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import MediaUploader from './MediaUploader'
 import { cloudinaryUrl } from '@/lib/utils/cloudinary-url'
-import type { MediaAsset } from '@/generated/prisma/client'
+import type { MediaAsset } from '@prisma/client'
 
 type Props = {
   onSelect: (asset: MediaAsset) => void

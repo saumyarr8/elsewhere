@@ -6,7 +6,7 @@ import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { deleteGalleryImage, updateGalleryImage } from '@/actions/gallery.actions'
 import { cloudinaryUrl } from '@/lib/utils/cloudinary-url'
-import type { GalleryImage, MediaAsset } from '@/generated/prisma/client'
+import type { GalleryImage, MediaAsset } from '@prisma/client'
 
 type Item = GalleryImage & { image: MediaAsset }
 

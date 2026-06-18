@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { cloudinaryUrl } from '@/lib/utils/cloudinary-url'
-import type { GalleryMediaType } from '@/generated/prisma/client'
+import type { GalleryMediaType } from '@prisma/client'
 import type { Note } from '@/actions/note.actions'
 
 export type GalleryItemData = {

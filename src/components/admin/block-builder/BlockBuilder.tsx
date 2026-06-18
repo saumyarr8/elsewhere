@@ -19,7 +19,7 @@ import {
 import { createBlock, reorderBlocks } from '@/actions/block.actions'
 import SortableBlock from './SortableBlock'
 import BlockMenu from './BlockMenu'
-import type { ContentBlock } from '@/generated/prisma/client'
+import type { ContentBlock } from '@prisma/client'
 import type { BlockType } from '@/lib/types/blocks'
 
 type Props = {

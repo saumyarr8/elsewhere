@@ -4,7 +4,7 @@ import { useState, useTransition } from 'react'
 import Link from 'next/link'
 import { updateProject, publishProject, unpublishProject } from '@/actions/project.actions'
 import MediaPicker from '@/components/admin/media/MediaPicker'
-import type { Project, MediaAsset } from '@/generated/prisma/client'
+import type { Project, MediaAsset } from '@prisma/client'
 import Template3Layout, { Template3Data } from '@/components/templates/Template3Layout'
 
 type FullProject = Project & { heroImage: MediaAsset | null; ogImage: MediaAsset | null }

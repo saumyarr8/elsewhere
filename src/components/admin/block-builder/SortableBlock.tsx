@@ -5,7 +5,7 @@ import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { deleteBlock, duplicateBlock } from '@/actions/block.actions'
 import BlockEditor from './BlockEditor'
-import type { ContentBlock } from '@/generated/prisma/client'
+import type { ContentBlock } from '@prisma/client'
 
 type Props = {
   block: ContentBlock

@@ -4,7 +4,7 @@ import { auth } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
 import { revalidatePath } from 'next/cache'
 import { z } from 'zod'
-import type { GalleryMediaType } from '@/generated/prisma/client'
+import type { GalleryMediaType } from '@prisma/client'
 
 async function requireAdmin() {
   const session = await auth()

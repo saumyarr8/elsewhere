@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { useState } from 'react'
 import { deleteMediaAsset, updateMediaAsset } from '@/actions/media.actions'
 import { cloudinaryUrl } from '@/lib/utils/cloudinary-url'
-import type { MediaAsset } from '@/generated/prisma/client'
+import type { MediaAsset } from '@prisma/client'
 
 type Props = {
   assets: MediaAsset[]

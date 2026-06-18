@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { updateProject, publishProject, unpublishProject } from '@/actions/project.actions'
 import MediaPicker from '@/components/admin/media/MediaPicker'
 import Template4Layout, { type Template4Data } from '@/components/templates/Template4Layout'
-import type { Project, MediaAsset } from '@/generated/prisma/client'
+import type { Project, MediaAsset } from '@prisma/client'
 
 type FullProject = Project & { heroImage: MediaAsset | null; ogImage: MediaAsset | null }
 

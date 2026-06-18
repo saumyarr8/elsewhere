@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from 'react'
 import { updateBlock } from '@/actions/block.actions'
-import type { ContentBlock } from '@/generated/prisma/client'
+import type { ContentBlock } from '@prisma/client'
 import type {
   BlockPayload,
   IntroBlockPayload,
