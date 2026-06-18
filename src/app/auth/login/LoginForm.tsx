@@ -18,18 +18,16 @@ export default function LoginForm() {
   return (
     <form action={handleSubmit} className="space-y-4">
       {state?.error && (
-        <p className="text-sm text-[var(--color-accent)] text-center">
-          {state.error}
-        </p>
+        <div className="bg-red-50 p-3 rounded text-sm text-red-900 border border-red-300 space-y-1">
+          <p><strong>Login Error:</strong></p>
+          <p className="break-words">{state.error}</p>
+        </div>
       )}
       {/* CLIENT-SIDE DEBUG INFO */}
       <div className="bg-yellow-50 p-3 rounded text-xs text-yellow-900 border border-yellow-200 space-y-1">
         <p><strong>Client Debug Info:</strong></p>
         <p>Current URL: {typeof window !== 'undefined' ? window.location.href : 'N/A'}</p>
         <p>Is Development: {isDev ? 'Yes' : 'No'}</p>
-        {state?.error && (
-          <p className="text-red-600"><strong>Last Error:</strong> {state.error}</p>
-        )}
       </div>
       <div className="space-y-1">
         <label htmlFor="email" className="block text-xs uppercase tracking-widest text-[var(--color-ink-muted)]">

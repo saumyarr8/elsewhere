@@ -25,14 +25,27 @@ export async function login(
     })
   } catch (err) {
     console.error('[LOGIN ACTION] signIn error:', err)
+    console.error('[LOGIN ACTION] Error details:', {
+      message: err instanceof Error ? err.message : String(err),
+      name: err instanceof Error ? err.name : 'unknown',
+      stack: err instanceof Error ? err.stack : undefined,
+    })
+
     if (err instanceof AuthError) {
       console.log('[LOGIN ACTION] AuthError type:', err.type)
+      console.log('[LOGIN ACTION] AuthError code:', err.code)
+      console.log('[LOGIN ACTION] AuthError message:', err.message)
       if (err.type === 'CredentialsSignin') {
         return { error: 'Invalid email or password.' }
       }
-      return { error: 'Something went wrong.' }
+      return { error: `Authentication error: ${err.message || err.type}` }
     }
-    throw err
+
+    if (err instanceof Error) {
+      return { error: `Error: ${err.message}` }
+    }
+
+    return { error: 'Something went wrong.' }
   }
 }
 
