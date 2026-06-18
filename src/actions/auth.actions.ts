@@ -33,7 +33,6 @@ export async function login(
 
     if (err instanceof AuthError) {
       console.log('[LOGIN ACTION] AuthError type:', err.type)
-      console.log('[LOGIN ACTION] AuthError code:', err.code)
       console.log('[LOGIN ACTION] AuthError message:', err.message)
       if (err.type === 'CredentialsSignin') {
         return { error: 'Invalid email or password.' }
