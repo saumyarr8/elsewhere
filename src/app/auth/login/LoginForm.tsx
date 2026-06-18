@@ -7,6 +7,7 @@ type State = { error?: string } | undefined
 
 export default function LoginForm() {
   const [state, action, pending] = useActionState(login, undefined)
+  const isDev = process.env.NODE_ENV === 'development'
 
   const handleSubmit = async (formData: FormData) => {
     console.log('[LOGIN FORM] Form submitted')
@@ -21,6 +22,15 @@ export default function LoginForm() {
           {state.error}
         </p>
       )}
+      {/* CLIENT-SIDE DEBUG INFO */}
+      <div className="bg-yellow-50 p-3 rounded text-xs text-yellow-900 border border-yellow-200 space-y-1">
+        <p><strong>Client Debug Info:</strong></p>
+        <p>Current URL: {typeof window !== 'undefined' ? window.location.href : 'N/A'}</p>
+        <p>Is Development: {isDev ? 'Yes' : 'No'}</p>
+        {state?.error && (
+          <p className="text-red-600"><strong>Last Error:</strong> {state.error}</p>
+        )}
+      </div>
       <div className="space-y-1">
         <label htmlFor="email" className="block text-xs uppercase tracking-widest text-[var(--color-ink-muted)]">
           Email
