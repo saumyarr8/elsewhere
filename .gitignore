@@ -40,3 +40,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Prisma generated files (platform-specific binaries)
+/src/generated/prisma/*.node
+/src/generated/prisma/*.dll
+/src/generated/prisma/*.so
