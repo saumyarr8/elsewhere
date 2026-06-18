@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 import SiteNav from '@/components/public/nav/SiteNav'
-import SiteFooter from '@/components/public/SiteFooter'
 import AboutCanvas from '@/components/public/about/AboutCanvas'
 
 export const metadata: Metadata = {
@@ -13,7 +12,6 @@ export default function AboutPage() {
     <>
       <SiteNav />
       <AboutCanvas />
-      <SiteFooter />
     </>
   )
 }

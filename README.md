@@ -31,6 +31,27 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 
 ## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+This app is ready for Vercel, but it needs the same production services that it uses locally.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Import the repository into Vercel and keep the project root at the repository root.
+2. Add these environment variables in Vercel for Production and Preview:
+	- `DATABASE_URL`
+	- `DIRECT_URL`
+	- `AUTH_SECRET`
+	- `NEXTAUTH_URL`
+	- `CLOUDINARY_CLOUD_NAME`
+	- `CLOUDINARY_API_KEY`
+	- `CLOUDINARY_API_SECRET`
+	- `NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME`
+	- `NEXT_PUBLIC_SITE_URL`
+	- `ADMIN_EMAIL`
+	- `ADMIN_PASSWORD`
+3. Point `DATABASE_URL` at your hosted Postgres database and `DIRECT_URL` at the direct migration connection string.
+4. Set `NEXTAUTH_URL` and `NEXT_PUBLIC_SITE_URL` to the deployed Vercel domain after the first deployment.
+5. Run Prisma migrations against production before relying on the app in production.
+
+Notes:
+
+- The build script already runs `prisma generate` before `next build`.
+- Cloudinary is used for both server-side signing and client-side image URLs, so its env vars must be present.
+- The sitemap and robots metadata use `NEXT_PUBLIC_SITE_URL`, so set it to the canonical domain, not localhost.

@@ -73,6 +73,26 @@ export default async function ProjectPage({ params }: Props) {
     )
   }
 
+  if (project.template === 'TEMPLATE_2') {
+    const Template2 = (await import('@/components/templates/Template2')).default
+    return (
+      <>
+        <SiteNav />
+        <Template2 project={project} />
+      </>
+    )
+  }
+
+  if (project.template === 'TEMPLATE_3') {
+    const Template3 = (await import('@/components/templates/Template3')).default
+    return (
+      <>
+        <SiteNav />
+        <Template3 project={project} />
+      </>
+    )
+  }
+
   const blocks = project.blocks.map((b) => ({
     ...b,
     payload: { type: b.type, ...(b.payload as object) } as BlockPayload,

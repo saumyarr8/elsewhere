@@ -73,6 +73,8 @@ export default function Template1Layout({ data, isEditing, onImageSelect }: Prop
   const [scale, setScale] = useState(1)
   const [activeIdx, setActiveIdx] = useState(0)
   const [sidebarVisible, setSidebarVisible] = useState(false)
+  const [sidebarHovered, setSidebarHovered] = useState(false)
+  const [hoveredIdx, setHoveredIdx] = useState<number | null>(null)
   const wrapperRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -80,7 +82,7 @@ export default function Template1Layout({ data, isEditing, onImageSelect }: Prop
       const el = wrapperRef.current
       if (!el) return
       const avail = el.parentElement?.clientWidth ?? window.innerWidth
-      setScale(Math.min(1, avail / W))
+      setScale(avail / W)
     }
     update()
     const ro = new ResizeObserver(update)
@@ -453,32 +455,91 @@ export default function Template1Layout({ data, isEditing, onImageSelect }: Prop
 
     {/* ━━━ FIXED SIDEBAR (public only) — escapes the canvas, positions via viewport ━ */}
     {!isEditing && sidebarVisible && (
-      <div style={{
-        position: 'fixed',
-        left: Math.max(12, 80 * scale),
-        top: '50%',
-        transform: 'translateY(-50%)',
-        zIndex: 20,
-        display: 'flex',
-        flexDirection: 'column',
-        gap: Math.max(10, 24 * scale),
-        pointerEvents: 'none',
-      }}>
-        {activeSections.map((_, i) => (
-          <span key={i} style={{
-            fontFamily: 'var(--font-sans, Montserrat)',
-            fontSize: Math.max(9, 12 * scale),
-            textTransform: 'uppercase',
-            lineHeight: 'normal',
-            fontWeight: i === activeIdx ? 500 : 400,
-            color: i === activeIdx ? '#1c1c1c' : '#ccc',
-            whiteSpace: 'nowrap',
-            transition: 'color 0.3s, font-weight 0.3s',
+      <>
+        {/* Blur overlay — shown while sidebar is hovered */}
+        {sidebarHovered && (
+          <div style={{
+            position: 'fixed',
+            inset: 0,
+            backdropFilter: 'blur(18px)',
+            WebkitBackdropFilter: 'blur(18px)',
+            zIndex: 19,
+            pointerEvents: 'none',
+            transition: 'backdrop-filter 0.3s',
+          }} />
+        )}
+
+        <div
+          onMouseEnter={() => setSidebarHovered(true)}
+          onMouseLeave={() => { setSidebarHovered(false); setHoveredIdx(null) }}
+          style={{
+            position: 'fixed',
+            left: Math.max(12, 80 * scale),
+            top: '50%',
+            transform: 'translateY(-50%)',
+            zIndex: 20,
+            display: 'flex',
+            flexDirection: 'column',
+            gap: Math.max(10, 24 * scale),
+            pointerEvents: 'auto',
           }}>
-            Section: {String(i + 1).padStart(2, '0')}
-          </span>
-        ))}
-      </div>
+          {activeSections.map((s, i) => {
+            const isHovered = hoveredIdx === i
+            const isActive = i === activeIdx
+            const fs = Math.max(9, 12 * scale)
+            return (
+              <div
+                key={i}
+                onMouseEnter={() => setHoveredIdx(i)}
+                onMouseLeave={() => setHoveredIdx(null)}
+                style={{ cursor: 'default' }}
+              >
+                {/* Label row — square + section number + headline inline on hover */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                  {/* ■ square — only on hovered item */}
+                  {isHovered && (
+                    <div style={{
+                      width: fs * 0.75,
+                      height: fs * 0.75,
+                      background: '#1c1c1c',
+                      flexShrink: 0,
+                    }} />
+                  )}
+                  <span style={{
+                    fontFamily: 'var(--font-sans, Montserrat)',
+                    fontSize: isHovered ? Math.max(10, 14 * scale) : fs,
+                    textTransform: 'uppercase',
+                    lineHeight: 'normal',
+                    fontWeight: isHovered || isActive ? 600 : 400,
+                    color: isHovered || isActive ? '#1c1c1c' : '#ccc',
+                    whiteSpace: 'nowrap',
+                    transition: 'color 0.2s, font-size 0.2s, font-weight 0.2s',
+                  }}>
+                    Section: {String(i + 1).padStart(2, '0')}
+                  </span>
+                  {/* Headline inline to the right — only on hover */}
+                  {isHovered && s.headline && (
+                    <span style={{
+                      fontFamily: 'var(--font-sans, Montserrat)',
+                      fontSize: Math.max(8, 11 * scale),
+                      fontWeight: 400,
+                      color: '#505050',
+                      lineHeight: 'normal',
+                      maxWidth: 300 * scale,
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                      whiteSpace: 'nowrap',
+                      marginLeft: 8,
+                    }}>
+                      {s.headline}
+                    </span>
+                  )}
+                </div>
+              </div>
+            )
+          })}
+        </div>
+      </>
     )}
   </>
   )

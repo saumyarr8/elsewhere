@@ -52,10 +52,9 @@ export default function NewProjectPage() {
             id="template"
             name="template"
             className="w-full border border-[var(--color-border)] px-3 py-2.5 text-sm focus:outline-none focus:border-[var(--color-ink)] transition-colors bg-transparent appearance-none rounded-none"
-            defaultValue="CUSTOM"
+            defaultValue="TEMPLATE_1"
           >
-            <option value="CUSTOM">Custom (Blocks)</option>
-            <option value="TEMPLATE_1">Template 1 (Story)</option>
+            <option value="TEMPLATE_1">Template 1</option>
             <option value="TEMPLATE_2">Template 2</option>
             <option value="TEMPLATE_3">Template 3</option>
             <option value="TEMPLATE_4">Template 4</option>

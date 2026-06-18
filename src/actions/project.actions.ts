@@ -32,7 +32,7 @@ export async function createProject(_prevState: { error?: string } | undefined, 
   const slug = slugify(rawSlug)
 
   const templateStr = formData.get('template') as string
-  const template = (['CUSTOM', 'TEMPLATE_1', 'TEMPLATE_2', 'TEMPLATE_3', 'TEMPLATE_4'].includes(templateStr) ? templateStr : 'CUSTOM') as 'CUSTOM' | 'TEMPLATE_1' | 'TEMPLATE_2' | 'TEMPLATE_3' | 'TEMPLATE_4'
+  const template = (['TEMPLATE_1', 'TEMPLATE_2', 'TEMPLATE_3', 'TEMPLATE_4'].includes(templateStr) ? templateStr : 'TEMPLATE_1') as 'TEMPLATE_1' | 'TEMPLATE_2' | 'TEMPLATE_3' | 'TEMPLATE_4'
 
   const existing = await prisma.project.findUnique({ where: { slug } })
   if (existing) return { error: 'A project with this slug already exists.' }
