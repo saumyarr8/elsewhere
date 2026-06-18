@@ -1,8 +1,9 @@
 import { handlers } from '@/lib/auth'
+import { NextRequest } from 'next/server'
 
 const originalPost = handlers.POST
 
-const loggingPost = async (request: Request) => {
+const loggingPost = async (request: NextRequest) => {
   console.log('[AUTH ROUTE] POST request to:', request.url)
   console.log('[AUTH ROUTE] Origin:', request.headers.get('origin'))
   console.log('[AUTH ROUTE] Referer:', request.headers.get('referer'))
