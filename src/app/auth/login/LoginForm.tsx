@@ -8,8 +8,14 @@ type State = { error?: string } | undefined
 export default function LoginForm() {
   const [state, action, pending] = useActionState(login, undefined)
 
+  const handleSubmit = async (formData: FormData) => {
+    console.log('[LOGIN FORM] Form submitted')
+    console.log('[LOGIN FORM] Email:', formData.get('email'))
+    return action(formData)
+  }
+
   return (
-    <form action={action} className="space-y-4">
+    <form action={handleSubmit} className="space-y-4">
       {state?.error && (
         <p className="text-sm text-[var(--color-accent)] text-center">
           {state.error}

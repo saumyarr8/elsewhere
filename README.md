@@ -38,6 +38,7 @@ This app is ready for Vercel, but it needs the same production services that it 
 	- `DATABASE_URL`
 	- `DIRECT_URL`
 	- `AUTH_SECRET`
+	- `AUTH_URL`
 	- `NEXTAUTH_URL`
 	- `CLOUDINARY_CLOUD_NAME`
 	- `CLOUDINARY_API_KEY`
@@ -47,8 +48,10 @@ This app is ready for Vercel, but it needs the same production services that it 
 	- `ADMIN_EMAIL`
 	- `ADMIN_PASSWORD`
 3. Point `DATABASE_URL` at your hosted Postgres database and `DIRECT_URL` at the direct migration connection string.
-4. Set `NEXTAUTH_URL` and `NEXT_PUBLIC_SITE_URL` to the deployed Vercel domain after the first deployment.
-5. Run Prisma migrations against production before relying on the app in production.
+4. Set `AUTH_URL` or `NEXTAUTH_URL` to the deployed Vercel domain after the first deployment.
+5. Set `NEXT_PUBLIC_SITE_URL` to the deployed Vercel domain after the first deployment.
+6. Do not use `NEXT_PUBLIC_AUTH_URL`; the login flow does not read it.
+7. Run Prisma migrations against production before relying on the app in production.
 
 Notes:
 
