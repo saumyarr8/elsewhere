@@ -32,6 +32,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           }
 
           console.log('[AUTH] Admin user found, comparing passwords')
+          console.log('[AUTH] Password hash exists:', !!admin.passwordHash)
           const valid = await bcrypt.compare(
             credentials.password as string,
             admin.passwordHash
@@ -46,6 +47,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           return { id: admin.id, email: admin.email }
         } catch (error) {
           console.error('[AUTH] Error during authorization:', error)
+          if (error instanceof Error) {
+            console.error('[AUTH] Error message:', error.message)
+            console.error('[AUTH] Error stack:', error.stack)
+          }
           throw error
         }
       },
@@ -57,16 +62,26 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   },
   callbacks: {
     jwt({ token, user }) {
-      console.log('[AUTH JWT] jwt callback called, user:', user?.id)
-      if (user) token.id = user.id
-      return token
+      try {
+        console.log('[AUTH JWT] jwt callback called, user:', user?.id)
+        if (user) token.id = user.id
+        return token
+      } catch (error) {
+        console.error('[AUTH JWT] Error in jwt callback:', error)
+        throw error
+      }
     },
     session({ session, token }) {
-      console.log('[AUTH SESSION] session callback called, token.id:', token?.id)
-      if (token?.id && session.user) {
-        session.user.id = token.id as string
+      try {
+        console.log('[AUTH SESSION] session callback called, token.id:', token?.id)
+        if (token?.id && session.user) {
+          session.user.id = token.id as string
+        }
+        return session
+      } catch (error) {
+        console.error('[AUTH SESSION] Error in session callback:', error)
+        throw error
       }
-      return session
     },
   },
   debug: isDevelopment,
