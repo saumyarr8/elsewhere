@@ -58,3 +58,5 @@ Notes:
 - The build script already runs `prisma generate` before `next build`.
 - Cloudinary is used for both server-side signing and client-side image URLs, so its env vars must be present.
 - The sitemap and robots metadata use `NEXT_PUBLIC_SITE_URL`, so set it to the canonical domain, not localhost.
+
+redeploy commit 1
