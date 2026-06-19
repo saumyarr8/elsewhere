@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useEffect, useRef, useState } from 'react'
+import MusicPlayer from '@/components/public/about/MusicPlayer'
 
 // ─── Data Types ───────────────────────────────────────────────────────────────
 
@@ -224,13 +225,24 @@ export default function Template1Layout({ data, isEditing, onImageSelect }: Prop
   }
 
   function P({ children, l, t, w = 220 }: { children?: string; l: number; t: number; w?: number }) {
+    const renderContent = (text: string) => {
+      if (!text) return null;
+      const parts = text.split(/(\*\*.*?\*\*)/g);
+      return parts.map((part, i) => {
+        if (part.startsWith('**') && part.endsWith('**') && part.length >= 4) {
+          return <strong key={i} style={{ fontWeight: 700 }}>{part.slice(2, -2)}</strong>;
+        }
+        return part;
+      });
+    };
+
     return (
       <div style={{
         position: 'absolute', left: l, top: t, width: w,
         fontFamily: 'var(--font-sans, Montserrat)', fontWeight: 400,
         fontSize: 14, color: '#505050', textAlign: 'justify', lineHeight: 'normal',
         whiteSpace: 'pre-wrap', overflowWrap: 'break-word',
-      }}>{children}</div>
+      }}>{renderContent(children || '')}</div>
     )
   }
 
@@ -259,6 +271,7 @@ export default function Template1Layout({ data, isEditing, onImageSelect }: Prop
           <ImgBox id={s.image2} sk={sk} field="image2" cap={s.caption2} l={996} t={1916 + off} w={193} h={354} />
           <H2 l={738} t={1651 + off}>{s.headline}</H2>
           <P l={738} t={1720 + off}>{s.body1}</P>
+          <P l={1212} t={1916 + off}>{s.body3}</P>
         </React.Fragment>
       )
       case 2: return (
@@ -270,6 +283,7 @@ export default function Template1Layout({ data, isEditing, onImageSelect }: Prop
           <H2 l={254} t={2953 + off} w={421}>{s.headline}</H2>
           <P l={254} t={3038 + off}>{s.body1}</P>
           <P l={503} t={3038 + off}>{s.body2}</P>
+          <P l={766} t={2380 + off}>{s.body4}</P>
         </React.Fragment>
       )
       case 3: return (
@@ -286,7 +300,9 @@ export default function Template1Layout({ data, isEditing, onImageSelect }: Prop
           <Num n={num} l={756} t={3923 + off} />
           <ImgBox id={s.image1} sk={sk} field="image1" cap={s.caption1} l={254} t={3923 + off} w={478} h={575} />
           <ImgBox id={s.image2} sk={sk} field="image2" cap={s.caption2} l={1006} t={4043 + off} w={193} h={354} />
-          <P l={1211} t={4260 + off}>{s.body1}</P>
+          <H2 l={756} t={3975 + off} w={220}>{s.headline}</H2>
+          <P l={756} t={4100 + off} w={220}>{s.body1}</P>
+          <P l={1211} t={4260 + off}>{s.body2}</P>
         </React.Fragment>
       )
       case 5: return (
@@ -375,11 +391,53 @@ export default function Template1Layout({ data, isEditing, onImageSelect }: Prop
           color: '#000', textTransform: 'uppercase', lineHeight: 1.15,
           whiteSpace: 'nowrap',
         }}>
-          <span style={{ fontWeight: 700 }}>{d?.titleBold || 'Project Title'}</span>
+          {(() => {
+            const title = d?.titleBold || 'Project Title';
+            const splitIdx = title.indexOf(',');
+            if (splitIdx === -1) return <span style={{ fontWeight: 700 }}>{title}</span>;
+            return (
+              <>
+                <span style={{ fontWeight: 700 }}>{title.substring(0, splitIdx + 1)}</span>
+                <span style={{ fontWeight: 400 }}>{title.substring(splitIdx + 1)}</span>
+              </>
+            );
+          })()}
         </div>
 
         {/* ━━━ HERO IMAGE — 1352 × 671 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
         <ImgBox id={d?.heroImage} sk="hero" field="heroImage" l={80} t={197} w={1352} h={671} />
+
+        {/* Hero Left Arrow */}
+        <div style={{
+          position: 'absolute', left: 100, top: 197 + 671/2 - 30,
+          width: 60, height: 60, borderRadius: '50%', background: 'rgba(255, 255, 255, 0.25)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          cursor: 'pointer', backdropFilter: 'blur(4px)', color: '#fff',
+          fontSize: 24, fontWeight: 300, fontFamily: 'sans-serif'
+        }}>
+          &lt;
+        </div>
+
+        {/* Hero Right Arrow */}
+        <div style={{
+          position: 'absolute', left: 80 + 1352 - 80, top: 197 + 671/2 - 30,
+          width: 60, height: 60, borderRadius: '50%', background: 'rgba(255, 255, 255, 0.25)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          cursor: 'pointer', backdropFilter: 'blur(4px)', color: '#fff',
+          fontSize: 24, fontWeight: 300, fontFamily: 'sans-serif'
+        }}>
+          &gt;
+        </div>
+
+        {/* Hero Music Player */}
+        <div style={{
+          position: 'absolute', left: 80 + 1352 - 130, top: 197 + 671 - 100,
+          width: 250, zIndex: 10, display: 'flex', justifyContent: 'center'
+        }}>
+          <div style={{ transform: 'scale(1.2)' }}>
+            <MusicPlayer />
+          </div>
+        </div>
 
         {/* ━━━ METADATA BAR ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
         <div style={{
@@ -434,7 +492,7 @@ export default function Template1Layout({ data, isEditing, onImageSelect }: Prop
         <img
           src="/t1-wordmark.svg"
           alt=".elsewhere"
-          style={{ position: 'absolute', left: 0, top: footerY + F_MARK, width: W, height: 242, display: 'block' }}
+          style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', top: footerY + F_MARK + 90, width: 300, height: 'auto', display: 'block' }}
         />
 
         <div style={{
@@ -492,7 +550,18 @@ export default function Template1Layout({ data, isEditing, onImageSelect }: Prop
                 key={i}
                 onMouseEnter={() => setHoveredIdx(i)}
                 onMouseLeave={() => setHoveredIdx(null)}
-                style={{ cursor: 'default' }}
+                onClick={() => {
+                  if (!wrapperRef.current) return;
+                  const wrapperTop = wrapperRef.current.getBoundingClientRect().top + window.scrollY;
+                  let cumH = 0;
+                  for (let j = 0; j < i; j++) cumH += SECTION_HEIGHTS[j % 11];
+                  const absoluteY = CONTENT_TOP + cumH;
+                  window.scrollTo({
+                    top: wrapperTop + (absoluteY * scale),
+                    behavior: 'smooth'
+                  });
+                }}
+                style={{ cursor: 'pointer' }}
               >
                 {/* Label row — square + section number + headline inline on hover */}
                 <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>

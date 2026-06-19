@@ -24,7 +24,7 @@ export default function SiteFooter() {
       <Link
         href="/"
         className="block text-center leading-[0.85] tracking-tight text-[var(--color-ink)] hover:opacity-60 transition-opacity"
-        style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(4rem, 16vw, 14rem)' }}
+        style={{ fontFamily: 'var(--font-heading)', fontSize: '3rem' }}
       >
         .elsewhere
       </Link>
