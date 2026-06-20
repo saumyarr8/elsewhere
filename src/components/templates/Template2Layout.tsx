@@ -1,7 +1,9 @@
 'use client'
 
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { type Section, type TemplateData } from '@/components/admin/template-editor/shared'
+import CanvasFooter from './CanvasFooter'
+import CanvasSidebar from './CanvasSidebar'
 
 export type Template2Data = TemplateData
 
@@ -40,7 +42,6 @@ const SECTION_STARTS = [1009, 1559, 2794, 3696, 4263, 5062, 5340, 5964]
 const FOOTER_Y = 7042
 const F_NAV = 0
 const F_MARK = 200
-const F_SOC = 442
 
 // ─── Component ────────────────────────────────────────────────────────────────
 
@@ -58,8 +59,6 @@ export default function Template2Layout({
   const [scale, setScale] = useState(1)
   const [activeIdx, setActiveIdx] = useState(0)
   const [sidebarVisible, setSidebarVisible] = useState(false)
-  const [sidebarHovered, setSidebarHovered] = useState(false)
-  const [hoveredIdx, setHoveredIdx] = useState<number | null>(null)
   const wrapperRef = useRef<HTMLDivElement>(null)
 
   const SECTION_HEADINGS = [
@@ -73,13 +72,18 @@ export default function Template2Layout({
     data.sec8Headline?.slice(0, 50) || 'Section 08',
   ]
 
-  const handleScrollTo = (y: number) => {
+  const handleScrollTo = useCallback((y: number) => {
     if (isEditing && wrapperRef.current) {
       wrapperRef.current.scrollTo({ top: y * scale, behavior: 'smooth' })
     } else {
       window.scrollTo({ top: y * scale, behavior: 'smooth' })
     }
-  }
+  }, [isEditing, scale])
+
+  const sidebarSections = SECTION_STARTS.map((y, i) => ({
+    scrollY: y,
+    headline: SECTION_HEADINGS[i],
+  }))
 
   useEffect(() => {
     const update = () => {
@@ -371,109 +375,26 @@ export default function Template2Layout({
           <P l={1200.92} t={6413.11} w={220}>{data.sec8Body4}</P>
 
           {/* ━━ FOOTER ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-          <div style={{
-            position: 'absolute', left: 663, top: FOOTER_Y + F_NAV, width: 769,
-            display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-          }}>
-            <span style={{ fontFamily: 'var(--font-sans, Montserrat)', fontWeight: 700, fontSize: 16, color: '#ccc', textTransform: 'uppercase' }}>
-              Take me elsewhere
-            </span>
-            {data.nextProjectSlug && (
-              <a href={`/${data.nextProjectSlug}`} style={{ display: 'flex', alignItems: 'center', gap: 4, textDecoration: 'none' }}>
-                <span style={{ fontFamily: 'var(--font-sans, Montserrat)', fontWeight: 700, fontSize: 16, color: '#ccc', textTransform: 'uppercase' }}>
-                  {data.nextProjectTitle || 'Next project'}
-                </span>
-                <span style={{ color: '#1c1c1c', fontSize: 10 }}>▶</span>
-              </a>
-            )}
-          </div>
-
-          <img
-            src="/t1-wordmark.svg"
-            alt=".elsewhere"
-            style={{ position: 'absolute', left: 0, top: FOOTER_Y + F_MARK, width: W, height: 242, display: 'block' }}
+          <CanvasFooter
+            footerY={FOOTER_Y + F_NAV}
+            markOffset={F_MARK}
+            canvasWidth={W}
+            nextProjectTitle={data.nextProjectTitle}
+            nextProjectSlug={data.nextProjectSlug}
           />
-
-          <div style={{
-            position: 'absolute', left: 88, top: FOOTER_Y + F_MARK + 290, width: 1344,
-            display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-          }}>
-            <div style={{ display: 'flex', gap: 40, alignItems: 'center' }}>
-              <img src="/t1-instagram.svg" alt="Instagram" width={20} height={20} style={{ display: 'block' }} />
-              <img src="/t1-twitter.svg" alt="X / Twitter" width={20} height={20} style={{ display: 'block' }} />
-            </div>
-            <span style={{ fontFamily: 'var(--font-sans, Montserrat)', fontWeight: 400, fontSize: 16, color: '#000' }}>
-              @Copywrite
-            </span>
-          </div>
 
         </div>
       </div>
 
       {/* ━━ SIDEBAR (public mode only) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-      {!isEditing && sidebarVisible && (
-        <>
-          {sidebarHovered && (
-            <div style={{
-              position: 'fixed', inset: 0,
-              backdropFilter: 'blur(18px)', WebkitBackdropFilter: 'blur(18px)',
-              zIndex: 19, pointerEvents: 'none',
-            }} />
-          )}
-          <div
-            onMouseEnter={() => setSidebarHovered(true)}
-            onMouseLeave={() => { setSidebarHovered(false); setHoveredIdx(null) }}
-            style={{
-              position: 'fixed', left: Math.max(12, 80 * scale), top: '50%',
-              transform: 'translateY(-50%)', zIndex: 20,
-              display: 'flex', flexDirection: 'column', gap: Math.max(10, 24 * scale),
-              pointerEvents: 'auto',
-            }}
-          >
-            {SECTION_STARTS.map((y, i) => {
-              const isHovered = hoveredIdx === i
-              const isActive = i === activeIdx
-              const fs = Math.max(9, 12 * scale)
-              return (
-                <div
-                  key={i}
-                  onMouseEnter={() => setHoveredIdx(i)}
-                  onMouseLeave={() => setHoveredIdx(null)}
-                  onClick={() => handleScrollTo(y)}
-                  style={{ cursor: 'pointer' }}
-                >
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                    {isHovered && (
-                      <div style={{ width: fs * 0.75, height: fs * 0.75, background: '#1c1c1c', flexShrink: 0 }} />
-                    )}
-                    <span style={{
-                      fontFamily: 'var(--font-sans, Montserrat)',
-                      fontSize: isHovered ? Math.max(10, 14 * scale) : fs,
-                      textTransform: 'uppercase', lineHeight: 'normal',
-                      fontWeight: isHovered || isActive ? 600 : 400,
-                      color: isHovered || isActive ? '#1c1c1c' : '#ccc',
-                      whiteSpace: 'nowrap',
-                      transition: 'color 0.2s, font-size 0.2s, font-weight 0.2s',
-                    }}>
-                      Section: {String(i + 1).padStart(2, '0')}
-                    </span>
-                    {isHovered && (
-                      <span style={{
-                        fontFamily: 'var(--font-sans, Montserrat)',
-                        fontSize: Math.max(8, 11 * scale), fontWeight: 400,
-                        color: '#505050', lineHeight: 'normal',
-                        maxWidth: 300 * scale, overflow: 'hidden',
-                        textOverflow: 'ellipsis', whiteSpace: 'nowrap', marginLeft: 8,
-                      }}>
-                        {SECTION_HEADINGS[i]}
-                      </span>
-                    )}
-                  </div>
-                </div>
-              )
-            })}
-          </div>
-        </>
+      {!isEditing && (
+        <CanvasSidebar
+          visible={sidebarVisible}
+          activeIdx={activeIdx}
+          sections={sidebarSections}
+          scale={scale}
+          onScrollTo={handleScrollTo}
+        />
       )}
     </>
   )

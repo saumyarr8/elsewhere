@@ -1,8 +1,10 @@
 'use client'
 
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState, useCallback } from 'react'
 import MusicPlayer from '@/components/public/about/MusicPlayer'
 import { hasContent, type Section, type TemplateData } from '@/components/admin/template-editor/shared'
+import CanvasFooter from './CanvasFooter'
+import CanvasSidebar from './CanvasSidebar'
 
 export type T1Section = Section
 export type Template1Data = TemplateData
@@ -44,8 +46,6 @@ export default function Template1Layout({ data, isEditing, onImageSelect }: Prop
   const [scale, setScale] = useState(1)
   const [activeIdx, setActiveIdx] = useState(0)
   const [sidebarVisible, setSidebarVisible] = useState(false)
-  const [sidebarHovered, setSidebarHovered] = useState(false)
-  const [hoveredIdx, setHoveredIdx] = useState<number | null>(null)
   const wrapperRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -87,6 +87,18 @@ export default function Template1Layout({ data, isEditing, onImageSelect }: Prop
     : CONTENT_TOP
   const footerY = lastContentBottom + 60
   const canvasH = footerY + FOOTER_HEIGHT
+
+  const handleScrollTo = useCallback((y: number) => {
+    if (!wrapperRef.current) return
+    const wrapperTop = wrapperRef.current.getBoundingClientRect().top + window.scrollY
+    window.scrollTo({ top: wrapperTop + y * scale, behavior: 'smooth' })
+  }, [scale])
+
+  const sidebarSections = activeSections.map((s, i) => {
+    let cumH = 0
+    for (let j = 0; j < i; j++) cumH += SECTION_HEIGHTS[j % 11]
+    return { scrollY: CONTENT_TOP + cumH, headline: s.headline }
+  })
 
   // Track which section is in the viewport (public mode only)
   useEffect(() => {
@@ -442,145 +454,25 @@ export default function Template1Layout({ data, isEditing, onImageSelect }: Prop
         {/* ━━━ SECTIONS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
         {activeSections.map((s, i) => renderSection(s, i))}
 
-        {/* ━━━ FOOTER ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-
-        <div style={{
-          position: 'absolute', left: 663, top: footerY + F_NAV, width: 769,
-          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        }}>
-          <span style={{ fontFamily: 'var(--font-sans, Montserrat)', fontWeight: 700, fontSize: 16, color: '#ccc', textTransform: 'uppercase' }}>
-            Take me elsewhere
-          </span>
-          {d?.nextProjectSlug && (
-            <a href={`/${d.nextProjectSlug}`} style={{ display: 'flex', alignItems: 'center', gap: 4, textDecoration: 'none' }}>
-              <span style={{ fontFamily: 'var(--font-sans, Montserrat)', fontWeight: 700, fontSize: 16, color: '#ccc', textTransform: 'uppercase' }}>
-                {d?.nextProjectTitle || 'Next project'}
-              </span>
-              <span style={{ color: '#1c1c1c', fontSize: 10 }}>▶</span>
-            </a>
-          )}
-        </div>
-
-        <img
-          src="/t1-wordmark.svg"
-          alt=".elsewhere"
-          style={{ position: 'absolute', left: 0, top: footerY + F_MARK, width: W, height: 242, display: 'block' }}
+        <CanvasFooter
+          footerY={footerY + F_NAV}
+          markOffset={F_MARK}
+          canvasWidth={W}
+          nextProjectTitle={d?.nextProjectTitle}
+          nextProjectSlug={d?.nextProjectSlug}
         />
-
-        <div style={{
-          position: 'absolute', left: 88, top: footerY + F_MARK + 290, width: 1344,
-          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        }}>
-          <div style={{ display: 'flex', gap: 40, alignItems: 'center' }}>
-            <img src="/t1-instagram.svg" alt="Instagram" width={20} height={20} style={{ display: 'block' }} />
-            <img src="/t1-twitter.svg" alt="X / Twitter" width={20} height={20} style={{ display: 'block' }} />
-          </div>
-          <span style={{ fontFamily: 'var(--font-sans, Montserrat)', fontWeight: 400, fontSize: 16, color: '#000' }}>
-            @Copywrite
-          </span>
-        </div>
 
       </div>
     </div>
 
-    {/* ━━━ FIXED SIDEBAR (public only) — escapes the canvas, positions via viewport ━ */}
-    {!isEditing && sidebarVisible && (
-      <>
-        {/* Blur overlay — shown while sidebar is hovered */}
-        {sidebarHovered && (
-          <div style={{
-            position: 'fixed',
-            inset: 0,
-            backdropFilter: 'blur(18px)',
-            WebkitBackdropFilter: 'blur(18px)',
-            zIndex: 19,
-            pointerEvents: 'none',
-            transition: 'backdrop-filter 0.3s',
-          }} />
-        )}
-
-        <div
-          onMouseEnter={() => setSidebarHovered(true)}
-          onMouseLeave={() => { setSidebarHovered(false); setHoveredIdx(null) }}
-          style={{
-            position: 'fixed',
-            left: Math.max(12, 80 * scale),
-            top: '50%',
-            transform: 'translateY(-50%)',
-            zIndex: 20,
-            display: 'flex',
-            flexDirection: 'column',
-            gap: Math.max(10, 24 * scale),
-            pointerEvents: 'auto',
-          }}>
-          {activeSections.map((s, i) => {
-            const isHovered = hoveredIdx === i
-            const isActive = i === activeIdx
-            const fs = Math.max(9, 12 * scale)
-            return (
-              <div
-                key={i}
-                onMouseEnter={() => setHoveredIdx(i)}
-                onMouseLeave={() => setHoveredIdx(null)}
-                onClick={() => {
-                  if (!wrapperRef.current) return;
-                  const wrapperTop = wrapperRef.current.getBoundingClientRect().top + window.scrollY;
-                  let cumH = 0;
-                  for (let j = 0; j < i; j++) cumH += SECTION_HEIGHTS[j % 11];
-                  const absoluteY = CONTENT_TOP + cumH;
-                  window.scrollTo({
-                    top: wrapperTop + (absoluteY * scale),
-                    behavior: 'smooth'
-                  });
-                }}
-                style={{ cursor: 'pointer' }}
-              >
-                {/* Label row — square + section number + headline inline on hover */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                  {/* ■ square — only on hovered item */}
-                  {isHovered && (
-                    <div style={{
-                      width: fs * 0.75,
-                      height: fs * 0.75,
-                      background: '#1c1c1c',
-                      flexShrink: 0,
-                    }} />
-                  )}
-                  <span style={{
-                    fontFamily: 'var(--font-sans, Montserrat)',
-                    fontSize: isHovered ? Math.max(10, 14 * scale) : fs,
-                    textTransform: 'uppercase',
-                    lineHeight: 'normal',
-                    fontWeight: isHovered || isActive ? 600 : 400,
-                    color: isHovered || isActive ? '#1c1c1c' : '#ccc',
-                    whiteSpace: 'nowrap',
-                    transition: 'color 0.2s, font-size 0.2s, font-weight 0.2s',
-                  }}>
-                    Section: {String(i + 1).padStart(2, '0')}
-                  </span>
-                  {/* Headline inline to the right — only on hover */}
-                  {isHovered && s.headline && (
-                    <span style={{
-                      fontFamily: 'var(--font-sans, Montserrat)',
-                      fontSize: Math.max(8, 11 * scale),
-                      fontWeight: 400,
-                      color: '#505050',
-                      lineHeight: 'normal',
-                      maxWidth: 300 * scale,
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis',
-                      whiteSpace: 'nowrap',
-                      marginLeft: 8,
-                    }}>
-                      {s.headline}
-                    </span>
-                  )}
-                </div>
-              </div>
-            )
-          })}
-        </div>
-      </>
+    {!isEditing && (
+      <CanvasSidebar
+        visible={sidebarVisible}
+        activeIdx={activeIdx}
+        sections={sidebarSections}
+        scale={scale}
+        onScrollTo={handleScrollTo}
+      />
     )}
   </>
   )
