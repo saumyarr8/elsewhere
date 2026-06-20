@@ -5,6 +5,7 @@ import MusicPlayer from '@/components/public/about/MusicPlayer'
 import { hasContent, type Section, type TemplateData } from '@/components/admin/template-editor/shared'
 import CanvasFooter from './CanvasFooter'
 import CanvasSidebar from './CanvasSidebar'
+import CanvasPhotosView, { photosViewHeight } from './CanvasPhotosView'
 
 export type T1Section = Section
 export type Template1Data = TemplateData
@@ -46,6 +47,7 @@ export default function Template1Layout({ data, isEditing, onImageSelect }: Prop
   const [scale, setScale] = useState(1)
   const [activeIdx, setActiveIdx] = useState(0)
   const [sidebarVisible, setSidebarVisible] = useState(false)
+  const [viewMode, setViewMode] = useState<'story' | 'photos'>('story')
   const wrapperRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -85,7 +87,13 @@ export default function Template1Layout({ data, isEditing, onImageSelect }: Prop
   const lastContentBottom = lastIdx >= 0
     ? SECTION_CONTENT_BOTTOMS[lastIdx % 11] + sectionOffset(lastIdx)
     : CONTENT_TOP
-  const footerY = lastContentBottom + 60
+  const allImageIds = activeSections.flatMap(s =>
+    [s.image1, s.image2, s.image3, s.image4].filter((id): id is string => !!id)
+  )
+
+  const storyFooterY = lastContentBottom + 60
+  const photosFooterY = CONTENT_TOP + photosViewHeight(allImageIds.length, W) + 60
+  const footerY = viewMode === 'photos' ? photosFooterY : storyFooterY
   const canvasH = footerY + FOOTER_HEIGHT
 
   const handleScrollTo = useCallback((y: number) => {
@@ -446,13 +454,31 @@ export default function Template1Layout({ data, isEditing, onImageSelect }: Prop
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           gap: 16, height: 75,
         }}>
-          <span style={{ fontFamily: 'var(--font-sans, Montserrat)', fontWeight: 800, fontSize: 14, textTransform: 'uppercase', color: '#ccc' }}>Photos</span>
+          <span
+            onClick={() => setViewMode('photos')}
+            style={{
+              fontFamily: 'var(--font-sans, Montserrat)', fontWeight: 800, fontSize: 14,
+              textTransform: 'uppercase', cursor: 'pointer',
+              color: viewMode === 'photos' ? '#1c1c1c' : '#ccc',
+            }}
+          >Photos</span>
           <div style={{ height: 31, width: 1, background: '#1c1c1c' }} />
-          <span style={{ fontFamily: 'var(--font-sans, Montserrat)', fontWeight: 800, fontSize: 14, textTransform: 'uppercase', color: '#1c1c1c' }}>Story</span>
+          <span
+            onClick={() => setViewMode('story')}
+            style={{
+              fontFamily: 'var(--font-sans, Montserrat)', fontWeight: 800, fontSize: 14,
+              textTransform: 'uppercase', cursor: 'pointer',
+              color: viewMode === 'story' ? '#1c1c1c' : '#ccc',
+            }}
+          >Story</span>
         </div>
 
-        {/* ━━━ SECTIONS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-        {activeSections.map((s, i) => renderSection(s, i))}
+        {/* ━━━ CONTENT ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+        {viewMode === 'photos' ? (
+          <CanvasPhotosView imageIds={allImageIds} canvasWidth={W} startY={CONTENT_TOP} />
+        ) : (
+          activeSections.map((s, i) => renderSection(s, i))
+        )}
 
         <CanvasFooter
           footerY={footerY + F_NAV}
@@ -465,7 +491,7 @@ export default function Template1Layout({ data, isEditing, onImageSelect }: Prop
       </div>
     </div>
 
-    {!isEditing && (
+    {!isEditing && viewMode === 'story' && (
       <CanvasSidebar
         visible={sidebarVisible}
         activeIdx={activeIdx}

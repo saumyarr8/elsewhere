@@ -4,6 +4,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { type Section, type TemplateData } from '@/components/admin/template-editor/shared'
 import CanvasFooter from './CanvasFooter'
 import CanvasSidebar from './CanvasSidebar'
+import CanvasPhotosView, { photosViewHeight } from './CanvasPhotosView'
 
 export type Template2Data = TemplateData
 
@@ -59,6 +60,7 @@ export default function Template2Layout({
   const [scale, setScale] = useState(1)
   const [activeIdx, setActiveIdx] = useState(0)
   const [sidebarVisible, setSidebarVisible] = useState(false)
+  const [viewMode, setViewMode] = useState<'story' | 'photos'>('story')
   const wrapperRef = useRef<HTMLDivElement>(null)
 
   const SECTION_HEADINGS = [
@@ -71,6 +73,16 @@ export default function Template2Layout({
     data.sec7Headline?.slice(0, 50) || 'Section 07',
     data.sec8Headline?.slice(0, 50) || 'Section 08',
   ]
+
+  const allImageIds = [
+    data.sec1Image, data.sec2Image1, data.sec2Image2, data.sec2Image3, data.sec2Image4,
+    data.sec3Image, data.sec4Image, data.sec5Image, data.sec5Image2,
+    data.sec6Image, data.sec6Image2, data.sec7Image, data.sec8Image,
+  ].filter((id): id is string => !!id)
+
+  const CONTENT_TOP = SECTION_STARTS[0]
+  const photosFooterY = CONTENT_TOP + photosViewHeight(allImageIds.length, W) + 60
+  const effectiveH = viewMode === 'photos' ? photosFooterY + 580 : H
 
   const handleScrollTo = useCallback((y: number) => {
     if (isEditing && wrapperRef.current) {
@@ -218,10 +230,10 @@ export default function Template2Layout({
     <>
       <div
         ref={wrapperRef}
-        style={{ width: '100%', height: H * scale, position: 'relative', overflow: 'hidden' }}
+        style={{ width: '100%', height: effectiveH * scale, position: 'relative', overflow: 'hidden' }}
       >
         <div style={{
-          width: W, height: H, position: 'relative', background: '#fff',
+          width: W, height: effectiveH, position: 'relative', background: '#fff',
           transform: `scale(${scale})`, transformOrigin: 'top left',
           fontFamily: 'var(--font-sans, Montserrat)',
         }}>
@@ -267,11 +279,29 @@ export default function Template2Layout({
             position: 'absolute', left: 0, top: 921, width: W,
             display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 16, height: 75,
           }}>
-            <span style={{ fontFamily: 'var(--font-sans, Montserrat)', fontWeight: 800, fontSize: 14, textTransform: 'uppercase', color: '#ccc' }}>Photos</span>
+            <span
+              onClick={() => setViewMode('photos')}
+              style={{
+                fontFamily: 'var(--font-sans, Montserrat)', fontWeight: 800, fontSize: 14,
+                textTransform: 'uppercase', cursor: 'pointer',
+                color: viewMode === 'photos' ? '#1c1c1c' : '#ccc',
+              }}
+            >Photos</span>
             <div style={{ height: 31, width: 1, background: '#1c1c1c' }} />
-            <span style={{ fontFamily: 'var(--font-sans, Montserrat)', fontWeight: 800, fontSize: 14, textTransform: 'uppercase', color: '#1c1c1c' }}>Story</span>
+            <span
+              onClick={() => setViewMode('story')}
+              style={{
+                fontFamily: 'var(--font-sans, Montserrat)', fontWeight: 800, fontSize: 14,
+                textTransform: 'uppercase', cursor: 'pointer',
+                color: viewMode === 'story' ? '#1c1c1c' : '#ccc',
+              }}
+            >Story</span>
           </div>
 
+          {viewMode === 'photos' ? (
+            <CanvasPhotosView imageIds={allImageIds} canvasWidth={W} startY={CONTENT_TOP} />
+          ) : (
+            <>
           {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
               SECTION 1 — image left, text right
           ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
@@ -373,10 +403,12 @@ export default function Template2Layout({
           <P l={958.42} t={6378.61} w={220}>{data.sec8Body2}</P>
           <P l={1200.92} t={6244.3} w={220}>{data.sec8Body3}</P>
           <P l={1200.92} t={6413.11} w={220}>{data.sec8Body4}</P>
+            </>
+          )}
 
           {/* ━━ FOOTER ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
           <CanvasFooter
-            footerY={FOOTER_Y + F_NAV}
+            footerY={(viewMode === 'photos' ? photosFooterY : FOOTER_Y) + F_NAV}
             markOffset={F_MARK}
             canvasWidth={W}
             nextProjectTitle={data.nextProjectTitle}
@@ -387,7 +419,7 @@ export default function Template2Layout({
       </div>
 
       {/* ━━ SIDEBAR (public mode only) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-      {!isEditing && (
+      {!isEditing && viewMode === 'story' && (
         <CanvasSidebar
           visible={sidebarVisible}
           activeIdx={activeIdx}

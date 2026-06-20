@@ -5,6 +5,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { type Section, type TemplateData } from '@/components/admin/template-editor/shared'
 import CanvasFooter from './CanvasFooter'
 import CanvasSidebar from './CanvasSidebar'
+import CanvasPhotosView, { photosViewHeight } from './CanvasPhotosView'
 
 export type Template4Data = TemplateData
 
@@ -49,10 +50,23 @@ export default function Template4Layout({
   const flat = rawData.sections ? sectionsToFlat(rawData.sections) : {}
   const data = { ...rawData, ...flat } as Record<string, string | undefined>
 
+  const allImageIds = [
+    data.sec1Image, data.sec2Image, data.sec2ImageB, data.sec2ImageC,
+    data.sec3ImageSmall, data.sec3Image, data.sec3ImageB,
+    data.sec4ImageTall, data.sec4Image, data.sec5Image,
+    data.sec6Image, data.sec6ImageB, data.sec7Image, data.sec7ImageWide,
+  ].filter((id): id is string => !!id)
+
+  const CONTENT_TOP = SECTION_STARTS[0]
+  const photosFooterY = CONTENT_TOP + photosViewHeight(allImageIds.length, W) + 60
+
   const [scale, setScale] = useState(1)
   const [activeIdx, setActiveIdx] = useState(0)
   const [sidebarVisible, setSidebarVisible] = useState(false)
+  const [viewMode, setViewMode] = useState<'story' | 'photos'>('story')
   const wrapperRef = useRef<HTMLDivElement>(null)
+
+  const effectiveH = viewMode === 'photos' ? photosFooterY + 580 : H
 
   const SECTION_HEADINGS = [
     data.sec1Headline?.slice(0, 50) || 'Section 01',
@@ -193,9 +207,9 @@ export default function Template4Layout({
 
   return (
     <>
-      <div ref={wrapperRef} style={{ width: '100%', height: H * scale, position: 'relative', overflow: 'hidden' }}>
+      <div ref={wrapperRef} style={{ width: '100%', height: effectiveH * scale, position: 'relative', overflow: 'hidden' }}>
         <div style={{
-          width: W, height: H, position: 'relative', background: '#fff',
+          width: W, height: effectiveH, position: 'relative', background: '#fff',
           transform: `scale(${scale})`, transformOrigin: 'top left',
           fontFamily: 'var(--font-sans, Montserrat)',
         }}>
@@ -234,83 +248,95 @@ export default function Template4Layout({
             position: 'absolute', left: 0, top: 921, width: W,
             display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 16, height: 75,
           }}>
-            <span style={{ fontFamily: 'var(--font-sans, Montserrat)', fontWeight: 800, fontSize: 14, textTransform: 'uppercase', color: '#ccc' }}>Photos</span>
+            <span
+              onClick={() => setViewMode('photos')}
+              style={{ fontFamily: 'var(--font-sans, Montserrat)', fontWeight: 800, fontSize: 14, textTransform: 'uppercase', color: viewMode === 'photos' ? '#1c1c1c' : '#ccc', cursor: 'pointer' }}
+            >Photos</span>
             <div style={{ height: 31, width: 1, background: '#1c1c1c' }} />
-            <span style={{ fontFamily: 'var(--font-sans, Montserrat)', fontWeight: 800, fontSize: 14, textTransform: 'uppercase', color: '#1c1c1c' }}>Story</span>
+            <span
+              onClick={() => setViewMode('story')}
+              style={{ fontFamily: 'var(--font-sans, Montserrat)', fontWeight: 800, fontSize: 14, textTransform: 'uppercase', color: viewMode === 'story' ? '#1c1c1c' : '#ccc', cursor: 'pointer' }}
+            >Story</span>
           </div>
 
-          {/* ━━━━ SECTION 1 — image left, text right */}
-          <ImgBox id={data.sec1Image} si="0" field="image1" l={254} t={1012} w={691} h={554} />
-          <SecNum n="01" l={1332} t={1009} />
-          <H2 l={964.33} t={1239.12} w={398.58}>{data.sec1Headline}</H2>
-          <P l={964.33} t={1364.48} w={220}>{data.sec1Body1}</P>
-          <P l={1212.49} t={1364.48} w={220}>{data.sec1Body2}</P>
-          {/* ━━━━ SECTION 2 — images + text */}
-          <ImgBox id={data.sec2Image} si="1" field="image1" l={252} t={1676} w={463} h={454} />
-          <SecNum n="02" l={1320} t={1676} />
-          <H2 l={730} t={1740} w={466}>{data.sec2Headline}</H2>
-          <P l={730} t={1840} w={300}>{data.sec2Body1}</P>
-          <P l={1050} t={1840} w={300}>{data.sec2Body2}</P>
-          <ImgBox id={data.sec2ImageC} si="1" field="image3" l={1213} t={2025} w={223} h={115} />
-          <ImgBox id={data.sec2ImageB} si="1" field="image2" l={733} t={2160} w={462} h={317} />
-          <P l={1213} t={2170} w={223}>{data.sec2Body3}</P>
+          {viewMode === 'photos' ? (
+            <CanvasPhotosView imageIds={allImageIds} canvasWidth={W} startY={CONTENT_TOP} />
+          ) : (
+            <>
+              {/* ━━━━ SECTION 1 — image left, text right */}
+              <ImgBox id={data.sec1Image} si="0" field="image1" l={254} t={1012} w={691} h={554} />
+              <SecNum n="01" l={1332} t={1009} />
+              <H2 l={964.33} t={1239.12} w={398.58}>{data.sec1Headline}</H2>
+              <P l={964.33} t={1364.48} w={220}>{data.sec1Body1}</P>
+              <P l={1212.49} t={1364.48} w={220}>{data.sec1Body2}</P>
+              {/* ━━━━ SECTION 2 — images + text */}
+              <ImgBox id={data.sec2Image} si="1" field="image1" l={252} t={1676} w={463} h={454} />
+              <SecNum n="02" l={1320} t={1676} />
+              <H2 l={730} t={1740} w={466}>{data.sec2Headline}</H2>
+              <P l={730} t={1840} w={300}>{data.sec2Body1}</P>
+              <P l={1050} t={1840} w={300}>{data.sec2Body2}</P>
+              <ImgBox id={data.sec2ImageC} si="1" field="image3" l={1213} t={2025} w={223} h={115} />
+              <ImgBox id={data.sec2ImageB} si="1" field="image2" l={733} t={2160} w={462} h={317} />
+              <P l={1213} t={2170} w={223}>{data.sec2Body3}</P>
 
-          {/* ━━━━ SECTION 3 — landscape + text */}
-          <ImgBox id={data.sec3Image} si="2" field="image1" l={254} t={2556} w={331} h={671} />
-          <SecNum n="03" l={1051} t={2567.13} />
-          <H2 l={621} t={2617.37} w={452.64}>{data.sec3Headline}</H2>
-          <P l={621} t={2758.5} w={224}>{data.sec3Body1}</P>
-          <P l={621} t={2989.73} w={224}>{data.sec3Body2}</P>
-          <Quote l={1086} t={3096.73} w={324}>{data.sec3Quote}</Quote>
-          <P l={862} t={2757.5} w={224}>{data.sec3Body3}</P>
-          <P l={862} t={2900} w={224}>{data.sec3Body4}</P>
+              {/* ━━━━ SECTION 3 — landscape + text */}
+              <ImgBox id={data.sec3Image} si="2" field="image1" l={254} t={2556} w={331} h={671} />
+              <SecNum n="03" l={1051} t={2567.13} />
+              <H2 l={621} t={2617.37} w={452.64}>{data.sec3Headline}</H2>
+              <P l={621} t={2758.5} w={224}>{data.sec3Body1}</P>
+              <P l={621} t={2989.73} w={224}>{data.sec3Body2}</P>
+              <Quote l={1086} t={3096.73} w={324}>{data.sec3Quote}</Quote>
+              <P l={862} t={2757.5} w={224}>{data.sec3Body3}</P>
+              <P l={862} t={2900} w={224}>{data.sec3Body4}</P>
 
-          {/* ━━━━ SECTION 4 — two portraits + text */}
-          <ImgBox id={data.sec4ImageTall} si="3" field="image1" l={248} t={4197} w={499} h={616} />
-          <SecNum n="04" l={1181} t={4247} />
-          <H2 l={763} t={4247} w={308}>{data.sec4Headline}</H2>
-          <P l={763} t={4323} w={220}>{data.sec4Body1}</P>
-          <P l={1011} t={4323} w={220}>{data.sec4Body2}</P>
-          <P l={763} t={4533} w={392}>{data.sec4Body3}</P>
-          <Quote l={1086} t={3096.73} w={324}>{data.sec4Quote}</Quote>
-          <P l={862} t={2873.73} w={224}>{data.sec4Body4}</P>
-          <ImgBox id={data.sec4Image} si="3" field="image2" l={744} t={4852} w={685} h={589} />
+              {/* ━━━━ SECTION 4 — two portraits + text */}
+              <ImgBox id={data.sec4ImageTall} si="3" field="image1" l={248} t={4197} w={499} h={616} />
+              <SecNum n="04" l={1181} t={4247} />
+              <H2 l={763} t={4247} w={308}>{data.sec4Headline}</H2>
+              <P l={763} t={4323} w={220}>{data.sec4Body1}</P>
+              <P l={1011} t={4323} w={220}>{data.sec4Body2}</P>
+              <P l={763} t={4533} w={392}>{data.sec4Body3}</P>
+              <Quote l={1086} t={3096.73} w={324}>{data.sec4Quote}</Quote>
+              <P l={862} t={2873.73} w={224}>{data.sec4Body4}</P>
+              <ImgBox id={data.sec4Image} si="3" field="image2" l={744} t={4852} w={685} h={589} />
 
-          {/* ━━━━ SECTION 5 — headline + image + text */}
-          <SecNum n="05" l={679} t={5478} />
-          <H2 l={259} t={5514} w={347}>{data.sec5Headline}</H2>
-          <P l={259} t={5589} w={220}>{data.sec5Body1}</P>
-          <P l={498} t={5589} w={220}>{data.sec5Body2}</P>
-          <P l={259} t={5684} w={220}>{data.sec5Body3}</P>
-          <ImgBox id={data.sec5Image} si="4" field="image1" l={258} t={5901} w={469} h={334} />
+              {/* ━━━━ SECTION 5 — headline + image + text */}
+              <SecNum n="05" l={679} t={5478} />
+              <H2 l={259} t={5514} w={347}>{data.sec5Headline}</H2>
+              <P l={259} t={5589} w={220}>{data.sec5Body1}</P>
+              <P l={498} t={5589} w={220}>{data.sec5Body2}</P>
+              <P l={259} t={5684} w={220}>{data.sec5Body3}</P>
+              <ImgBox id={data.sec5Image} si="4" field="image1" l={258} t={5901} w={469} h={334} />
 
-          {/* ━━━━ SECTION 6 — portrait + strip + text */}
-          <SecNum n="06" l={1070} t={6277} />
-          <ImgBox id={data.sec6Image} si="5" field="image1" l={1132} t={6277} w={293} h={456} />
-          <H2 l={884} t={6326} w={220}>{data.sec6Headline}</H2>
-          <P l={884} t={6396} w={220}>{data.sec6Body1}</P>
-          <ImgBox id={data.sec6ImageB} si="5" field="image2" l={258} t={6555} w={469} h={178} />
+              {/* ━━━━ SECTION 6 — portrait + strip + text */}
+              <SecNum n="06" l={1070} t={6277} />
+              <ImgBox id={data.sec6Image} si="5" field="image1" l={1132} t={6277} w={293} h={456} />
+              <H2 l={884} t={6326} w={220}>{data.sec6Headline}</H2>
+              <P l={884} t={6396} w={220}>{data.sec6Body1}</P>
+              <ImgBox id={data.sec6ImageB} si="5" field="image2" l={258} t={6555} w={469} h={178} />
 
-          {/* ━━━━ SECTION 7 — portrait + wide + text */}
-          <SecNum n="07" l={689} t={6749} />
-          <P l={884} t={6579} w={220}>{data.sec7Body3}</P>
-          <H2 l={260} t={6789} w={467}>{data.sec7Headline}</H2>
-          <ImgBox id={data.sec7Image} si="6" field="image1" l={1132} t={6830} w={293} h={262} />
-          <P l={260} t={6830} w={220}>{data.sec7Body1}</P>
-          <P l={499} t={6830} w={220}>{data.sec7Body2}</P>
-          <ImgBox id={data.sec7ImageWide} si="6" field="image2" l={259} t={7584} w={688} h={589} />
+              {/* ━━━━ SECTION 7 — portrait + wide + text */}
+              <SecNum n="07" l={689} t={6749} />
+              <P l={884} t={6579} w={220}>{data.sec7Body3}</P>
+              <H2 l={260} t={6789} w={467}>{data.sec7Headline}</H2>
+              <ImgBox id={data.sec7Image} si="6" field="image1" l={1132} t={6830} w={293} h={262} />
+              <P l={260} t={6830} w={220}>{data.sec7Body1}</P>
+              <P l={499} t={6830} w={220}>{data.sec7Body2}</P>
+              <ImgBox id={data.sec7ImageWide} si="6" field="image2" l={259} t={7584} w={688} h={589} />
 
-          {/* ━━━━ SECTION 8 — closing text */}
-          <SecNum n="08" l={1387} t={7734} />
-          <H2 l={958} t={7777} w={421}>{data.sec8Headline}</H2>
-          <P l={958} t={7864} w={220}>{data.sec8Body1}</P>
-          <P l={1201} t={7864} w={220}>{data.sec8Body2}</P>
-          <P l={958} t={7998} w={220}>{data.sec8Body3}</P>
-          <P l={1201} t={8032} w={220}>{data.sec8Body4}</P>
+              {/* ━━━━ SECTION 8 — closing text */}
+              <SecNum n="08" l={1387} t={7734} />
+              <H2 l={958} t={7777} w={421}>{data.sec8Headline}</H2>
+              <P l={958} t={7864} w={220}>{data.sec8Body1}</P>
+              <P l={1201} t={7864} w={220}>{data.sec8Body2}</P>
+              <P l={958} t={7998} w={220}>{data.sec8Body3}</P>
+              <P l={1201} t={8032} w={220}>{data.sec8Body4}</P>
+            </>
+          )}
 
           {/* ━━ FOOTER */}
           <CanvasFooter
-            footerY={FOOTER_Y}
+            footerY={viewMode === 'photos' ? photosFooterY : FOOTER_Y}
             markOffset={136}
             canvasWidth={W}
             nextProjectTitle={data.nextProjectTitle}
@@ -321,7 +347,7 @@ export default function Template4Layout({
       </div>
 
       {/* ━━ SIDEBAR */}
-      {!isEditing && (
+      {!isEditing && viewMode === 'story' && (
         <CanvasSidebar
           visible={sidebarVisible}
           activeIdx={activeIdx}

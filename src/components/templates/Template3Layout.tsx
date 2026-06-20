@@ -6,6 +6,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react'
 
 import { type Section, type TemplateData } from '@/components/admin/template-editor/shared'
 import CanvasFooter from './CanvasFooter'
+import CanvasPhotosView, { photosViewHeight } from './CanvasPhotosView'
 import CanvasSidebar from './CanvasSidebar'
 export type Template3Data = TemplateData
 
@@ -60,7 +61,17 @@ export default function Template3Layout({
   const [scale, setScale] = useState(1)
   const [activeIdx, setActiveIdx] = useState(0)
   const [sidebarVisible, setSidebarVisible] = useState(false)
+  const [viewMode, setViewMode] = useState<'story' | 'photos'>('story')
   const wrapperRef = useRef<HTMLDivElement>(null)
+
+  const allImageIds = [
+    data.sec1Image, data.sec2Image, data.sec2ImageB, data.sec2ImageC,
+    data.sec3ImageSmall, data.sec3Image, data.sec4ImageTall, data.sec4Image,
+    data.sec5Image, data.sec6Image, data.sec6ImageB, data.sec7Image, data.sec7ImageWide,
+  ].filter((id): id is string => !!id)
+
+  const CONTENT_TOP = SECTION_STARTS[0]
+  const photosFooterY = CONTENT_TOP + photosViewHeight(allImageIds.length, W) + 60
 
   const SECTION_HEADINGS = [
     data.sec1Headline?.slice(0, 50) || 'Section 01',
@@ -208,14 +219,16 @@ export default function Template3Layout({
     )
   }
 
+  const effectiveH = viewMode === 'photos' ? photosFooterY + 580 : H
+
   return (
     <>
       <div
         ref={wrapperRef}
-        style={{ width: '100%', height: H * scale, position: 'relative', overflow: 'hidden' }}
+        style={{ width: '100%', height: effectiveH * scale, position: 'relative', overflow: 'hidden' }}
       >
         <div style={{
-          width: W, height: H, position: 'relative', background: '#fff',
+          width: W, height: effectiveH, position: 'relative', background: '#fff',
           transform: `scale(${scale})`, transformOrigin: 'top left',
           fontFamily: 'var(--font-sans, Montserrat)',
         }}>
@@ -254,103 +267,109 @@ export default function Template3Layout({
             position: 'absolute', left: 0, top: 921, width: W,
             display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 16, height: 75,
           }}>
-            <span style={{ fontFamily: 'var(--font-sans, Montserrat)', fontWeight: 800, fontSize: 14, textTransform: 'uppercase', color: '#ccc' }}>Photos</span>
+            <span onClick={() => setViewMode('photos')} style={{ fontFamily: 'var(--font-sans, Montserrat)', fontWeight: 800, fontSize: 14, textTransform: 'uppercase', color: viewMode === 'photos' ? '#1c1c1c' : '#ccc', cursor: 'pointer' }}>Photos</span>
             <div style={{ height: 31, width: 1, background: '#1c1c1c' }} />
-            <span style={{ fontFamily: 'var(--font-sans, Montserrat)', fontWeight: 800, fontSize: 14, textTransform: 'uppercase', color: '#1c1c1c' }}>Story</span>
+            <span onClick={() => setViewMode('story')} style={{ fontFamily: 'var(--font-sans, Montserrat)', fontWeight: 800, fontSize: 14, textTransform: 'uppercase', color: viewMode === 'story' ? '#1c1c1c' : '#ccc', cursor: 'pointer' }}>Story</span>
           </div>
 
-          {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-              SECTION 1 — image left, text right
-          ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-          <ImgBox id={data.sec1Image} si="0" field="image1" l={80} t={1009} w={760} h={540} />
-          <SecNum n="01" l={1400} t={1009} />
-          <H2 l={880} t={1050} w={550}>{data.sec1Headline}</H2>
-          <Quote l={880} t={1180} w={550}>{data.sec1Quote}</Quote>
-          <P l={880} t={1290} w={260}>{data.sec1Body1}</P>
-          <P l={1170} t={1290} w={260}>{data.sec1Body2}</P>
-          <P l={880} t={1450} w={550}>{data.sec1Body3}</P>
+          {viewMode === 'photos' ? (
+            <CanvasPhotosView imageIds={allImageIds} canvasWidth={W} startY={CONTENT_TOP} />
+          ) : (
+            <>
+              {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+                  SECTION 1 — image left, text right
+              ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+              <ImgBox id={data.sec1Image} si="0" field="image1" l={80} t={1009} w={760} h={540} />
+              <SecNum n="01" l={1400} t={1009} />
+              <H2 l={880} t={1050} w={550}>{data.sec1Headline}</H2>
+              <Quote l={880} t={1180} w={550}>{data.sec1Quote}</Quote>
+              <P l={880} t={1290} w={260}>{data.sec1Body1}</P>
+              <P l={1170} t={1290} w={260}>{data.sec1Body2}</P>
+              <P l={880} t={1450} w={550}>{data.sec1Body3}</P>
 
-          {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-              SECTION 2 — multiple portraits (image-only)
-          ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-          <SecNum n="02" l={1150} t={1632} />
-          <ImgBox id={data.sec2Image} si="1" field="image1" l={254} t={1568} w={695} h={492} />
-          <ImgBox id={data.sec2ImageC} si="1" field="image3" l={1240} t={1962} w={193} h={354} />
-          <ImgBox id={data.sec2ImageB} si="1" field="image2" l={254} t={2107} w={487} h={575} />
-          <ImgBox id={data.sec3ImageSmall} si="2" field="image1" l={995} t={2328} w={193} h={354} />
+              {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+                  SECTION 2 — multiple portraits (image-only)
+              ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+              <SecNum n="02" l={1150} t={1632} />
+              <ImgBox id={data.sec2Image} si="1" field="image1" l={254} t={1568} w={695} h={492} />
+              <ImgBox id={data.sec2ImageC} si="1" field="image3" l={1240} t={1962} w={193} h={354} />
+              <ImgBox id={data.sec2ImageB} si="1" field="image2" l={254} t={2107} w={487} h={575} />
+              <ImgBox id={data.sec3ImageSmall} si="2" field="image1" l={995} t={2328} w={193} h={354} />
 
-          {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-              SECTION 3 — landscape image, text left
-          ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-          <ImgBox id={data.sec3Image} si="2" field="image2" l={748} t={2773} w={684} h={520} />
-          <SecNum n="03" l={686} t={2885} />
-          <H2 l={255} t={2940} w={448}>{data.sec3Headline}</H2>
-          <P l={255} t={3060} w={220}>{data.sec3Body1}</P>
-          <P l={255} t={3111} w={432}>{data.sec3Body2}</P>
-          <Quote l={255} t={3150} w={432}>{data.sec3Quote}</Quote>
-          <P l={476} t={3264} w={220}>{data.sec3Body3}</P>
+              {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+                  SECTION 3 — landscape image, text left
+              ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+              <ImgBox id={data.sec3Image} si="2" field="image2" l={748} t={2773} w={684} h={520} />
+              <SecNum n="03" l={686} t={2885} />
+              <H2 l={255} t={2940} w={448}>{data.sec3Headline}</H2>
+              <P l={255} t={3060} w={220}>{data.sec3Body1}</P>
+              <P l={255} t={3111} w={432}>{data.sec3Body2}</P>
+              <Quote l={255} t={3150} w={432}>{data.sec3Quote}</Quote>
+              <P l={476} t={3264} w={220}>{data.sec3Body3}</P>
 
-          {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-              SECTION 4 — portraits, text
-          ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-          <ImgBox id={data.sec4ImageTall} si="3" field="image1" l={248} t={3387} w={499} h={616} />
-          <SecNum n="04" l={1187} t={3438} />
-          <H2 l={766} t={3438} w={308}>{data.sec4Headline}</H2>
-          <P l={766} t={3513} w={220}>{data.sec4Body1}</P>
-          <P l={1017} t={3513} w={220}>{data.sec4Body2}</P>
-          <ImgBox id={data.sec4Image} si="3" field="image2" l={748} t={4042} w={685} h={589} />
-          <P l={766} t={3723} w={220}>{data.sec4Body3}</P>
-          <Quote l={766} t={3800} w={458}>{data.sec4Quote}</Quote>
+              {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+                  SECTION 4 — portraits, text
+              ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+              <ImgBox id={data.sec4ImageTall} si="3" field="image1" l={248} t={3387} w={499} h={616} />
+              <SecNum n="04" l={1187} t={3438} />
+              <H2 l={766} t={3438} w={308}>{data.sec4Headline}</H2>
+              <P l={766} t={3513} w={220}>{data.sec4Body1}</P>
+              <P l={1017} t={3513} w={220}>{data.sec4Body2}</P>
+              <ImgBox id={data.sec4Image} si="3" field="image2" l={748} t={4042} w={685} h={589} />
+              <P l={766} t={3723} w={220}>{data.sec4Body3}</P>
+              <Quote l={766} t={3800} w={458}>{data.sec4Quote}</Quote>
 
-          {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-              SECTION 5 — text + image
-          ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-          <SecNum n="05" l={682} t={4264} />
-          <H2 l={260} t={4299} w={347}>{data.sec5Headline}</H2>
-          <P l={963} t={4300} w={220}>{data.sec5Body1}</P>
-          <H2 l={963} t={4440} w={215}>{data.sec5Headline2}</H2>
-          <P l={963} t={4527} w={220}>{data.sec5Body2}</P>
-          <ImgBox id={data.sec5Image} si="4" field="image1" l={260} t={4687} w={469} h={334} />
-          <P l={260} t={5069} w={220}>{data.sec5Body3}</P>
-          <P l={260} t={5169} w={220}>{data.sec5Body4}</P>
+              {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+                  SECTION 5 — text + image
+              ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+              <SecNum n="05" l={682} t={4264} />
+              <H2 l={260} t={4299} w={347}>{data.sec5Headline}</H2>
+              <P l={963} t={4300} w={220}>{data.sec5Body1}</P>
+              <H2 l={963} t={4440} w={215}>{data.sec5Headline2}</H2>
+              <P l={963} t={4527} w={220}>{data.sec5Body2}</P>
+              <ImgBox id={data.sec5Image} si="4" field="image1" l={260} t={4687} w={469} h={334} />
+              <P l={260} t={5069} w={220}>{data.sec5Body3}</P>
+              <P l={260} t={5169} w={220}>{data.sec5Body4}</P>
 
-          {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-              SECTION 6 — portraits + text
-          ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-          <SecNum n="06" l={1075} t={5063} />
-          <ImgBox id={data.sec6Image} si="5" field="image1" l={1139} t={5063} w={293} h={456} />
-          <H2 l={260} t={5063} w={220}>{data.sec6Headline}</H2>
-          <P l={889} t={5063} w={220}>{data.sec6Body1}</P>
-          <ImgBox id={data.sec6ImageB} si="5" field="image2" l={260} t={5341} w={469} h={178} />
-          <P l={260} t={5169} w={600}>{data.sec6Body2}</P>
+              {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+                  SECTION 6 — portraits + text
+              ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+              <SecNum n="06" l={1075} t={5063} />
+              <ImgBox id={data.sec6Image} si="5" field="image1" l={1139} t={5063} w={293} h={456} />
+              <H2 l={260} t={5063} w={220}>{data.sec6Headline}</H2>
+              <P l={889} t={5063} w={220}>{data.sec6Body1}</P>
+              <ImgBox id={data.sec6ImageB} si="5" field="image2" l={260} t={5341} w={469} h={178} />
+              <P l={260} t={5169} w={600}>{data.sec6Body2}</P>
 
-          {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-              SECTION 7 — portraits + text
-          ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-          <SecNum n="07" l={692} t={5535} />
-          <ImgBox id={data.sec7Image} si="6" field="image1" l={1139} t={5616} w={293} h={262} />
-          <H2 l={261} t={5574} w={467}>{data.sec7Headline}</H2>
-          <P l={260} t={5640} w={220}>{data.sec7Body1}</P>
-          <P l={519} t={5640} w={220}>{data.sec7Body2}</P>
-          <P l={260} t={5810} w={220}>{data.sec7Body3}</P>
-          <P l={815} t={5810} w={220}>{data.sec7Body4}</P>
-          <ImgBox id={data.sec7ImageWide} si="6" field="image2" l={261} t={5965} w={688} h={589} />
-          <P l={260} t={6594} w={220}>{data.sec7Body5}</P>
-          <P l={519} t={6594} w={220}>{data.sec7Body6}</P>
+              {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+                  SECTION 7 — portraits + text
+              ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+              <SecNum n="07" l={692} t={5535} />
+              <ImgBox id={data.sec7Image} si="6" field="image1" l={1139} t={5616} w={293} h={262} />
+              <H2 l={261} t={5574} w={467}>{data.sec7Headline}</H2>
+              <P l={260} t={5640} w={220}>{data.sec7Body1}</P>
+              <P l={519} t={5640} w={220}>{data.sec7Body2}</P>
+              <P l={260} t={5810} w={220}>{data.sec7Body3}</P>
+              <P l={815} t={5810} w={220}>{data.sec7Body4}</P>
+              <ImgBox id={data.sec7ImageWide} si="6" field="image2" l={261} t={5965} w={688} h={589} />
+              <P l={260} t={6594} w={220}>{data.sec7Body5}</P>
+              <P l={519} t={6594} w={220}>{data.sec7Body6}</P>
 
-          {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-              SECTION 8 — text + conclusion
-          ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-          <SecNum n="08" l={1394} t={6115} />
-          <H2 l={963} t={6158} w={421}>{data.sec8Headline}</H2>
-          <P l={963} t={6243} w={220}>{data.sec8Body1}</P>
-          <P l={1210} t={6243} w={220}>{data.sec8Body2}</P>
-          <P l={963} t={6445} w={220}>{data.sec8Body3}</P>
-          <P l={1210} t={6445} w={220}>{data.sec8Body4}</P>
+              {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+                  SECTION 8 — text + conclusion
+              ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+              <SecNum n="08" l={1394} t={6115} />
+              <H2 l={963} t={6158} w={421}>{data.sec8Headline}</H2>
+              <P l={963} t={6243} w={220}>{data.sec8Body1}</P>
+              <P l={1210} t={6243} w={220}>{data.sec8Body2}</P>
+              <P l={963} t={6445} w={220}>{data.sec8Body3}</P>
+              <P l={1210} t={6445} w={220}>{data.sec8Body4}</P>
+            </>
+          )}
 
           {/* ━━ FOOTER ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
           <CanvasFooter
-            footerY={FOOTER_Y + F_NAV}
+            footerY={viewMode === 'photos' ? photosFooterY + F_NAV : FOOTER_Y + F_NAV}
             markOffset={F_MARK}
             canvasWidth={W}
             nextProjectTitle={data.nextProjectTitle}
@@ -361,7 +380,7 @@ export default function Template3Layout({
       </div>
 
       {/* ━━ SIDEBAR ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-      {!isEditing && (
+      {!isEditing && viewMode === 'story' && (
         <CanvasSidebar
           visible={sidebarVisible}
           activeIdx={activeIdx}
