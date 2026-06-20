@@ -19,8 +19,8 @@ export type Template2Data = {
   sec3Image?: string     // 1062 × 575 — section 3 wide
   sec4Image?: string     // 575 × 620  — section 4 left
   sec5Image?: string     // 748 × 554  — section 5 large
-  sec6Image?: string     // 705 × 589  — section 6 left
-  sec7Image?: string     // 587 × 392  — section 7 right
+  nextProjectTitle?: string
+  nextProjectSlug?: string
   // Section 1 text
   sec1Headline?: string
   sec1Quote?: string
@@ -82,11 +82,11 @@ export function hasContent(d: Partial<Template2Data>): boolean {
 // ─── Canvas constants (W=1512, H=7446) ───────────────────────────────────────
 
 const W = 1512
-const H = 7946
+const H = 7446
 
 const SECTION_STARTS = [1009, 1559, 2794, 3696, 4813, 5561, 6484]
 
-const FOOTER_Y = 7542
+const FOOTER_Y = 7042
 const F_NAV = 0
 const F_MARK = 200
 const F_SOC = 442
@@ -413,32 +413,34 @@ export default function Template2Layout({
             position: 'absolute', left: 663, top: FOOTER_Y + F_NAV, width: 769,
             display: 'flex', alignItems: 'center', justifyContent: 'space-between',
           }}>
-            <span style={{ fontFamily: 'var(--font-sans, Montserrat)', fontWeight: 700, fontSize: 10, letterSpacing: '0.05em', color: '#ccc', textTransform: 'uppercase' }}>
+            <span style={{ fontFamily: 'var(--font-sans, Montserrat)', fontWeight: 700, fontSize: 16, color: '#ccc', textTransform: 'uppercase' }}>
               Take me elsewhere
             </span>
             <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-              <span style={{ fontFamily: 'var(--font-sans, Montserrat)', fontWeight: 700, fontSize: 10, letterSpacing: '0.05em', color: '#ccc', textTransform: 'uppercase' }}>
-                {data.nextProjectTitle || 'NEXT PROJECT'}
+              <span style={{ fontFamily: 'var(--font-sans, Montserrat)', fontWeight: 700, fontSize: 16, color: '#ccc', textTransform: 'uppercase' }}>
+                {data.nextProjectTitle || 'Next project'}
               </span>
-              <span style={{ color: '#ccc', fontSize: 10, fontWeight: 700 }}>&gt;</span>
+              <span style={{ color: '#1c1c1c', fontSize: 10 }}>▶</span>
             </div>
           </div>
 
           <img
             src="/t1-wordmark.svg"
             alt=".elsewhere"
-            style={{ position: 'absolute', left: 256, top: FOOTER_Y + F_MARK, width: 1000, height: 160, display: 'block' }}
+            style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', top: FOOTER_Y + F_MARK + 90, width: 300, height: 'auto', display: 'block' }}
           />
 
           <div style={{
-            position: 'absolute', left: 80, top: FOOTER_Y + F_SOC, width: 1352,
+            position: 'absolute', left: 88, top: FOOTER_Y + F_SOC, width: 1344,
             display: 'flex', alignItems: 'center', justifyContent: 'space-between',
           }}>
             <div style={{ display: 'flex', gap: 40, alignItems: 'center' }}>
               <img src="/t1-instagram.svg" alt="Instagram" width={20} height={20} style={{ display: 'block' }} />
               <img src="/t1-twitter.svg" alt="X / Twitter" width={20} height={20} style={{ display: 'block' }} />
             </div>
-            <span style={{ fontFamily: 'var(--font-sans, Montserrat)', fontWeight: 400, fontSize: 12, color: '#000' }}>@Copywrite</span>
+            <span style={{ fontFamily: 'var(--font-sans, Montserrat)', fontWeight: 400, fontSize: 16, color: '#000' }}>
+              @Copyright
+            </span>
           </div>
 
         </div>
