@@ -54,6 +54,7 @@ export type Template2Data = {
   sec5Quote?: string
   sec5Body2?: string
   sec5Body3?: string
+  sec5Image2?: string
   // Section 6 text
   sec6Headline?: string
   sec6Body1?: string
@@ -367,10 +368,10 @@ export default function Template2Layout({
               SECTION 5 — large image right, text left
           ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
           <SecNum n="05" l={678.6} t={4263.62} />
-          <H2 l={248} t={4200} w={400}>{data.sec5Headline}</H2>
-          <P l={248} t={4320} w={220}>{data.sec5Body1}</P>
-          <P l={500} t={4320} w={220}>{data.sec5Body2}</P>
-          <P l={248} t={4470} w={220}>{data.sec5Body3}</P>
+          <H2 l={258.58} t={4299.32} w={347.31}>{data.sec5Headline}</H2>
+          <P l={258.58} t={4375} w={220}>{data.sec5Body1}</P>
+          <P l={497.6} t={4375} w={220}>{data.sec5Body2}</P>
+          <P l={258.58} t={4469.83} w={220}>{data.sec5Body3}</P>
           <ImgBox id={data.sec5Image} sk="sec5Image" l={744} t={4042.16} w={685} h={589} />
 
           {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
