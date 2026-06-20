@@ -324,17 +324,17 @@ export default function Template2Layout({
           {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
               SECTION 2
           ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-          <ImgBox id={data.sec2Image1} sk="sec2Image1" l={80} t={1560} w={830} h={600} />
+          <ImgBox id={data.sec2Image1} sk="sec2Image1" l={253} t={1569} w={695} h={492} />
           <SecNum n="02" l={1350} t={1560} />
-          <H2 l={950} t={1650} w={400}>{data.sec2Headline}</H2>
-          <P l={950} t={1750} w={400}>{data.sec2Body1}</P>
+          <H2 l={961} t={1697} w={215}>{data.sec2Headline}</H2>
+          <P l={961} t={1766} w={220}>{data.sec2Body1}</P>
 
-          <ImgBox id={data.sec2Image3} sk="sec2Image3" l={1250} t={2050} w={200} h={300} />
-          <P l={950} t={2050} w={260}>{data.sec2Body2}</P>
+          <ImgBox id={data.sec2Image3} sk="sec2Image3" l={1234} t={1962} w={193} h={354} />
+          <P l={963} t={1962} w={220}>{data.sec2Body2}</P>
 
-          <ImgBox id={data.sec2Image2} sk="sec2Image2" l={80} t={2220} w={550} h={550} />
-          <ImgBox id={data.sec2Image4} sk="sec2Image4" l={950} t={2950} w={220} h={330} />
-          <P l={680} t={2950} w={240}>{data.sec2Body3}</P>
+          <ImgBox id={data.sec2Image2} sk="sec2Image2" l={253} t={2108} w={487} h={575} />
+          <ImgBox id={data.sec2Image4} sk="sec2Image4" l={991} t={2328} w={193} h={354} />
+          <P l={754} t={2480} w={220}>{data.sec2Body3}</P>
 
           {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
               SECTION 3 — wide image, text right
