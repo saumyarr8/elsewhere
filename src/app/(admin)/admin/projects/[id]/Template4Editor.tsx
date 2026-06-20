@@ -56,6 +56,7 @@ const SECTIONS: SectionDef[] = [
       { key: 'sec3Body2', label: 'Body 2', multiline: true },
       { key: 'sec3Quote', label: 'Quote', multiline: true },
       { key: 'sec3Body3', label: 'Body 3', multiline: true },
+      { key: 'sec3Body4', label: 'Body 4', multiline: true },
     ],
   },
   {

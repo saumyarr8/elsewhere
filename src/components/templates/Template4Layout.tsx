@@ -36,6 +36,7 @@ export type Template4Data = {
   sec3Body2?: string
   sec3Quote?: string
   sec3Body3?: string
+  sec3Body4?: string
   sec4Headline?: string
   sec4Body1?: string
   sec4Body2?: string
@@ -267,24 +268,24 @@ export default function Template4Layout({
           <P l={964.33} t={1364.48} w={220}>{data.sec1Body1}</P>
           <P l={1212.49} t={1364.48} w={220}>{data.sec1Body2}</P>
           {/* ━━━━ SECTION 2 — images + text */}
-          <ImgBox id={data.sec2Image} sk="sec2Image" l={80} t={1676} w={600} h={800} />
+          <ImgBox id={data.sec2Image} sk="sec2Image" l={252} t={1676} w={463} h={454} />
           <SecNum n="02" l={1320} t={1676} />
-          <H2 l={720} t={1740} w={640}>{data.sec2Headline}</H2>
-          <P l={720} t={1880} w={300}>{data.sec2Body1}</P>
-          <P l={1060} t={1880} w={300}>{data.sec2Body2}</P>
-          <ImgBox id={data.sec2ImageC} sk="sec2ImageC" l={1060} t={2230} w={300} h={200} />
-          <ImgBox id={data.sec2ImageB} sk="sec2ImageB" l={720} t={2480} w={550} h={400} />
-          <P l={1300} t={2480} w={180}>{data.sec2Body3}</P>
-          <ImgBox id={data.sec3ImageSmall} sk="sec3ImageSmall" l={990} t={2733} w={193} h={354} />
+          <H2 l={730} t={1740} w={466}>{data.sec2Headline}</H2>
+          <P l={730} t={1840} w={300}>{data.sec2Body1}</P>
+          <P l={1050} t={1840} w={300}>{data.sec2Body2}</P>
+          <ImgBox id={data.sec2ImageC} sk="sec2ImageC" l={1213} t={2025} w={223} h={115} />
+          <ImgBox id={data.sec2ImageB} sk="sec2ImageB" l={733} t={2160} w={462} h={317} />
+          <P l={1213} t={2170} w={223}>{data.sec2Body3}</P>
 
           {/* ━━━━ SECTION 3 — landscape + text */}
-          <ImgBox id={data.sec3Image} sk="sec3Image" l={259} t={3178} w={684} h={520} />
-          <SecNum n="03" l={683} t={3694} />
-          <H2 l={253} t={3749} w={448}>{data.sec3Headline}</H2>
-          <P l={253} t={3827} w={220}>{data.sec3Body1}</P>
-          <P l={253} t={3921} w={392}>{data.sec3Body2}</P>
+          <ImgBox id={data.sec3Image} sk="sec3Image" l={254} t={2556} w={331} h={671} />
+          <SecNum n="03" l={1051} t={2567.13} />
+          <H2 l={621} t={2617.37} w={452.64}>{data.sec3Headline}</H2>
+          <P l={621} t={2758.5} w={224}>{data.sec3Body1}</P>
+          <P l={621} t={2989.73} w={224}>{data.sec3Body2}</P>
           <Quote l={253} t={3960} w={432}>{data.sec3Quote}</Quote>
-          <P l={463} t={4072} w={220}>{data.sec3Body3}</P>
+          <P l={862} t={2757.5} w={224}>{data.sec3Body3}</P>
+          <P l={862} t={2900} w={224}>{data.sec3Body4}</P>
 
           {/* ━━━━ SECTION 4 — two portraits + text */}
           <ImgBox id={data.sec4ImageTall} sk="sec4ImageTall" l={248} t={4197} w={499} h={616} />
