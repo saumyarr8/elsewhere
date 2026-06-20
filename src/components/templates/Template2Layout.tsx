@@ -36,7 +36,7 @@ function sectionsToFlat(sections: Section[]): Record<string, string | undefined>
 // ─── Canvas constants (W=1512, H=7446) ───────────────────────────────────────
 
 const W = 1512
-const H = 7446
+const H = 7600
 
 const SECTION_STARTS = [1009, 1559, 2794, 3696, 4263, 5062, 5340, 5964]
 

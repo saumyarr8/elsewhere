@@ -31,7 +31,7 @@ const SECTION_CONTENT_BOTTOMS = [1560, 2300, 3250, 3860, 4520, 5160, 6030, 6410,
 const F_NAV  = 0    // "Take me elsewhere" row
 const F_MARK = 198  // wordmark SVG
 const F_SOC  = 440  // social bar
-const FOOTER_HEIGHT = 480
+const FOOTER_HEIGHT = 560
 
 // ─── Props ────────────────────────────────────────────────────────────────────
 
