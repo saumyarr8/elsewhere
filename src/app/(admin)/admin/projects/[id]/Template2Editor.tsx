@@ -30,12 +30,18 @@ const SECTIONS: SectionDef[] = [
       { key: 'sec1Body1',    label: 'Body — left column',  rows: 4 },
       { key: 'sec1Body2',    label: 'Body — right column', rows: 4 },
       { key: 'sec1Body3',    label: 'Body — footer line',  rows: 2 },
+      { key: 'sec1Quote2',   label: 'Quote 2', rows: 3, isQuote: true },
     ],
   },
   {
     label: 'Section 02',
     desc: 'Image right, text left',
-    images: [{ key: 'sec2Image', label: 'Image — right (588×492)', dims: '588 × 492' }],
+    images: [
+      { key: 'sec2Image1', label: 'Image 1', dims: '' },
+      { key: 'sec2Image2', label: 'Image 2', dims: '' },
+      { key: 'sec2Image3', label: 'Image 3', dims: '' },
+      { key: 'sec2Image4', label: 'Image 4', dims: '' }
+    ],
     fields: [
       { key: 'sec2Headline', label: 'Headline', rows: 2 },
       { key: 'sec2Body1',    label: 'Body — left column',  rows: 4 },
@@ -54,8 +60,7 @@ const SECTIONS: SectionDef[] = [
       { key: 'sec3Body1',    label: 'Body 1', rows: 4 },
       { key: 'sec3Body2',    label: 'Body 2', rows: 4 },
       { key: 'sec3Body3',    label: 'Body 3', rows: 4 },
-      { key: 'sec3Body4',    label: 'Body 4', rows: 4 },
-      { key: 'sec3Body5',    label: 'Body 5', rows: 4 },
+      { key: 'sec3Quote',    label: 'Quote', rows: 4, isQuote: true },
     ],
   },
   {
@@ -65,15 +70,19 @@ const SECTIONS: SectionDef[] = [
     fields: [
       { key: 'sec4Headline', label: 'Headline', rows: 2 },
       { key: 'sec4Quote',    label: 'Quote 1', rows: 3, isQuote: true },
-      { key: 'sec4Body1',    label: 'Body — left column',  rows: 4 },
-      { key: 'sec4Body2',    label: 'Body — right column', rows: 4 },
-      { key: 'sec4Quote2',   label: 'Quote 2', rows: 3, isQuote: true },
+      { key: 'sec4Body1',    label: 'Body 1',  rows: 4 },
+      { key: 'sec4Body2',    label: 'Body 2', rows: 4 },
+      { key: 'sec4Body3',    label: 'Body 3', rows: 4 },
+      { key: 'sec4Body4',    label: 'Body 4', rows: 4 },
     ],
   },
   {
     label: 'Section 05',
     desc: 'Large image right, text left',
-    images: [{ key: 'sec5Image', label: 'Image — large right (748×554)', dims: '748 × 554' }],
+    images: [
+      { key: 'sec5Image', label: 'Image — large right (748×554)', dims: '748 × 554' },
+      { key: 'sec5Image2', label: 'Image 2', dims: '' }
+    ],
     fields: [
       { key: 'sec5Headline', label: 'Headline', rows: 2 },
       { key: 'sec5Body1',    label: 'Body — intro', rows: 2 },
@@ -85,27 +94,36 @@ const SECTIONS: SectionDef[] = [
   {
     label: 'Section 06',
     desc: 'Image left, text right',
-    images: [{ key: 'sec6Image', label: 'Image — left (705×589)', dims: '705 × 589' }],
+    images: [
+      { key: 'sec6Image', label: 'Image 1', dims: '' },
+      { key: 'sec6Image2', label: 'Image 2', dims: '' }
+    ],
     fields: [
       { key: 'sec6Headline', label: 'Headline', rows: 2 },
-      { key: 'sec6Body1',    label: 'Body', rows: 2 },
-      { key: 'sec6Quote',    label: 'Quote', rows: 3, isQuote: true },
+      { key: 'sec6Body1',    label: 'Body 1', rows: 2 },
+      { key: 'sec6Body2',    label: 'Body 2', rows: 2 },
     ],
   },
   {
     label: 'Section 07',
-    desc: 'Three columns + conclusion',
-    images: [{ key: 'sec7Image', label: 'Image — right (587×392)', dims: '587 × 392' }],
+    desc: 'Columns + conclusion',
+    images: [{ key: 'sec7Image', label: 'Image', dims: '' }],
     fields: [
-      { key: 'sec7Col1',    label: 'Column 1', rows: 5 },
-      { key: 'sec7Col2',    label: 'Column 2', rows: 5 },
-      { key: 'sec7Col3',    label: 'Column 3', rows: 5 },
       { key: 'sec7Headline', label: 'Headline', rows: 2 },
-      { key: 'sec7Body1',   label: 'Body 1 — left column',  rows: 4 },
-      { key: 'sec7Body2',   label: 'Body 2 — right column', rows: 4 },
-      { key: 'sec7Body3',   label: 'Body 3 — left column',  rows: 4 },
-      { key: 'sec7Body4',   label: 'Body 4 — right column', rows: 4 },
-      { key: 'sec7Body5',   label: 'Body 5 — wide',         rows: 4 },
+      { key: 'sec7Body1',   label: 'Body 1',  rows: 4 },
+      { key: 'sec7Body2',   label: 'Body 2', rows: 4 },
+    ],
+  },
+  {
+    label: 'Section 08',
+    desc: 'Image left, text right',
+    images: [{ key: 'sec8Image', label: 'Image', dims: '' }],
+    fields: [
+      { key: 'sec8Headline', label: 'Headline', rows: 2 },
+      { key: 'sec8Body1',   label: 'Body 1',  rows: 4 },
+      { key: 'sec8Body2',   label: 'Body 2', rows: 4 },
+      { key: 'sec8Body3',   label: 'Body 3',  rows: 4 },
+      { key: 'sec8Body4',   label: 'Body 4', rows: 4 },
     ],
   },
 ]

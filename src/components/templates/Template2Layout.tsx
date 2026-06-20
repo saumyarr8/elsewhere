@@ -66,6 +66,13 @@ export type Template2Data = {
   sec7Body1?: string
   sec7Body2?: string
   sec7Image?: string
+  // Section 8 text
+  sec8Headline?: string
+  sec8Body1?: string
+  sec8Body2?: string
+  sec8Body3?: string
+  sec8Body4?: string
+  sec8Image?: string
 }
 
 export function hasContent(d: Partial<Template2Data>): boolean {
@@ -389,6 +396,17 @@ export default function Template2Layout({
           <H2 l={80} t={5720} w={400} size={32}>{data.sec7Headline}</H2>
           <P l={80} t={5900} w={220}>{data.sec7Body1}</P>
           <P l={329} t={5900} w={220}>{data.sec7Body2}</P>
+
+          {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+              SECTION 8
+          ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+          <ImgBox id={data.sec8Image} sk="sec8Image" l={80} t={6400} w={700} h={500} />
+          <SecNum n="08" l={1350} t={6400} />
+          <H2 l={820} t={6450} w={400} size={32}>{data.sec8Headline}</H2>
+          <P l={820} t={6550} w={220}>{data.sec8Body1}</P>
+          <P l={820} t={6750} w={220}>{data.sec8Body2}</P>
+          <P l={1070} t={6550} w={220}>{data.sec8Body3}</P>
+          <P l={1070} t={6750} w={220}>{data.sec8Body4}</P>
 
           {/* ━━ FOOTER ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
           {data.nextProjectTitle && (
