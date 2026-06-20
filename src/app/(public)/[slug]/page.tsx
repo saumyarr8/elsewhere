@@ -137,7 +137,7 @@ export default async function ProjectPage({ params }: Props) {
     <article>
       <ProjectHero project={project} />
       <div className="max-w-screen-xl mx-auto">
-        {blocks.map((block) => (
+        {blocks.map((block: any) => (
           <BlockRenderer key={block.id} block={block} />
         ))}
       </div>
