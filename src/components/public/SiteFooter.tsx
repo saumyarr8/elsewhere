@@ -1,44 +1,45 @@
 import Link from 'next/link'
 
-function InstagramIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="size-5" aria-hidden="true">
-      <rect x="2" y="2" width="20" height="20" rx="5" />
-      <circle cx="12" cy="12" r="4" />
-      <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" />
-    </svg>
-  )
+type Props = {
+  nextProject?: { slug: string; title: string } | null
 }
 
-function TwitterIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" className="size-5" aria-hidden="true">
-      <path d="M18.244 2H21.5l-7.5 8.57L23 22h-6.844l-5.36-6.61L4.6 22H1.34l8.04-9.19L1 2h7.07l4.84 6.04L18.244 2zm-1.2 18h1.9L7.04 4H5.02l11.024 16z" />
-    </svg>
-  )
-}
-
-export default function SiteFooter() {
+export default function SiteFooter({ nextProject }: Props) {
   return (
     <footer className="pt-24 pb-10">
-      <Link
-        href="/"
-        className="block text-center leading-[0.85] tracking-tight text-[var(--color-ink)] hover:opacity-60 transition-opacity"
-        style={{ fontFamily: 'var(--font-heading)', fontSize: '3rem' }}
-      >
-        .elsewhere
-      </Link>
+      {nextProject && (
+        <div className="flex items-center justify-between px-6 md:px-20 mb-16">
+          <span style={{ fontFamily: 'var(--font-sans, Montserrat)', fontWeight: 700, fontSize: 16, color: '#ccc', textTransform: 'uppercase' }}>
+            Take me elsewhere
+          </span>
+          <Link
+            href={`/${nextProject.slug}`}
+            className="flex items-center gap-1.5 hover:opacity-60 transition-opacity"
+          >
+            <span style={{ fontFamily: 'var(--font-sans, Montserrat)', fontWeight: 700, fontSize: 16, color: '#ccc', textTransform: 'uppercase' }}>
+              {nextProject.title}
+            </span>
+            <span style={{ color: '#1c1c1c', fontSize: 10 }}>▶</span>
+          </Link>
+        </div>
+      )}
 
-      <div className="flex items-center justify-between px-6 md:px-20 mt-8 pb-2">
+      <img
+        src="/t1-wordmark.svg"
+        alt=".elsewhere"
+        className="w-full block"
+      />
+
+      <div className="flex items-center justify-between px-6 md:px-20 mt-16">
         <div className="flex items-center gap-10 text-[var(--color-ink)]">
           <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="hover:opacity-60 transition-opacity">
-            <InstagramIcon />
+            <img src="/t1-instagram.svg" alt="Instagram" width={20} height={20} className="block" />
           </a>
           <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter / X" className="hover:opacity-60 transition-opacity">
-            <TwitterIcon />
+            <img src="/t1-twitter.svg" alt="X / Twitter" width={20} height={20} className="block" />
           </a>
         </div>
-        <p className="text-base text-[var(--color-ink)]">@Copyright</p>
+        <p className="text-base text-[var(--color-ink)]" style={{ fontFamily: 'var(--font-sans, Montserrat)' }}>@Copywrite</p>
       </div>
     </footer>
   )

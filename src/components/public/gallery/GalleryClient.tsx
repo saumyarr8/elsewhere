@@ -17,10 +17,12 @@ export default function GalleryClient({
   items,
   categories,
   notes,
+  nextProject,
 }: {
   items: GalleryItemData[]
   categories: string[]
   notes: Note[]
+  nextProject?: { slug: string; title: string } | null
 }) {
   const [activeCategory, setActiveCategory] = useState<string | null>(null)
   const [activeType, setActiveType] = useState<MediaFilter>('all')
@@ -88,7 +90,7 @@ export default function GalleryClient({
         <GalleryGrid items={filtered} notes={notes} />
       </div>
 
-      <SiteFooter />
+      <SiteFooter nextProject={nextProject} />
     </div>
   )
 }

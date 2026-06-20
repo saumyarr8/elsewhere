@@ -451,22 +451,24 @@ export default function Template1Layout({ data, isEditing, onImageSelect }: Prop
           <span style={{ fontFamily: 'var(--font-sans, Montserrat)', fontWeight: 700, fontSize: 16, color: '#ccc', textTransform: 'uppercase' }}>
             Take me elsewhere
           </span>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-            <span style={{ fontFamily: 'var(--font-sans, Montserrat)', fontWeight: 700, fontSize: 16, color: '#ccc', textTransform: 'uppercase' }}>
-              {d?.nextProjectTitle || 'Next project'}
-            </span>
-            <span style={{ color: '#1c1c1c', fontSize: 10 }}>▶</span>
-          </div>
+          {d?.nextProjectSlug && (
+            <a href={`/${d.nextProjectSlug}`} style={{ display: 'flex', alignItems: 'center', gap: 4, textDecoration: 'none' }}>
+              <span style={{ fontFamily: 'var(--font-sans, Montserrat)', fontWeight: 700, fontSize: 16, color: '#ccc', textTransform: 'uppercase' }}>
+                {d?.nextProjectTitle || 'Next project'}
+              </span>
+              <span style={{ color: '#1c1c1c', fontSize: 10 }}>▶</span>
+            </a>
+          )}
         </div>
 
         <img
           src="/t1-wordmark.svg"
           alt=".elsewhere"
-          style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', top: footerY + F_MARK + 90, width: 300, height: 'auto', display: 'block' }}
+          style={{ position: 'absolute', left: 0, top: footerY + F_MARK, width: W, height: 242, display: 'block' }}
         />
 
         <div style={{
-          position: 'absolute', left: 88, top: footerY + F_SOC, width: 1344,
+          position: 'absolute', left: 88, top: footerY + F_MARK + 290, width: 1344,
           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         }}>
           <div style={{ display: 'flex', gap: 40, alignItems: 'center' }}>
@@ -474,7 +476,7 @@ export default function Template1Layout({ data, isEditing, onImageSelect }: Prop
             <img src="/t1-twitter.svg" alt="X / Twitter" width={20} height={20} style={{ display: 'block' }} />
           </div>
           <span style={{ fontFamily: 'var(--font-sans, Montserrat)', fontWeight: 400, fontSize: 16, color: '#000' }}>
-            @Copyright
+            @Copywrite
           </span>
         </div>
 

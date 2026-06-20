@@ -339,22 +339,22 @@ export default function Template3Layout({
           <P l={1210} t={6445} w={220}>{data.sec8Body4}</P>
 
           {/* ━━ FOOTER ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-          {data.nextProjectTitle && (
-            <div style={{
-              position: 'absolute', left: 663, top: FOOTER_Y + F_NAV, width: 769,
-              display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-            }}>
-              <span style={{ fontFamily: 'var(--font-sans, Montserrat)', fontWeight: 700, fontSize: 16, color: '#ccc', textTransform: 'uppercase' }}>
-                Take me elsewhere
-              </span>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+          <div style={{
+            position: 'absolute', left: 663, top: FOOTER_Y + F_NAV, width: 769,
+            display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          }}>
+            <span style={{ fontFamily: 'var(--font-sans, Montserrat)', fontWeight: 700, fontSize: 16, color: '#ccc', textTransform: 'uppercase' }}>
+              Take me elsewhere
+            </span>
+            {data.nextProjectSlug && (
+              <a href={`/${data.nextProjectSlug}`} style={{ display: 'flex', alignItems: 'center', gap: 4, textDecoration: 'none' }}>
                 <span style={{ fontFamily: 'var(--font-sans, Montserrat)', fontWeight: 700, fontSize: 16, color: '#ccc', textTransform: 'uppercase' }}>
-                  {data.nextProjectTitle}
+                  {data.nextProjectTitle || 'Next project'}
                 </span>
                 <span style={{ color: '#1c1c1c', fontSize: 10 }}>▶</span>
-              </div>
-            </div>
-          )}
+              </a>
+            )}
+          </div>
 
           <img
             src="/t1-wordmark.svg"
@@ -363,14 +363,14 @@ export default function Template3Layout({
           />
 
           <div style={{
-            position: 'absolute', left: 88, top: FOOTER_Y + F_SOC, width: 1344,
+            position: 'absolute', left: 88, top: FOOTER_Y + F_MARK + 290, width: 1344,
             display: 'flex', alignItems: 'center', justifyContent: 'space-between',
           }}>
             <div style={{ display: 'flex', gap: 40, alignItems: 'center' }}>
               <img src="/t1-instagram.svg" alt="Instagram" width={20} height={20} style={{ display: 'block' }} />
               <img src="/t1-twitter.svg" alt="X / Twitter" width={20} height={20} style={{ display: 'block' }} />
             </div>
-            <span style={{ fontFamily: 'var(--font-sans, Montserrat)', fontWeight: 400, fontSize: 16, color: '#000' }}>@Copyright</span>
+            <span style={{ fontFamily: 'var(--font-sans, Montserrat)', fontWeight: 400, fontSize: 16, color: '#000' }}>@Copywrite</span>
           </div>
 
         </div>

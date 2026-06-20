@@ -6,6 +6,7 @@ import SiteFooter from '@/components/public/SiteFooter'
 import ProjectHero from '@/components/public/project/ProjectHero'
 import BlockRenderer from '@/components/public/project/BlockRenderer'
 import type { BlockPayload } from '@/lib/types/blocks'
+import { getNextProject } from '@/lib/utils/next-project'
 
 export const revalidate = 300
 
@@ -63,6 +64,8 @@ export default async function ProjectPage({ params }: Props) {
 
   if (!project) notFound()
 
+  const nextProject = await getNextProject(slug)
+
   const TEMPLATE_IMPORTS = {
     TEMPLATE_1: () => import('@/components/templates/Template1'),
     TEMPLATE_2: () => import('@/components/templates/Template2'),
@@ -74,13 +77,23 @@ export default async function ProjectPage({ params }: Props) {
 
   if (templateLoader) {
     const Template = (await templateLoader()).default
+    const enrichedProject = {
+      ...project,
+      templateData: {
+        ...(typeof project.templateData === 'string'
+          ? JSON.parse(project.templateData)
+          : (project.templateData as Record<string, unknown>) ?? {}),
+        nextProjectTitle: nextProject?.title,
+        nextProjectSlug: nextProject?.slug,
+      },
+    }
     return (
       <>
         <SiteNav />
         {project.template === 'TEMPLATE_1' ? (
-          <div className="pt-24"><Template project={project} /></div>
+          <div className="pt-24"><Template project={enrichedProject} /></div>
         ) : (
-          <Template project={project} />
+          <Template project={enrichedProject} />
         )}
       </>
     )
@@ -102,7 +115,7 @@ export default async function ProjectPage({ params }: Props) {
           ))}
         </div>
       </article>
-      <SiteFooter />
+      <SiteFooter nextProject={nextProject} />
     </>
   )
 }
