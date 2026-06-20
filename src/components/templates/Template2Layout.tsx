@@ -373,6 +373,7 @@ export default function Template2Layout({
           <P l={497.6} t={4375} w={220}>{data.sec5Body2}</P>
           <P l={258.58} t={4469.83} w={220}>{data.sec5Body3}</P>
           <ImgBox id={data.sec5Image} sk="sec5Image" l={744} t={4042.16} w={685} h={589} />
+          <ImgBox id={data.sec5Image2} sk="sec5Image2" l={258.58} t={4686.66} w={469} h={334} />
 
           {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
               SECTION 6 — image left, text right
