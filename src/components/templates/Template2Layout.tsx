@@ -391,56 +391,54 @@ export default function Template2Layout({
           {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
               SECTION 7
           ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-          <ImgBox id={data.sec7Image} sk="sec7Image" l={80} t={5450} w={469} h={178} />
+          <ImgBox id={data.sec7Image} sk="sec7Image" l={258.58} t={5340.66} w={469} h={178} />
           <SecNum n="07" l={688.58} t={5534.99} />
-          <H2 l={80} t={5720} w={400} size={32}>{data.sec7Headline}</H2>
-          <P l={80} t={5900} w={220}>{data.sec7Body1}</P>
-          <P l={329} t={5900} w={220}>{data.sec7Body2}</P>
+          <H2 l={259.42} t={5574.21} w={467.34}>{data.sec7Headline}</H2>
+          <P l={259.42} t={5615.92} w={220}>{data.sec7Body1}</P>
+          <P l={498.44} t={5615.92} w={220}>{data.sec7Body2}</P>
 
           {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
               SECTION 8
           ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-          <ImgBox id={data.sec8Image} sk="sec8Image" l={80} t={6400} w={700} h={500} />
-          <SecNum n="08" l={1350} t={6400} />
-          <H2 l={820} t={6450} w={400} size={32}>{data.sec8Headline}</H2>
-          <P l={820} t={6550} w={220}>{data.sec8Body1}</P>
-          <P l={820} t={6750} w={220}>{data.sec8Body2}</P>
-          <P l={1070} t={6550} w={220}>{data.sec8Body3}</P>
-          <P l={1070} t={6750} w={220}>{data.sec8Body4}</P>
+          <ImgBox id={data.sec8Image} sk="sec8Image" l={259.42} t={5964.66} w={688} h={589} />
+          <SecNum n="08" l={1387.58} t={6115.21} />
+          <H2 l={958.42} t={6158.06} w={420.93}>{data.sec8Headline}</H2>
+          <P l={958.42} t={6244.3} w={220}>{data.sec8Body1}</P>
+          <P l={958.42} t={6378.61} w={220}>{data.sec8Body2}</P>
+          <P l={1200.92} t={6244.3} w={220}>{data.sec8Body3}</P>
+          <P l={1200.92} t={6413.11} w={220}>{data.sec8Body4}</P>
 
           {/* ━━ FOOTER ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-          {data.nextProjectTitle && (
-            <div style={{
-              position: 'absolute', left: 663, top: FOOTER_Y + F_NAV, width: 769,
-              display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-            }}>
+          <div style={{
+            position: 'absolute', left: 663, top: FOOTER_Y + F_NAV, width: 769,
+            display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          }}>
+            <span style={{ fontFamily: 'var(--font-sans, Montserrat)', fontWeight: 700, fontSize: 16, color: '#ccc', textTransform: 'uppercase' }}>
+              Take me elsewhere
+            </span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
               <span style={{ fontFamily: 'var(--font-sans, Montserrat)', fontWeight: 700, fontSize: 16, color: '#ccc', textTransform: 'uppercase' }}>
-                Take me elsewhere
+                {data.nextProjectTitle || 'NEXT PROJECT'}
               </span>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-                <span style={{ fontFamily: 'var(--font-sans, Montserrat)', fontWeight: 700, fontSize: 16, color: '#ccc', textTransform: 'uppercase' }}>
-                  {data.nextProjectTitle}
-                </span>
-                <span style={{ color: '#1c1c1c', fontSize: 10 }}>▶</span>
-              </div>
+              <span style={{ color: '#ccc', fontSize: 16, fontWeight: 700 }}>&gt;</span>
             </div>
-          )}
+          </div>
 
           <img
             src="/t1-wordmark.svg"
             alt=".elsewhere"
-            style={{ position: 'absolute', left: 0, top: FOOTER_Y + F_MARK, width: W, height: 242, display: 'block' }}
+            style={{ position: 'absolute', left: 80, top: FOOTER_Y + F_MARK, width: 1352, height: 216, display: 'block' }}
           />
 
           <div style={{
-            position: 'absolute', left: 88, top: FOOTER_Y + F_SOC, width: 1344,
+            position: 'absolute', left: 80, top: FOOTER_Y + F_SOC, width: 1352,
             display: 'flex', alignItems: 'center', justifyContent: 'space-between',
           }}>
             <div style={{ display: 'flex', gap: 40, alignItems: 'center' }}>
               <img src="/t1-instagram.svg" alt="Instagram" width={20} height={20} style={{ display: 'block' }} />
               <img src="/t1-twitter.svg" alt="X / Twitter" width={20} height={20} style={{ display: 'block' }} />
             </div>
-            <span style={{ fontFamily: 'var(--font-sans, Montserrat)', fontWeight: 400, fontSize: 16, color: '#000' }}>@Copyright</span>
+            <span style={{ fontFamily: 'var(--font-sans, Montserrat)', fontWeight: 400, fontSize: 16, color: '#000' }}>@Copywrite</span>
           </div>
 
         </div>
