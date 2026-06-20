@@ -126,7 +126,7 @@ export default async function ProjectPage({ params }: Props) {
     )
   }
 
-  const blocks = project.blocks.map((b) => ({
+  const blocks = project.blocks.map((b: any) => ({
     ...b,
     payload: { type: b.type, ...(b.payload as object) } as BlockPayload,
   }))

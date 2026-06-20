@@ -24,6 +24,7 @@ export type Template2Data = {
   sec1Body1?: string
   sec1Body2?: string
   sec1Body3?: string
+  sec1Quote2?: string
   // Section 2 text
   sec2Headline?: string
   sec2Body1?: string
@@ -300,10 +301,11 @@ export default function Template2Layout({
           <ImgBox id={data.sec1Image} sk="sec1Image" l={260} t={1009} w={579} h={475} />
           <SecNum n="01" l={1359} t={1009} />
           <H2 l={871} t={1045} w={488}>{data.sec1Headline}</H2>
-          <Quote l={871} t={1230} w={520}>{data.sec1Quote}</Quote>
-          <P l={871} t={1310} w={255}>{data.sec1Body1}</P>
-          <P l={1148} t={1310} w={251}>{data.sec1Body2}</P>
-          <P l={871} t={1475} w={520}>{data.sec1Body3}</P>
+          <P l={871} t={1115} w={488}>{data.sec1Body1}</P>
+          <Quote l={871} t={1155} w={520}>{data.sec1Quote}</Quote>
+          <P l={871} t={1265} w={488}>{data.sec1Body2}</P>
+          <Quote l={871} t={1305} w={520}>{data.sec1Quote2}</Quote>
+          <P l={871} t={1425} w={255}>{data.sec1Body3}</P>
 
           {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
               SECTION 2 — image right, text left
