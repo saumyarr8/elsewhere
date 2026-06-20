@@ -74,6 +74,16 @@ export default async function ProjectsPage() {
                   </button>
                 </form>
 
+                <form action={deleteProject.bind(null, p.id)}>
+                  <button
+                    type="submit"
+                    onClick={(e) => { if (!confirm('Delete this project? This cannot be undone.')) e.preventDefault() }}
+                    className="text-xs text-red-500 hover:text-red-700 transition-colors"
+                  >
+                    Delete
+                  </button>
+                </form>
+
                 {p.published && (
                   <Link
                     href={`/${p.slug}`}

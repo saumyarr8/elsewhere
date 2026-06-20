@@ -2,7 +2,7 @@
 
 import { useState, useTransition, type ComponentType } from 'react'
 import Link from 'next/link'
-import { updateProject, publishProject, unpublishProject } from '@/actions/project.actions'
+import { updateProject, publishProject, unpublishProject, deleteProject } from '@/actions/project.actions'
 import MediaPicker from '@/components/admin/media/MediaPicker'
 import type { Project, MediaAsset } from '@prisma/client'
 import { inputCls, textareaCls, hasContent, type Section, type TemplateData, type Pattern } from './shared'
@@ -331,6 +331,18 @@ export default function TemplateEditor({ project, patterns, Layout, showTitleLig
                 </span>
               )}
             </button>
+          </div>
+
+          <div className="pt-4 pb-6 border-t border-gray-100">
+            <form action={deleteProject.bind(null, project.id)}>
+              <button
+                type="submit"
+                onClick={(e) => { if (!confirm('Delete this project? This cannot be undone.')) e.preventDefault() }}
+                className="text-xs text-red-400 hover:text-red-600 hover:underline transition-colors"
+              >
+                Delete project
+              </button>
+            </form>
           </div>
         </div>
       </aside>
