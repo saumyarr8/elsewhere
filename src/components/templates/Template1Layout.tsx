@@ -2,33 +2,10 @@
 
 import React, { useEffect, useRef, useState } from 'react'
 import MusicPlayer from '@/components/public/about/MusicPlayer'
+import { hasContent, type Section, type TemplateData } from '@/components/admin/template-editor/shared'
 
-// ─── Data Types ───────────────────────────────────────────────────────────────
-
-export type T1Section = {
-  image1?: string
-  image2?: string
-  image3?: string
-  caption1?: string
-  caption2?: string
-  caption3?: string
-  headline?: string
-  body1?: string
-  body2?: string
-  body3?: string
-  body4?: string
-}
-
-export type Template1Data = {
-  titleBold: string
-  location: string
-  coordinates: string
-  camera: string
-  heroImage: string
-  sections: T1Section[]
-  nextProjectTitle?: string
-  nextProjectSlug?: string
-}
+export type T1Section = Section
+export type Template1Data = TemplateData
 
 // ─── Canvas constants ─────────────────────────────────────────────────────────
 
@@ -59,13 +36,6 @@ type Props = {
   data: Partial<Template1Data>
   isEditing?: boolean
   onImageSelect?: (sectionIndex: string, field: string) => void
-}
-
-// ─── Helpers ──────────────────────────────────────────────────────────────────
-
-export function hasContent(s?: Partial<T1Section>): boolean {
-  if (!s) return false
-  return Object.values(s).some(v => typeof v === 'string' && v.trim() !== '')
 }
 
 // ─── Component ────────────────────────────────────────────────────────────────

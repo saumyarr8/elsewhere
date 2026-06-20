@@ -1,16 +1,11 @@
 'use server'
 
-import { auth } from '@/lib/auth'
+import { requireAdmin } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { slugify } from '@/lib/utils/slugify'
 import { z } from 'zod'
-
-async function requireAdmin() {
-  const session = await auth()
-  if (!session) throw new Error('Unauthorized')
-}
 
 const ProjectSchema = z.object({
   title: z.string().min(1),

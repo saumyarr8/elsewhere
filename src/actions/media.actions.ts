@@ -1,6 +1,6 @@
 'use server'
 
-import { auth } from '@/lib/auth'
+import { requireAdmin } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
 import { cloudinary } from '@/lib/cloudinary'
 import { revalidatePath } from 'next/cache'
@@ -15,11 +15,6 @@ const SaveSchema = z.object({
   bytes: z.number().int().positive(),
   altText: z.string().optional(),
 })
-
-async function requireAdmin() {
-  const session = await auth()
-  if (!session) throw new Error('Unauthorized')
-}
 
 export async function saveMediaAsset(input: z.infer<typeof SaveSchema>) {
   await requireAdmin()

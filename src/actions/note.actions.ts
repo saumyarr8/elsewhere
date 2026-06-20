@@ -1,6 +1,6 @@
 'use server'
 
-import { auth } from '@/lib/auth'
+import { requireAdmin } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
@@ -16,11 +16,6 @@ export type Note = {
   published: boolean
   createdAt: Date
   updatedAt: Date
-}
-
-async function requireAdmin() {
-  const session = await auth()
-  if (!session) throw new Error('Unauthorized')
 }
 
 const NoteSchema = z.object({
@@ -39,10 +34,10 @@ export async function createNote(_prevState: { error?: string } | undefined, for
   const rawSlug = (formData.get('slug') as string) || slugify(title)
   const slug = slugify(rawSlug)
 
-  const existing = await (prisma as any).note.findUnique({ where: { slug } })
+  const existing = await prisma.note.findUnique({ where: { slug } })
   if (existing) return { error: 'A note with this slug already exists.' }
 
-  const note = await (prisma as any).note.create({
+  const note = await prisma.note.create({
     data: {
       title: title.trim(),
       slug,
@@ -65,13 +60,13 @@ export async function updateNote(id: string, data: {
 
   if (data.slug) {
     data.slug = slugify(data.slug)
-    const existing = await (prisma as any).note.findFirst({
+    const existing = await prisma.note.findFirst({
       where: { slug: data.slug, NOT: { id } },
     })
     if (existing) return { error: 'Slug already in use.' }
   }
 
-  await (prisma as any).note.update({
+  await prisma.note.update({
     where: { id },
     data,
   })
@@ -83,7 +78,7 @@ export async function updateNote(id: string, data: {
 
 export async function publishNote(id: string) {
   await requireAdmin()
-  const note = await (prisma as any).note.update({
+  const note = await prisma.note.update({
     where: { id },
     data: { published: true },
   })
@@ -94,7 +89,7 @@ export async function publishNote(id: string) {
 
 export async function unpublishNote(id: string) {
   await requireAdmin()
-  const note = await (prisma as any).note.update({
+  const note = await prisma.note.update({
     where: { id },
     data: { published: false },
   })
@@ -105,10 +100,10 @@ export async function unpublishNote(id: string) {
 
 export async function deleteNote(id: string) {
   await requireAdmin()
-  const note = await (prisma as any).note.findUnique({ where: { id } })
+  const note = await prisma.note.findUnique({ where: { id } })
   if (!note) return
 
-  await (prisma as any).note.delete({ where: { id } })
+  await prisma.note.delete({ where: { id } })
   revalidatePath('/gallery')
   revalidatePath(`/notes/${note.slug}`)
   revalidatePath('/admin/notes')

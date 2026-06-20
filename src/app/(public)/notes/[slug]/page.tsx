@@ -11,7 +11,7 @@ type Props = { params: Promise<{ slug: string }> }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
-  const note = await (prisma as any).note.findUnique({
+  const note = await prisma.note.findUnique({
     where: { slug, published: true },
   })
   if (!note) return {}
@@ -23,7 +23,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export async function generateStaticParams() {
   try {
-    const notes = await (prisma as any).note.findMany({
+    const notes = await prisma.note.findMany({
       where: { published: true },
       select: { slug: true },
     })
@@ -35,7 +35,7 @@ export async function generateStaticParams() {
 
 export default async function NotePage({ params }: Props) {
   const { slug } = await params
-  const note = await (prisma as any).note.findUnique({
+  const note = await prisma.note.findUnique({
     where: { slug, published: true },
   })
 

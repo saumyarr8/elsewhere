@@ -2,71 +2,32 @@
 
 import React, { useEffect, useRef, useState } from 'react'
 
-export type Template4Data = {
-  titleBold?: string
-  location?: string
-  coordinates?: string
-  camera?: string
-  heroImage?: string
-  sec1Image?: string
-  sec2Image?: string
-  sec2ImageB?: string
-  sec2ImageC?: string
-  sec3ImageSmall?: string
-  sec3Image?: string
-  sec4ImageTall?: string
-  sec4Image?: string
-  sec5Image?: string
-  sec6Image?: string
-  sec6ImageB?: string
-  sec7Image?: string
-  sec7ImageWide?: string
-  sec1Headline?: string
-  sec1Body1?: string
-  sec1Quote?: string
-  sec1Body2?: string
-  sec1Quote2?: string
-  sec1Body3?: string
-  sec2Headline?: string
-  sec2Body1?: string
-  sec2Body2?: string
-  sec2Body3?: string
-  sec3Headline?: string
-  sec3Body1?: string
-  sec3Body2?: string
-  sec3Quote?: string
-  sec3Body3?: string
-  sec3Body4?: string
-  sec3Body5?: string
-  sec3Body6?: string
-  sec3ImageB?: string
-  sec4Headline?: string
-  sec4Body1?: string
-  sec4Body2?: string
-  sec4Body3?: string
-  sec4Quote?: string
-  sec4Body4?: string
-  sec5Headline?: string
-  sec5Body1?: string
-  sec5Body2?: string
-  sec5Body3?: string
-  sec6Headline?: string
-  sec6Body1?: string
-  sec7Headline?: string
-  sec7Body1?: string
-  sec7Body2?: string
-  sec7Body3?: string
-  sec8Headline?: string
-  sec8Body1?: string
-  sec8Body2?: string
-  sec8Body3?: string
-  sec8Body4?: string
-  nextProjectTitle?: string
-  nextProjectSlug?: string
-}
+import { type Section, type TemplateData } from '@/components/admin/template-editor/shared'
 
-export function hasContent(d: Partial<Template4Data>): boolean {
-  return !!(d.heroImage || d.sec1Image || d.sec2Image)
+export type Template4Data = TemplateData
+
+const FIELD_MAPS: Record<string, string>[] = [
+  { image1: 'sec1Image', headline: 'sec1Headline', body1: 'sec1Body1', quote: 'sec1Quote', body2: 'sec1Body2', quote2: 'sec1Quote2', body3: 'sec1Body3' },
+  { image1: 'sec2Image', image2: 'sec2ImageB', image3: 'sec2ImageC', image4: 'sec3ImageSmall', headline: 'sec2Headline', body1: 'sec2Body1', body2: 'sec2Body2', body3: 'sec2Body3' },
+  { image1: 'sec3Image', image2: 'sec3ImageB', headline: 'sec3Headline', body1: 'sec3Body1', body2: 'sec3Body2', quote: 'sec3Quote', body3: 'sec3Body3', body4: 'sec3Body4', body5: 'sec3Body5', body6: 'sec3Body6' },
+  { image1: 'sec4ImageTall', image2: 'sec4Image', headline: 'sec4Headline', body1: 'sec4Body1', body2: 'sec4Body2', body3: 'sec4Body3', quote: 'sec4Quote', body4: 'sec4Body4' },
+  { image1: 'sec5Image', headline: 'sec5Headline', body1: 'sec5Body1', body2: 'sec5Body2', body3: 'sec5Body3' },
+  { image1: 'sec6Image', image2: 'sec6ImageB', headline: 'sec6Headline', body1: 'sec6Body1' },
+  { image1: 'sec7Image', image2: 'sec7ImageWide', headline: 'sec7Headline', body1: 'sec7Body1', body2: 'sec7Body2', body3: 'sec7Body3' },
+  { headline: 'sec8Headline', body1: 'sec8Body1', body2: 'sec8Body2', body3: 'sec8Body3', body4: 'sec8Body4' },
+]
+
+function sectionsToFlat(sections: Section[]): Record<string, string | undefined> {
+  const flat: Record<string, string | undefined> = {}
+  for (let i = 0; i < sections.length && i < FIELD_MAPS.length; i++) {
+    const s = sections[i]
+    const map = FIELD_MAPS[i % FIELD_MAPS.length]
+    for (const [sectionKey, flatKey] of Object.entries(map)) {
+      const val = s[sectionKey as keyof Section]
+      if (val) flat[flatKey] = val
+    }
+  }
+  return flat
 }
 
 const W = 1504
@@ -75,14 +36,17 @@ const SECTION_STARTS = [1009, 2037, 3694, 4247, 5478, 6277, 6749, 7734]
 const FOOTER_Y = 8288
 
 export default function Template4Layout({
-  data,
+  data: rawData,
   isEditing = false,
   onImageSelect,
 }: {
   data: Partial<Template4Data>
   isEditing?: boolean
-  onImageSelect?: (key: string) => void
+  onImageSelect?: (sectionIndex: string, field: string) => void
 }) {
+  const flat = rawData.sections ? sectionsToFlat(rawData.sections) : {}
+  const data = { ...rawData, ...flat } as Record<string, string | undefined>
+
   const [scale, setScale] = useState(1)
   const [activeIdx, setActiveIdx] = useState(0)
   const [sidebarVisible, setSidebarVisible] = useState(false)
@@ -136,8 +100,8 @@ export default function Template4Layout({
   const imgUrl = (id?: string) =>
     id && cloudName ? `https://res.cloudinary.com/${cloudName}/image/upload/q_auto,f_auto/${id}` : ''
 
-  function ImgBox({ id, sk, l, t, w, h }: {
-    id?: string; sk: string; l: number; t: number; w: number; h: number
+  function ImgBox({ id, si, field, l, t, w, h }: {
+    id?: string; si: string; field: string; l: number; t: number; w: number; h: number
   }) {
     const url = imgUrl(id)
     return (
@@ -147,7 +111,7 @@ export default function Template4Layout({
           overflow: 'hidden', background: id ? undefined : '#e8e8e8',
           cursor: isEditing ? 'pointer' : undefined,
         }}
-        onClick={isEditing ? () => onImageSelect?.(sk) : undefined}
+        onClick={isEditing ? () => onImageSelect?.(si, field) : undefined}
       >
         {url && <img src={url} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />}
         {isEditing && (
@@ -235,7 +199,7 @@ export default function Template4Layout({
           </div>
 
           {/* ━━ HERO */}
-          <ImgBox id={data.heroImage} sk="heroImage" l={80} t={197} w={1352} h={671} />
+          <ImgBox id={data.heroImage} si="hero" field="heroImage" l={80} t={197} w={1352} h={671} />
 
           {/* ━━ METADATA */}
           <div style={{
@@ -265,23 +229,23 @@ export default function Template4Layout({
           </div>
 
           {/* ━━━━ SECTION 1 — image left, text right */}
-          <ImgBox id={data.sec1Image} sk="sec1Image" l={254} t={1012} w={691} h={554} />
+          <ImgBox id={data.sec1Image} si="0" field="image1" l={254} t={1012} w={691} h={554} />
           <SecNum n="01" l={1332} t={1009} />
           <H2 l={964.33} t={1239.12} w={398.58}>{data.sec1Headline}</H2>
           <P l={964.33} t={1364.48} w={220}>{data.sec1Body1}</P>
           <P l={1212.49} t={1364.48} w={220}>{data.sec1Body2}</P>
           {/* ━━━━ SECTION 2 — images + text */}
-          <ImgBox id={data.sec2Image} sk="sec2Image" l={252} t={1676} w={463} h={454} />
+          <ImgBox id={data.sec2Image} si="1" field="image1" l={252} t={1676} w={463} h={454} />
           <SecNum n="02" l={1320} t={1676} />
           <H2 l={730} t={1740} w={466}>{data.sec2Headline}</H2>
           <P l={730} t={1840} w={300}>{data.sec2Body1}</P>
           <P l={1050} t={1840} w={300}>{data.sec2Body2}</P>
-          <ImgBox id={data.sec2ImageC} sk="sec2ImageC" l={1213} t={2025} w={223} h={115} />
-          <ImgBox id={data.sec2ImageB} sk="sec2ImageB" l={733} t={2160} w={462} h={317} />
+          <ImgBox id={data.sec2ImageC} si="1" field="image3" l={1213} t={2025} w={223} h={115} />
+          <ImgBox id={data.sec2ImageB} si="1" field="image2" l={733} t={2160} w={462} h={317} />
           <P l={1213} t={2170} w={223}>{data.sec2Body3}</P>
 
           {/* ━━━━ SECTION 3 — landscape + text */}
-          <ImgBox id={data.sec3Image} sk="sec3Image" l={254} t={2556} w={331} h={671} />
+          <ImgBox id={data.sec3Image} si="2" field="image1" l={254} t={2556} w={331} h={671} />
           <SecNum n="03" l={1051} t={2567.13} />
           <H2 l={621} t={2617.37} w={452.64}>{data.sec3Headline}</H2>
           <P l={621} t={2758.5} w={224}>{data.sec3Body1}</P>
@@ -291,7 +255,7 @@ export default function Template4Layout({
           <P l={862} t={2900} w={224}>{data.sec3Body4}</P>
 
           {/* ━━━━ SECTION 4 — two portraits + text */}
-          <ImgBox id={data.sec4ImageTall} sk="sec4ImageTall" l={248} t={4197} w={499} h={616} />
+          <ImgBox id={data.sec4ImageTall} si="3" field="image1" l={248} t={4197} w={499} h={616} />
           <SecNum n="04" l={1181} t={4247} />
           <H2 l={763} t={4247} w={308}>{data.sec4Headline}</H2>
           <P l={763} t={4323} w={220}>{data.sec4Body1}</P>
@@ -299,7 +263,7 @@ export default function Template4Layout({
           <P l={763} t={4533} w={392}>{data.sec4Body3}</P>
           <Quote l={1086} t={3096.73} w={324}>{data.sec4Quote}</Quote>
           <P l={862} t={2873.73} w={224}>{data.sec4Body4}</P>
-          <ImgBox id={data.sec4Image} sk="sec4Image" l={744} t={4852} w={685} h={589} />
+          <ImgBox id={data.sec4Image} si="3" field="image2" l={744} t={4852} w={685} h={589} />
 
           {/* ━━━━ SECTION 5 — headline + image + text */}
           <SecNum n="05" l={679} t={5478} />
@@ -307,23 +271,23 @@ export default function Template4Layout({
           <P l={259} t={5589} w={220}>{data.sec5Body1}</P>
           <P l={498} t={5589} w={220}>{data.sec5Body2}</P>
           <P l={259} t={5684} w={220}>{data.sec5Body3}</P>
-          <ImgBox id={data.sec5Image} sk="sec5Image" l={258} t={5901} w={469} h={334} />
+          <ImgBox id={data.sec5Image} si="4" field="image1" l={258} t={5901} w={469} h={334} />
 
           {/* ━━━━ SECTION 6 — portrait + strip + text */}
           <SecNum n="06" l={1070} t={6277} />
-          <ImgBox id={data.sec6Image} sk="sec6Image" l={1132} t={6277} w={293} h={456} />
+          <ImgBox id={data.sec6Image} si="5" field="image1" l={1132} t={6277} w={293} h={456} />
           <H2 l={884} t={6326} w={220}>{data.sec6Headline}</H2>
           <P l={884} t={6396} w={220}>{data.sec6Body1}</P>
-          <ImgBox id={data.sec6ImageB} sk="sec6ImageB" l={258} t={6555} w={469} h={178} />
+          <ImgBox id={data.sec6ImageB} si="5" field="image2" l={258} t={6555} w={469} h={178} />
 
           {/* ━━━━ SECTION 7 — portrait + wide + text */}
           <SecNum n="07" l={689} t={6749} />
           <P l={884} t={6579} w={220}>{data.sec7Body3}</P>
           <H2 l={260} t={6789} w={467}>{data.sec7Headline}</H2>
-          <ImgBox id={data.sec7Image} sk="sec7Image" l={1132} t={6830} w={293} h={262} />
+          <ImgBox id={data.sec7Image} si="6" field="image1" l={1132} t={6830} w={293} h={262} />
           <P l={260} t={6830} w={220}>{data.sec7Body1}</P>
           <P l={499} t={6830} w={220}>{data.sec7Body2}</P>
-          <ImgBox id={data.sec7ImageWide} sk="sec7ImageWide" l={259} t={7584} w={688} h={589} />
+          <ImgBox id={data.sec7ImageWide} si="6" field="image2" l={259} t={7584} w={688} h={589} />
 
           {/* ━━━━ SECTION 8 — closing text */}
           <SecNum n="08" l={1387} t={7734} />

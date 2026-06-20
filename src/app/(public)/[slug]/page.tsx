@@ -13,15 +13,10 @@ type Props = { params: Promise<{ slug: string }> }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
-  let project = null;
-  try {
-    project = await prisma.project.findUnique({
-      where: { slug, published: true },
-      include: { ogImage: true },
-    })
-  } catch (error) {
-    return { title: 'Preview Mode (No DB)' }
-  }
+  const project = await prisma.project.findUnique({
+    where: { slug, published: true },
+    include: { ogImage: true },
+  })
   if (!project) return {}
 
   const title = project.seoTitle || project.title
@@ -58,91 +53,56 @@ export async function generateStaticParams() {
 
 export default async function ProjectPage({ params }: Props) {
   const { slug } = await params
-  let project = null;
-  try {
-    project = await prisma.project.findUnique({
-      where: { slug, published: true },
-      include: {
-        blocks: { orderBy: { order: 'asc' } },
-        heroImage: true,
-      },
-    })
-  } catch (error) {
-    console.log("Using local fallback for project page...");
-    // Fallback so it doesn't crash locally
-    project = {
-      id: 'mock-id',
-      slug,
-      title: slug.split('-').join(' ').toUpperCase(),
-      description: 'Local Preview Mode - Database not connected. The real content will show when deployed.',
-      published: true,
-      publishedAt: new Date(),
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      seoTitle: null,
-      seoDescription: null,
-      heroImageId: null,
-      ogImageId: null,
-      template: 'TEMPLATE_1',
-      theme: 'LIGHT',
-      password: null,
-      blocks: [],
-      heroImage: null,
-      ogImage: null
-    } as any;
-  }
+  const project = await prisma.project.findUnique({
+    where: { slug, published: true },
+    include: {
+      blocks: { orderBy: { order: 'asc' } },
+      heroImage: true,
+    },
+  })
 
   if (!project) notFound()
 
-  if (project.template === 'TEMPLATE_1') {
-    const Template1 = (await import('@/components/templates/Template1')).default
+  const TEMPLATE_IMPORTS = {
+    TEMPLATE_1: () => import('@/components/templates/Template1'),
+    TEMPLATE_2: () => import('@/components/templates/Template2'),
+    TEMPLATE_3: () => import('@/components/templates/Template3'),
+    TEMPLATE_4: () => import('@/components/templates/Template4'),
+  } as const
+
+  const templateLoader = TEMPLATE_IMPORTS[project.template as keyof typeof TEMPLATE_IMPORTS]
+
+  if (templateLoader) {
+    const Template = (await templateLoader()).default
     return (
       <>
         <SiteNav />
-        <div className="pt-24">
-          <Template1 project={project} />
-        </div>
+        {project.template === 'TEMPLATE_1' ? (
+          <div className="pt-24"><Template project={project} /></div>
+        ) : (
+          <Template project={project} />
+        )}
       </>
     )
   }
 
-  if (project.template === 'TEMPLATE_2') {
-    const Template2 = (await import('@/components/templates/Template2')).default
-    return (
-      <>
-        <SiteNav />
-        <Template2 project={project} />
-      </>
-    )
-  }
-
-  if (project.template === 'TEMPLATE_3') {
-    const Template3 = (await import('@/components/templates/Template3')).default
-    return (
-      <>
-        <SiteNav />
-        <Template3 project={project} />
-      </>
-    )
-  }
-
-  const blocks = project.blocks.map((b: any) => ({
+  const blocks = project.blocks.map((b) => ({
     ...b,
     payload: { type: b.type, ...(b.payload as object) } as BlockPayload,
   }))
 
   return (
     <>
-    <SiteNav />
-    <article>
-      <ProjectHero project={project} />
-      <div className="max-w-screen-xl mx-auto">
-        {blocks.map((block: any) => (
-          <BlockRenderer key={block.id} block={block} />
-        ))}
-      </div>
-    </article>
-    <SiteFooter />
+      <SiteNav />
+      <article>
+        <ProjectHero project={project} />
+        <div className="max-w-screen-xl mx-auto">
+          {blocks.map((block) => (
+            <BlockRenderer key={block.id} block={block} />
+          ))}
+        </div>
+      </article>
+      <SiteFooter />
     </>
   )
 }

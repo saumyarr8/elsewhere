@@ -19,14 +19,12 @@ export default async function GalleryPage() {
     })
     .catch(() => [])
 
-  const notes = ('note' in prisma)
-    ? await (prisma as any).note
-        .findMany({
-          where: { published: true },
-          orderBy: { createdAt: 'desc' },
-        })
-        .catch(() => [])
-    : []
+  const notes = await prisma.note
+    .findMany({
+      where: { published: true },
+      orderBy: { createdAt: 'desc' },
+    })
+    .catch(() => [])
 
   const categories = Array.from(
     new Set(images.map((i) => i.category).filter((c): c is string => Boolean(c)))

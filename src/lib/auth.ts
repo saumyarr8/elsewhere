@@ -47,3 +47,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
   },
 })
+
+export async function requireAdmin() {
+  const session = await auth()
+  if (!session) throw new Error('Unauthorized')
+}

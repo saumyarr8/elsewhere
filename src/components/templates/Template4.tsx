@@ -1,13 +1,12 @@
-import Template1Layout from './Template1Layout'
+import Template4Layout from './Template4Layout'
 import type { TemplateData } from '@/components/admin/template-editor/shared'
 
 type TemplateProject = { templateData: unknown }
 
-export default function Template1({ project }: { project: TemplateProject }) {
+export default function Template4({ project }: { project: TemplateProject }) {
   const data: Partial<TemplateData> =
     typeof project.templateData === 'string'
       ? JSON.parse(project.templateData)
       : (project.templateData as Partial<TemplateData>) ?? {}
-
-  return <Template1Layout data={data} />
+  return <Template4Layout data={data} />
 }

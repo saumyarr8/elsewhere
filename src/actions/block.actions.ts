@@ -1,15 +1,10 @@
 'use server'
 
-import { auth } from '@/lib/auth'
+import { requireAdmin } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
 import { revalidatePath } from 'next/cache'
 import type { BlockType } from '@/lib/types/blocks'
 import type { BlockType as PrismaBlockType } from '@prisma/client'
-
-async function requireAdmin() {
-  const session = await auth()
-  if (!session) throw new Error('Unauthorized')
-}
 
 const DEFAULT_PAYLOADS: Record<BlockType, object> = {
   INTRO: { title: '', subtitle: '', description: '' },

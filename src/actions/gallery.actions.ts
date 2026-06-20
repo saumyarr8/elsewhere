@@ -1,15 +1,10 @@
 'use server'
 
-import { auth } from '@/lib/auth'
+import { requireAdmin } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
 import { revalidatePath } from 'next/cache'
 import { z } from 'zod'
 import type { GalleryMediaType } from '@prisma/client'
-
-async function requireAdmin() {
-  const session = await auth()
-  if (!session) throw new Error('Unauthorized')
-}
 
 const GalleryImageSchema = z.object({
   altText: z.string().min(1),

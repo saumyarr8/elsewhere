@@ -5,21 +5,17 @@ import { deleteNote, publishNote, unpublishNote } from '@/actions/note.actions'
 export const metadata = { title: 'Notes' }
 
 export default async function NotesPage() {
-  const isDbOutOfSync = !('note' in prisma)
-
-  const notes = isDbOutOfSync
-    ? []
-    : await (prisma as any).note.findMany({
-        orderBy: { updatedAt: 'desc' },
-        select: {
-          id: true,
-          title: true,
-          slug: true,
-          published: true,
-          readTime: true,
-          updatedAt: true,
-        },
-      }).catch(() => [])
+  const notes = await prisma.note.findMany({
+    orderBy: { updatedAt: 'desc' },
+    select: {
+      id: true,
+      title: true,
+      slug: true,
+      published: true,
+      readTime: true,
+      updatedAt: true,
+    },
+  })
 
   return (
     <div className="p-8 max-w-4xl">
@@ -27,35 +23,22 @@ export default async function NotesPage() {
         <h1 className="text-2xl font-medium" style={{ fontFamily: 'var(--font-heading)' }}>
           Notes
         </h1>
-        {!isDbOutOfSync && (
-          <Link
-            href="/admin/notes/new"
-            className="px-4 py-2 bg-[var(--color-ink)] text-[var(--color-paper)] text-xs uppercase tracking-widest hover:opacity-80 transition-opacity"
-          >
-            New Note
-          </Link>
-        )}
+        <Link
+          href="/admin/notes/new"
+          className="px-4 py-2 bg-[var(--color-ink)] text-[var(--color-paper)] text-xs uppercase tracking-widest hover:opacity-80 transition-opacity"
+        >
+          New Note
+        </Link>
       </div>
 
-      {isDbOutOfSync && (
-        <div className="mb-8 p-4 bg-amber-50 border border-amber-200 text-amber-800 text-sm rounded">
-          <p className="font-semibold mb-1">Database Schema Out of Sync</p>
-          <p className="mb-2">The Note model was added to the schema, but the database table has not been created yet.</p>
-          <p>Please run the following commands in your terminal to sync the schema and generate the client:</p>
-          <pre className="mt-2 p-2 bg-black/5 rounded text-xs font-mono">
-            npx prisma db push
-          </pre>
-        </div>
-      )}
-
-      {!isDbOutOfSync && notes.length === 0 ? (
+      {notes.length === 0 ? (
         <div className="bg-white border border-[var(--color-border)] rounded px-5 py-12 text-center">
           <p className="text-sm text-[var(--color-ink-muted)] mb-4">No notes yet.</p>
           <Link href="/admin/notes/new" className="text-sm underline">Create your first note</Link>
         </div>
-      ) : !isDbOutOfSync && (
+      ) : (
         <div className="bg-white border border-[var(--color-border)] rounded">
-          {notes.map((n: any, i: number) => (
+          {notes.map((n, i) => (
             <div
               key={n.id}
               className={`flex items-center gap-4 px-5 py-4 ${i < notes.length - 1 ? 'border-b border-[var(--color-border)]' : ''}`}

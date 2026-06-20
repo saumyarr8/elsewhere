@@ -1,15 +1,10 @@
 'use server'
 
-import { auth } from '@/lib/auth'
+import { requireAdmin } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
 import type { Prisma } from '@prisma/client'
 import { revalidatePath } from 'next/cache'
 import { z } from 'zod'
-
-async function requireAdmin() {
-  const session = await auth()
-  if (!session) throw new Error('Unauthorized')
-}
 
 const ItemSchema = z.object({
   id: z.string().optional(),

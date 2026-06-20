@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
-import { getNavProjects } from '@/lib/actions'
+import { getNavProjects } from '@/actions/nav.actions'
 
 const PAGE_LABELS: Record<string, string> = {
   '/': 'Projects',
