@@ -397,37 +397,41 @@ export default function Template1Layout({ data, isEditing, onImageSelect }: Prop
         {/* ━━━ HERO IMAGE — 1352 × 671 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
         <ImgBox id={d?.heroImage} sk="hero" field="heroImage" l={80} t={197} w={1352} h={671} />
 
-        {/* Hero Left Arrow */}
-        <div style={{
-          position: 'absolute', left: 100, top: 197 + 671/2 - 30,
-          width: 60, height: 60, borderRadius: '50%', background: 'rgba(255, 255, 255, 0.25)',
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          cursor: 'pointer', backdropFilter: 'blur(4px)', color: '#fff',
-          fontSize: 24, fontWeight: 300, fontFamily: 'sans-serif'
-        }}>
-          &lt;
-        </div>
+        {!isEditing && (
+          <>
+            {/* Hero Left Arrow */}
+            <div style={{
+              position: 'absolute', left: 100, top: 197 + 671/2 - 30,
+              width: 60, height: 60, borderRadius: '50%', background: 'rgba(255, 255, 255, 0.25)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              cursor: 'pointer', backdropFilter: 'blur(4px)', color: '#fff',
+              fontSize: 24, fontWeight: 300, fontFamily: 'sans-serif'
+            }}>
+              &lt;
+            </div>
 
-        {/* Hero Right Arrow */}
-        <div style={{
-          position: 'absolute', left: 80 + 1352 - 80, top: 197 + 671/2 - 30,
-          width: 60, height: 60, borderRadius: '50%', background: 'rgba(255, 255, 255, 0.25)',
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          cursor: 'pointer', backdropFilter: 'blur(4px)', color: '#fff',
-          fontSize: 24, fontWeight: 300, fontFamily: 'sans-serif'
-        }}>
-          &gt;
-        </div>
+            {/* Hero Right Arrow */}
+            <div style={{
+              position: 'absolute', left: 80 + 1352 - 80, top: 197 + 671/2 - 30,
+              width: 60, height: 60, borderRadius: '50%', background: 'rgba(255, 255, 255, 0.25)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              cursor: 'pointer', backdropFilter: 'blur(4px)', color: '#fff',
+              fontSize: 24, fontWeight: 300, fontFamily: 'sans-serif'
+            }}>
+              &gt;
+            </div>
 
-        {/* Hero Music Player */}
-        <div style={{
-          position: 'absolute', left: 80 + 1352 - 130, top: 197 + 671 - 100,
-          width: 250, zIndex: 10, display: 'flex', justifyContent: 'center'
-        }}>
-          <div style={{ transform: 'scale(1.2)' }}>
-            <MusicPlayer />
-          </div>
-        </div>
+            {/* Hero Music Player */}
+            <div style={{
+              position: 'absolute', left: 80 + 1352 - 130, top: 197 + 671 - 100,
+              width: 250, zIndex: 10, display: 'flex', justifyContent: 'center'
+            }}>
+              <div style={{ transform: 'scale(1.2)' }}>
+                <MusicPlayer />
+              </div>
+            </div>
+          </>
+        )}
 
         {/* ━━━ METADATA BAR ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
         <div style={{
