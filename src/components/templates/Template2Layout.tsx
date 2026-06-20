@@ -58,19 +58,14 @@ export type Template2Data = {
   // Section 6 text
   sec6Headline?: string
   sec6Body1?: string
-  sec6Quote?: string
+  sec6Body2?: string
+  sec6Image?: string
+  sec6Image2?: string
   // Section 7 text
-  sec7Col1?: string
-  sec7Col2?: string
-  sec7Col3?: string
   sec7Headline?: string
   sec7Body1?: string
   sec7Body2?: string
-  sec7Body3?: string
-  sec7Body4?: string
-  sec7Body5?: string
-  nextProjectTitle?: string
-  nextProjectSlug?: string
+  sec7Image?: string
 }
 
 export function hasContent(d: Partial<Template2Data>): boolean {
@@ -376,29 +371,23 @@ export default function Template2Layout({
           <ImgBox id={data.sec5Image2} sk="sec5Image2" l={258.58} t={4686.66} w={469} h={334} />
 
           {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-              SECTION 6 — image left, text right
+              SECTION 6
           ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-          <ImgBox id={data.sec6Image} sk="sec6Image" l={255} t={5561} w={705} h={589} />
-          <SecNum n="06" l={1075} t={5774} />
-          <H2 l={982} t={5820} w={418} size={32}>{data.sec6Headline}</H2>
-          <P l={982} t={5990} w={418}>{data.sec6Body1}</P>
-          <Quote l={982} t={6030} w={418}>{data.sec6Quote}</Quote>
+          <ImgBox id={data.sec6Image} sk="sec6Image" l={80} t={5560} w={469} h={334} />
+          <SecNum n="06" l={740} t={5400} />
+          <H2 l={540} t={5500} w={300} size={32}>{data.sec6Headline}</H2>
+          <P l={540} t={5650} w={220}>{data.sec6Body1}</P>
+          <P l={540} t={5850} w={220}>{data.sec6Body2}</P>
+          <ImgBox id={data.sec6Image2} sk="sec6Image2" l={780} t={5450} w={350} h={500} />
 
           {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-              SECTION 7 — three text columns, then image + conclusion
+              SECTION 7
           ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-          <P l={255} t={6176} w={214}>{data.sec7Col1}</P>
-          <P l={500} t={6176} w={213}>{data.sec7Col2}</P>
-          <P l={741} t={6176} w={220}>{data.sec7Col3}</P>
-
-          <SecNum n="07" l={769} t={6484} />
-          <ImgBox id={data.sec7Image} sk="sec7Image" l={833} t={6609} w={587} h={392} />
-          <H2 l={260} t={6533} w={509} size={32}>{data.sec7Headline}</H2>
-          <P l={260} t={6606} w={255}>{data.sec7Body1}</P>
-          <P l={546} t={6606} w={255}>{data.sec7Body2}</P>
-          <P l={260} t={6749} w={255}>{data.sec7Body3}</P>
-          <P l={546} t={6824} w={255}>{data.sec7Body4}</P>
-          <P l={255} t={6956} w={255}>{data.sec7Body5}</P>
+          <SecNum n="07" l={400} t={6000} />
+          <H2 l={80} t={6100} w={400} size={32}>{data.sec7Headline}</H2>
+          <P l={80} t={6200} w={200}>{data.sec7Body1}</P>
+          <P l={300} t={6200} w={200}>{data.sec7Body2}</P>
+          <ImgBox id={data.sec7Image} sk="sec7Image" l={780} t={6100} w={350} h={500} />
 
           {/* ━━ FOOTER ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
           {data.nextProjectTitle && (
