@@ -338,13 +338,15 @@ export default function Template2Layout({
           {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
               SECTION 3 — text left, image right
           ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-          <SecNum n="03" l={580} t={2900} />
-          <H2 l={100} t={2950} w={480}>{data.sec3Headline}</H2>
-          <P l={100} t={3050} w={220}>{data.sec3Body1}</P>
-          <P l={100} t={3180} w={220}>{data.sec3Body2}</P>
-          <Quote l={100} t={3250} w={480}>{data.sec3Quote}</Quote>
-          <P l={350} t={3380} w={200}>{data.sec3Body3}</P>
-          <ImgBox id={data.sec3Image} sk="sec3Image" l={600} t={2900} w={650} h={450} />
+          <SecNum n="03" l={683} t={2885} />
+          <H2 l={253} t={2940} w={448}>{data.sec3Headline}</H2>
+          <P l={253} t={3018} w={220}>{data.sec3Body1}</P>
+          <div style={{ position: 'absolute', left: 253, top: 3111, width: 432, display: 'flex', flexDirection: 'column', gap: 12 }}>
+            <P w={432}>{data.sec3Body2}</P>
+            <Quote w={432}>{data.sec3Quote}</Quote>
+          </div>
+          <P l={463} t={3262} w={220}>{data.sec3Body3}</P>
+          <ImgBox id={data.sec3Image} sk="sec3Image" l={745} t={2773} w={684} h={520} />
 
           {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
               SECTION 4 — image left, text blocks
