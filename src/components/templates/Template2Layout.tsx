@@ -387,8 +387,8 @@ export default function Template2Layout({
           <ImgBox id={data.sec7Image} sk="sec7Image" l={80} t={5450} w={469} h={178} />
           <SecNum n="07" l={520} t={5660} />
           <H2 l={80} t={5720} w={400} size={32}>{data.sec7Headline}</H2>
-          <P l={80} t={5820} w={220}>{data.sec7Body1}</P>
-          <P l={329} t={5820} w={220}>{data.sec7Body2}</P>
+          <P l={80} t={5900} w={220}>{data.sec7Body1}</P>
+          <P l={329} t={5900} w={220}>{data.sec7Body2}</P>
 
           {/* ━━ FOOTER ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
           {data.nextProjectTitle && (
