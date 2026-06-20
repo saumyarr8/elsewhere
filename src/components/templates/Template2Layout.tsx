@@ -373,22 +373,22 @@ export default function Template2Layout({
           {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
               SECTION 6
           ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-          <ImgBox id={data.sec6Image} sk="sec6Image" l={258.58} t={5450} w={469} h={334} />
-          
+          <ImgBox id={data.sec6Image} sk="sec6Image" l={80} t={5300} w={469} h={334} />
+
           <SecNum n="06" l={1075} t={5062.66} />
-          <H2 l={884.36} t={5111.17} w={220} size={32}>{data.sec6Headline}</H2>
-          <P l={884.36} t={5200} w={220}>{data.sec6Body1}</P>
-          <P l={884.36} t={5450} w={220}>{data.sec6Body2}</P>
+          <H2 l={830} t={5111.17} w={220} size={32}>{data.sec6Headline}</H2>
+          <P l={830} t={5220} w={220}>{data.sec6Body1}</P>
+          <P l={830} t={5420} w={220}>{data.sec6Body2}</P>
           <ImgBox id={data.sec6Image2} sk="sec6Image2" l={1132} t={5062.66} w={293} h={456} />
 
           {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
               SECTION 7
           ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-          <SecNum n="07" l={740} t={5850} />
-          <H2 l={258.58} t={5900} w={400} size={32}>{data.sec7Headline}</H2>
-          <P l={258.58} t={5980} w={220}>{data.sec7Body1}</P>
-          <P l={500} t={5980} w={220}>{data.sec7Body2}</P>
-          <ImgBox id={data.sec7Image} sk="sec7Image" l={1132} t={5980} w={293} h={262} />
+          <SecNum n="07" l={520} t={5660} />
+          <H2 l={80} t={5720} w={400} size={32}>{data.sec7Headline}</H2>
+          <P l={80} t={5820} w={220}>{data.sec7Body1}</P>
+          <P l={329} t={5820} w={220}>{data.sec7Body2}</P>
+          <ImgBox id={data.sec7Image} sk="sec7Image" l={1132} t={5720} w={293} h={300} />
 
           {/* ━━ FOOTER ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
           {data.nextProjectTitle && (
