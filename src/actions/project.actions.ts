@@ -33,12 +33,14 @@ export async function createProject(_prevState: { error?: string } | undefined, 
 
   const templateStr = formData.get('template') as string
   const template = (['TEMPLATE_1', 'TEMPLATE_2', 'TEMPLATE_3', 'TEMPLATE_4'].includes(templateStr) ? templateStr : 'TEMPLATE_1') as 'TEMPLATE_1' | 'TEMPLATE_2' | 'TEMPLATE_3' | 'TEMPLATE_4'
+  const categoryStr = formData.get('category') as string
+  const category = (['CULTURE', 'ADVENTURE'].includes(categoryStr) ? categoryStr : 'CULTURE') as 'CULTURE' | 'ADVENTURE'
 
   const existing = await prisma.project.findUnique({ where: { slug } })
   if (existing) return { error: 'A project with this slug already exists.' }
 
   const project = await prisma.project.create({
-    data: { title: title.trim(), slug, template },
+    data: { title: title.trim(), slug, template, category },
   })
 
   revalidatePath('/admin/projects')
@@ -124,6 +126,7 @@ export async function duplicateProject(id: string) {
       title: `${source.title} (Copy)`,
       slug: newSlug,
       description: source.description,
+      category: source.category,
       heroImageId: source.heroImageId,
       seoTitle: source.seoTitle,
       seoDescription: source.seoDescription,

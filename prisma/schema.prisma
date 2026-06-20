@@ -28,6 +28,7 @@ model Project {
   description String?   @db.Text
 
   template    ProjectTemplate @default(CUSTOM)
+  category    ProjectCategory @default(CULTURE)
   templateData Json?
 
   heroImageId String?
@@ -57,6 +58,11 @@ enum ProjectTemplate {
   TEMPLATE_2
   TEMPLATE_3
   TEMPLATE_4
+}
+
+enum ProjectCategory {
+  CULTURE
+  ADVENTURE
 }
 
 // ─── Content Blocks ───────────────────────────────────────────────────────────
@@ -179,4 +185,3 @@ model Note {
 
   @@index([published])
 }
-

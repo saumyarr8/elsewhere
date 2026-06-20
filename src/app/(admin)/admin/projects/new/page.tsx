@@ -45,6 +45,21 @@ export default function NewProjectPage() {
         </div>
 
         <div className="space-y-1">
+          <label htmlFor="category" className="block text-xs uppercase tracking-widest text-[var(--color-ink-muted)]">
+            Category
+          </label>
+          <select
+            id="category"
+            name="category"
+            className="w-full border border-[var(--color-border)] px-3 py-2.5 text-sm focus:outline-none focus:border-[var(--color-ink)] transition-colors bg-transparent appearance-none rounded-none"
+            defaultValue="CULTURE"
+          >
+            <option value="CULTURE">Culture</option>
+            <option value="ADVENTURE">Adventure</option>
+          </select>
+        </div>
+
+        <div className="space-y-1">
           <label htmlFor="template" className="block text-xs uppercase tracking-widest text-[var(--color-ink-muted)]">
             Template
           </label>
