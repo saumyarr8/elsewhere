@@ -366,13 +366,12 @@ export default function Template2Layout({
           {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
               SECTION 5 — large image right, text left
           ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-          <ImgBox id={data.sec5Image} sk="sec5Image" l={679} t={4813} w={748} h={554} />
-          <SecNum n="05" l={325} t={4954} />
-          <H2 l={247} t={5004} w={395} size={32}>{data.sec5Headline}</H2>
-          <P l={247} t={5172} w={395}>{data.sec5Body1}</P>
-          <Quote l={247} t={5205} w={395}>{data.sec5Quote}</Quote>
-          <P l={247} t={5394} w={220}>{data.sec5Body2}</P>
-          <P l={490} t={5394} w={220}>{data.sec5Body3}</P>
+          <SecNum n="05" l={392} t={4174} />
+          <H2 l={74} t={4230} w={335}>{data.sec5Headline}</H2>
+          <P l={74} t={4350} w={250}>{data.sec5Body1}</P>
+          <P l={354} t={4350} w={250}>{data.sec5Body2}</P>
+          <P l={74} t={4450} w={250}>{data.sec5Body3}</P>
+          <ImgBox id={data.sec5Image} sk="sec5Image" l={442} t={4015} w={520} h={588} />
 
           {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
               SECTION 6 — image left, text right
