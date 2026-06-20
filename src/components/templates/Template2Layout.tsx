@@ -84,7 +84,7 @@ export function hasContent(d: Partial<Template2Data>): boolean {
 const W = 1512
 const H = 7446
 
-const SECTION_STARTS = [1009, 1559, 2794, 3696, 4813, 5561, 6484]
+const SECTION_STARTS = [1009, 1559, 2794, 3696, 4263, 5062, 5340, 5964]
 
 const FOOTER_Y = 7042
 const F_NAV = 0
@@ -117,7 +117,16 @@ export default function Template2Layout({
     data.sec5Headline?.slice(0, 50) || 'Section 05',
     data.sec6Headline?.slice(0, 50) || 'Section 06',
     data.sec7Headline?.slice(0, 50) || 'Section 07',
+    data.sec8Headline?.slice(0, 50) || 'Section 08',
   ]
+
+  const handleScrollTo = (y: number) => {
+    if (isEditing && wrapperRef.current) {
+      wrapperRef.current.scrollTo({ top: y * scale, behavior: 'smooth' })
+    } else {
+      window.scrollTo({ top: y * scale, behavior: 'smooth' })
+    }
+  }
 
   useEffect(() => {
     const update = () => {
@@ -466,7 +475,7 @@ export default function Template2Layout({
               pointerEvents: 'auto',
             }}
           >
-            {SECTION_STARTS.map((_, i) => {
+            {SECTION_STARTS.map((y, i) => {
               const isHovered = hoveredIdx === i
               const isActive = i === activeIdx
               const fs = Math.max(9, 12 * scale)
@@ -475,7 +484,8 @@ export default function Template2Layout({
                   key={i}
                   onMouseEnter={() => setHoveredIdx(i)}
                   onMouseLeave={() => setHoveredIdx(null)}
-                  style={{ cursor: 'default' }}
+                  onClick={() => handleScrollTo(y)}
+                  style={{ cursor: 'pointer' }}
                 >
                   <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
                     {isHovered && (
