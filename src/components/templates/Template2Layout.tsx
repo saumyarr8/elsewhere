@@ -84,9 +84,9 @@ const H = 7946
 const SECTION_STARTS = [1009, 1559, 2794, 3696, 4813, 5561, 6484]
 
 const FOOTER_Y = 7542
-const F_NAV    = 0
-const F_MARK   = 200
-const F_SOC    = 442
+const F_NAV = 0
+const F_MARK = 200
+const F_SOC = 442
 
 // ─── Component ────────────────────────────────────────────────────────────────
 
@@ -202,22 +202,24 @@ export default function Template2Layout({
     )
   }
 
-  function H2({ children, l, t, w = 421, size = 22 }: { children?: string; l: number; t: number; w?: number; size?: number }) {
+  function H2({ children, l, t, w = 421, size = 22 }: { children?: string; l?: number; t?: number; w?: number; size?: number }) {
     if (!children) return null
     return (
       <div style={{
-        position: 'absolute', left: l, top: t, width: w,
+        ...(l !== undefined && t !== undefined ? { position: 'absolute', left: l, top: t } : { position: 'relative' }),
+        width: w,
         fontFamily: 'var(--font-serif, DM Sans)', fontWeight: 500, fontSize: size,
         color: '#1c1c1c', textTransform: 'uppercase', lineHeight: 'normal',
       }}>{children}</div>
     )
   }
 
-  function P({ children, l, t, w = 220, size = 14 }: { children?: string; l: number; t: number; w?: number; size?: number }) {
+  function P({ children, l, t, w = 220, size = 14 }: { children?: string; l?: number; t?: number; w?: number; size?: number }) {
     if (!children) return null
     return (
       <div style={{
-        position: 'absolute', left: l, top: t, width: w,
+        ...(l !== undefined && t !== undefined ? { position: 'absolute', left: l, top: t } : { position: 'relative' }),
+        width: w,
         fontFamily: 'var(--font-sans, Montserrat)', fontWeight: 400, fontSize: size,
         color: '#505050', textAlign: 'justify', lineHeight: 'normal',
         whiteSpace: 'pre-wrap', overflowWrap: 'break-word',
@@ -225,10 +227,13 @@ export default function Template2Layout({
     )
   }
 
-  function Quote({ children, l, t, w = 395 }: { children?: string; l: number; t: number; w?: number }) {
+  function Quote({ children, l, t, w = 395 }: { children?: string; l?: number; t?: number; w?: number }) {
     if (!children) return null
     return (
-      <div style={{ position: 'absolute', left: l, top: t, width: w }}>
+      <div style={{ 
+        ...(l !== undefined && t !== undefined ? { position: 'absolute', left: l, top: t } : { position: 'relative' }),
+        width: w 
+      }}>
         <svg width="30" height="26" viewBox="0 0 29.773 25.235" style={{ display: 'block', marginBottom: 8 }}>
           <path d="M0 25.235h12.95L19.427 0H6.477L0 25.235zm16.824 0H29.773L29.773 0H16.824L16.824 25.235z" fill="#1c1c1c" />
         </svg>
@@ -301,14 +306,20 @@ export default function Template2Layout({
           {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
               SECTION 1 — image left, text right
           ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-          <ImgBox id={data.sec1Image} sk="sec1Image" l={260} t={1009} w={579} h={475} />
+          <ImgBox id={data.sec1Image} sk="sec1Image" l={259} t={1009} w={648} h={416} />
           <SecNum n="01" l={1359} t={1009} />
-          <H2 l={871} t={1045} w={488}>{data.sec1Headline}</H2>
-          <P l={871} t={1115} w={488}>{data.sec1Body1}</P>
-          <Quote l={871} t={1155} w={520}>{data.sec1Quote}</Quote>
-          <P l={871} t={1265} w={488}>{data.sec1Body2}</P>
-          <Quote l={871} t={1305} w={520}>{data.sec1Quote2}</Quote>
-          <P l={871} t={1425} w={255}>{data.sec1Body3}</P>
+          
+          <div style={{ position: 'absolute', left: 928, top: 1050, width: 432, display: 'flex', flexDirection: 'column', gap: 24 }}>
+            <H2 w={432}>{data.sec1Headline}</H2>
+            <P w={432}>{data.sec1Body1}</P>
+            <Quote w={432}>{data.sec1Quote}</Quote>
+            <P w={432}>{data.sec1Body2}</P>
+            <Quote w={432}>{data.sec1Quote2}</Quote>
+          </div>
+
+          <div style={{ position: 'absolute', left: 928, top: 1425, width: 220 }}>
+            <P w={220}>{data.sec1Body3}</P>
+          </div>
 
           {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
               SECTION 2
