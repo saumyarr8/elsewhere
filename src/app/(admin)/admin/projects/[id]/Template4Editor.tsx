@@ -49,7 +49,10 @@ const SECTIONS: SectionDef[] = [
   {
     label: 'Section 03',
     desc: 'Landscape with quote',
-    images: [{ key: 'sec3Image', label: 'Image (684×520)', w: 684, h: 520 }],
+    images: [
+      { key: 'sec3Image', label: 'Image (684×520)', w: 684, h: 520 },
+      { key: 'sec3ImageB', label: 'Second Image (400×300)', w: 400, h: 300 }
+    ],
     fields: [
       { key: 'sec3Headline', label: 'Headline' },
       { key: 'sec3Body1', label: 'Body 1', multiline: true },
@@ -57,6 +60,8 @@ const SECTIONS: SectionDef[] = [
       { key: 'sec3Quote', label: 'Quote', multiline: true },
       { key: 'sec3Body3', label: 'Body 3', multiline: true },
       { key: 'sec3Body4', label: 'Body 4', multiline: true },
+      { key: 'sec3Body5', label: 'Body 5', multiline: true },
+      { key: 'sec3Body6', label: 'Body 6', multiline: true },
     ],
   },
   {

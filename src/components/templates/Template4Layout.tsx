@@ -283,7 +283,7 @@ export default function Template4Layout({
           <H2 l={621} t={2617.37} w={452.64}>{data.sec3Headline}</H2>
           <P l={621} t={2758.5} w={224}>{data.sec3Body1}</P>
           <P l={621} t={2989.73} w={224}>{data.sec3Body2}</P>
-          <Quote l={253} t={3960} w={432}>{data.sec3Quote}</Quote>
+          <Quote l={1086} t={3096.73} w={324}>{data.sec3Quote}</Quote>
           <P l={862} t={2757.5} w={224}>{data.sec3Body3}</P>
           <P l={862} t={2900} w={224}>{data.sec3Body4}</P>
 
@@ -294,8 +294,8 @@ export default function Template4Layout({
           <P l={763} t={4323} w={220}>{data.sec4Body1}</P>
           <P l={1011} t={4323} w={220}>{data.sec4Body2}</P>
           <P l={763} t={4533} w={392}>{data.sec4Body3}</P>
-          <Quote l={763} t={4572} w={458}>{data.sec4Quote}</Quote>
-          <P l={1011} t={4669} w={220}>{data.sec4Body4}</P>
+          <Quote l={1086} t={3096.73} w={324}>{data.sec4Quote}</Quote>
+          <P l={862} t={2873.73} w={224}>{data.sec4Body4}</P>
           <ImgBox id={data.sec4Image} sk="sec4Image" l={744} t={4852} w={685} h={589} />
 
           {/* ━━━━ SECTION 5 — headline + image + text */}
