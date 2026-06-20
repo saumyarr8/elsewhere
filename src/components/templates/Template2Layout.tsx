@@ -376,9 +376,9 @@ export default function Template2Layout({
           <ImgBox id={data.sec6Image} sk="sec6Image" l={80} t={5300} w={469} h={334} />
 
           <SecNum n="06" l={1075} t={5062.66} />
-          <H2 l={830} t={5111.17} w={220} size={32}>{data.sec6Headline}</H2>
-          <P l={830} t={5220} w={220}>{data.sec6Body1}</P>
-          <P l={830} t={5420} w={220}>{data.sec6Body2}</P>
+          <H2 l={884.36} t={5111.17} w={220}>{data.sec6Headline}</H2>
+          <P l={884.36} t={5181.68} w={220}>{data.sec6Body1}</P>
+          <P l={884.36} t={5420} w={220}>{data.sec6Body2}</P>
           <ImgBox id={data.sec6Image2} sk="sec6Image2" l={1132} t={5062.66} w={293} h={456} />
 
           {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
