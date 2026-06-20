@@ -58,6 +58,7 @@ export default function Template3Layout({
 }) {
   const flat = rawData.sections ? sectionsToFlat(rawData.sections) : {}
   const data = { ...rawData, ...flat } as Record<string, string | undefined>
+  const sectionCount = rawData.sections?.length ?? 0
   const [scale, setScale] = useState(1)
   const [activeIdx, setActiveIdx] = useState(0)
   const [sidebarVisible, setSidebarVisible] = useState(false)
@@ -279,6 +280,7 @@ export default function Template3Layout({
               {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
                   SECTION 1 — image left, text right
               ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+              {sectionCount > 0 && <>
               <ImgBox id={data.sec1Image} si="0" field="image1" l={80} t={1009} w={760} h={540} />
               <SecNum n="01" l={1400} t={1009} />
               <H2 l={880} t={1050} w={550}>{data.sec1Headline}</H2>
@@ -286,19 +288,23 @@ export default function Template3Layout({
               <P l={880} t={1290} w={260}>{data.sec1Body1}</P>
               <P l={1170} t={1290} w={260}>{data.sec1Body2}</P>
               <P l={880} t={1450} w={550}>{data.sec1Body3}</P>
+              </>}
 
               {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
                   SECTION 2 — multiple portraits (image-only)
               ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+              {sectionCount > 1 && <>
               <SecNum n="02" l={1150} t={1632} />
               <ImgBox id={data.sec2Image} si="1" field="image1" l={254} t={1568} w={695} h={492} />
               <ImgBox id={data.sec2ImageC} si="1" field="image3" l={1240} t={1962} w={193} h={354} />
               <ImgBox id={data.sec2ImageB} si="1" field="image2" l={254} t={2107} w={487} h={575} />
               <ImgBox id={data.sec3ImageSmall} si="2" field="image1" l={995} t={2328} w={193} h={354} />
+              </>}
 
               {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
                   SECTION 3 — landscape image, text left
               ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+              {sectionCount > 2 && <>
               <ImgBox id={data.sec3Image} si="2" field="image2" l={748} t={2773} w={684} h={520} />
               <SecNum n="03" l={686} t={2885} />
               <H2 l={255} t={2940} w={448}>{data.sec3Headline}</H2>
@@ -306,10 +312,12 @@ export default function Template3Layout({
               <P l={255} t={3111} w={432}>{data.sec3Body2}</P>
               <Quote l={255} t={3150} w={432}>{data.sec3Quote}</Quote>
               <P l={476} t={3264} w={220}>{data.sec3Body3}</P>
+              </>}
 
               {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
                   SECTION 4 — portraits, text
               ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+              {sectionCount > 3 && <>
               <ImgBox id={data.sec4ImageTall} si="3" field="image1" l={248} t={3387} w={499} h={616} />
               <SecNum n="04" l={1187} t={3438} />
               <H2 l={766} t={3438} w={308}>{data.sec4Headline}</H2>
@@ -318,10 +326,12 @@ export default function Template3Layout({
               <ImgBox id={data.sec4Image} si="3" field="image2" l={748} t={4042} w={685} h={589} />
               <P l={766} t={3723} w={220}>{data.sec4Body3}</P>
               <Quote l={766} t={3800} w={458}>{data.sec4Quote}</Quote>
+              </>}
 
               {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
                   SECTION 5 — text + image
               ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+              {sectionCount > 4 && <>
               <SecNum n="05" l={682} t={4264} />
               <H2 l={260} t={4299} w={347}>{data.sec5Headline}</H2>
               <P l={963} t={4300} w={220}>{data.sec5Body1}</P>
@@ -330,20 +340,24 @@ export default function Template3Layout({
               <ImgBox id={data.sec5Image} si="4" field="image1" l={260} t={4687} w={469} h={334} />
               <P l={260} t={5069} w={220}>{data.sec5Body3}</P>
               <P l={260} t={5169} w={220}>{data.sec5Body4}</P>
+              </>}
 
               {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
                   SECTION 6 — portraits + text
               ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+              {sectionCount > 5 && <>
               <SecNum n="06" l={1075} t={5063} />
               <ImgBox id={data.sec6Image} si="5" field="image1" l={1139} t={5063} w={293} h={456} />
               <H2 l={260} t={5063} w={220}>{data.sec6Headline}</H2>
               <P l={889} t={5063} w={220}>{data.sec6Body1}</P>
               <ImgBox id={data.sec6ImageB} si="5" field="image2" l={260} t={5341} w={469} h={178} />
               <P l={260} t={5169} w={600}>{data.sec6Body2}</P>
+              </>}
 
               {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
                   SECTION 7 — portraits + text
               ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+              {sectionCount > 6 && <>
               <SecNum n="07" l={692} t={5535} />
               <ImgBox id={data.sec7Image} si="6" field="image1" l={1139} t={5616} w={293} h={262} />
               <H2 l={261} t={5574} w={467}>{data.sec7Headline}</H2>
@@ -354,16 +368,19 @@ export default function Template3Layout({
               <ImgBox id={data.sec7ImageWide} si="6" field="image2" l={261} t={5965} w={688} h={589} />
               <P l={260} t={6594} w={220}>{data.sec7Body5}</P>
               <P l={519} t={6594} w={220}>{data.sec7Body6}</P>
+              </>}
 
               {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
                   SECTION 8 — text + conclusion
               ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+              {sectionCount > 7 && <>
               <SecNum n="08" l={1394} t={6115} />
               <H2 l={963} t={6158} w={421}>{data.sec8Headline}</H2>
               <P l={963} t={6243} w={220}>{data.sec8Body1}</P>
               <P l={1210} t={6243} w={220}>{data.sec8Body2}</P>
               <P l={963} t={6445} w={220}>{data.sec8Body3}</P>
               <P l={1210} t={6445} w={220}>{data.sec8Body4}</P>
+              </>}
             </>
           )}
 
