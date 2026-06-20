@@ -295,14 +295,13 @@ export default function Template3Layout({
           {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
               SECTION 1 — image left, text right
           ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-          <ImgBox id={data.sec1Image} sk="sec1Image" l={260} t={1009} w={648} h={416} />
-          <SecNum n="01" l={1338} t={1009} />
-          <H2 l={932} t={1050} w={432}>{data.sec1Headline}</H2>
-          <P l={932} t={1116} w={220}>{data.sec1Body1}</P>
-          <Quote l={932} t={1150} w={432}>{data.sec1Quote}</Quote>
-          <P l={932} t={1264} w={220}>{data.sec1Body2}</P>
-          <Quote l={932} t={1298} w={432}>{data.sec1Quote2}</Quote>
-          <P l={932} t={1425} w={220}>{data.sec1Body3}</P>
+          <ImgBox id={data.sec1Image} sk="sec1Image" l={80} t={1009} w={760} h={540} />
+          <SecNum n="01" l={1400} t={1009} />
+          <H2 l={880} t={1050} w={550}>{data.sec1Headline}</H2>
+          <Quote l={880} t={1180} w={550}>{data.sec1Quote}</Quote>
+          <P l={880} t={1290} w={260}>{data.sec1Body1}</P>
+          <P l={1170} t={1290} w={260}>{data.sec1Body2}</P>
+          <P l={880} t={1450} w={550}>{data.sec1Body3}</P>
 
           {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
               SECTION 2 — multiple portraits (image-only)
