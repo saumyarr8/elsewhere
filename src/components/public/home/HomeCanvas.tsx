@@ -57,7 +57,22 @@ export default function HomeCanvas({ projects }: { projects: HomeProject[] }) {
         overflow: 'hidden',
       }}>
 
-
+        {/* ── Filter bar ── */}
+        <div style={{ position: 'absolute', left: 80, top: 115, display: 'flex', alignItems: 'center', gap: 48 }}>
+          <p style={{ fontFamily: 'Montserrat, sans-serif', fontSize: 16, fontWeight: 600, textTransform: 'uppercase', color: '#1c1c1c', margin: 0 }}>
+            filter
+          </p>
+          <div style={{ display: 'flex', gap: 24, alignItems: 'center' }}>
+            {['Culture', 'Adventure'].map(tag => (
+              <div key={tag} style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
+                <img alt="remove" style={{ width: 7.8, height: 7.8 }} src="/icons/filter-close.svg" />
+                <p style={{ fontFamily: 'Montserrat, sans-serif', fontSize: 16, fontWeight: 400, textTransform: 'uppercase', color: '#1c1c1c', margin: 0 }}>
+                  {tag}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
 
         {/* ── Photo slots ── */}
         {SLOTS.map((slot, i) => {

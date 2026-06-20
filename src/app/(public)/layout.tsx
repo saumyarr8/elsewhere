@@ -4,7 +4,14 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
   return (
     <>
       {children}
-      <MusicPlayer />
+      <div style={{
+        position: 'fixed',
+        bottom: 32,
+        right: 32,
+        zIndex: 50,
+      }}>
+        <MusicPlayer />
+      </div>
     </>
   )
 }

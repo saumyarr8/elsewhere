@@ -37,7 +37,7 @@ export default async function HomePage() {
   return (
     <>
       <SiteNav />
-      <HomeCanvas projects={mapped} />
+      <HomeCanvas projects={[]} />
     </>
   )
 }
