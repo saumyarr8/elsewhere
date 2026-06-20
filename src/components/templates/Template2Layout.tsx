@@ -413,21 +413,21 @@ export default function Template2Layout({
             position: 'absolute', left: 663, top: FOOTER_Y + F_NAV, width: 769,
             display: 'flex', alignItems: 'center', justifyContent: 'space-between',
           }}>
-            <span style={{ fontFamily: 'var(--font-sans, Montserrat)', fontWeight: 700, fontSize: 16, color: '#ccc', textTransform: 'uppercase' }}>
+            <span style={{ fontFamily: 'var(--font-sans, Montserrat)', fontWeight: 700, fontSize: 10, letterSpacing: '0.05em', color: '#ccc', textTransform: 'uppercase' }}>
               Take me elsewhere
             </span>
             <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-              <span style={{ fontFamily: 'var(--font-sans, Montserrat)', fontWeight: 700, fontSize: 16, color: '#ccc', textTransform: 'uppercase' }}>
+              <span style={{ fontFamily: 'var(--font-sans, Montserrat)', fontWeight: 700, fontSize: 10, letterSpacing: '0.05em', color: '#ccc', textTransform: 'uppercase' }}>
                 {data.nextProjectTitle || 'NEXT PROJECT'}
               </span>
-              <span style={{ color: '#ccc', fontSize: 16, fontWeight: 700 }}>&gt;</span>
+              <span style={{ color: '#ccc', fontSize: 10, fontWeight: 700 }}>&gt;</span>
             </div>
           </div>
 
           <img
             src="/t1-wordmark.svg"
             alt=".elsewhere"
-            style={{ position: 'absolute', left: 80, top: FOOTER_Y + F_MARK, width: 1352, height: 216, display: 'block' }}
+            style={{ position: 'absolute', left: 256, top: FOOTER_Y + F_MARK, width: 1000, height: 160, display: 'block' }}
           />
 
           <div style={{
@@ -438,7 +438,7 @@ export default function Template2Layout({
               <img src="/t1-instagram.svg" alt="Instagram" width={20} height={20} style={{ display: 'block' }} />
               <img src="/t1-twitter.svg" alt="X / Twitter" width={20} height={20} style={{ display: 'block' }} />
             </div>
-            <span style={{ fontFamily: 'var(--font-sans, Montserrat)', fontWeight: 400, fontSize: 16, color: '#000' }}>@Copywrite</span>
+            <span style={{ fontFamily: 'var(--font-sans, Montserrat)', fontWeight: 400, fontSize: 12, color: '#000' }}>@Copywrite</span>
           </div>
 
         </div>
