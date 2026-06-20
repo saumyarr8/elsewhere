@@ -46,7 +46,8 @@ export type Template2Data = {
   sec4Quote?: string
   sec4Body1?: string
   sec4Body2?: string
-  sec4Quote2?: string
+  sec4Body3?: string
+  sec4Body4?: string
   // Section 5 text
   sec5Headline?: string
   sec5Body1?: string
@@ -351,13 +352,14 @@ export default function Template2Layout({
           {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
               SECTION 4 — image left, text blocks
           ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-          <ImgBox id={data.sec4Image} sk="sec4Image" l={249} t={3696} w={575} h={620} />
-          <SecNum n="04" l={1286} t={4060} />
-          <H2 l={855} t={4101} w={448}>{data.sec4Headline}</H2>
-          <Quote l={858} t={4261} w={518}>{data.sec4Quote}</Quote>
-          <P l={858} t={4397} w={255}>{data.sec4Body1}</P>
-          <P l={1138} t={4397} w={220}>{data.sec4Body2}</P>
-          <Quote l={858} t={4516} w={220}>{data.sec4Quote2}</Quote>
+          <ImgBox id={data.sec4Image} sk="sec4Image" l={100} t={3450} w={550} h={600} />
+          <H2 l={700} t={3450} w={400}>{data.sec4Headline}</H2>
+          <SecNum n="04" l={1200} t={3450} />
+          <P l={700} t={3600} w={220}>{data.sec4Body1}</P>
+          <P l={950} t={3600} w={220}>{data.sec4Body2}</P>
+          <P l={700} t={3800} w={470}>{data.sec4Body3}</P>
+          <Quote l={700} t={3900} w={470}>{data.sec4Quote}</Quote>
+          <P l={950} t={4050} w={220}>{data.sec4Body4}</P>
 
           {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
               SECTION 5 — large image right, text left
