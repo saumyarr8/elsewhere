@@ -352,14 +352,16 @@ export default function Template2Layout({
           {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
               SECTION 4 — image left, text blocks
           ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-          <ImgBox id={data.sec4Image} sk="sec4Image" l={100} t={3450} w={550} h={600} />
-          <H2 l={700} t={3450} w={400}>{data.sec4Headline}</H2>
-          <SecNum n="04" l={1200} t={3450} />
-          <P l={700} t={3600} w={220}>{data.sec4Body1}</P>
-          <P l={950} t={3600} w={220}>{data.sec4Body2}</P>
-          <P l={700} t={3800} w={470}>{data.sec4Body3}</P>
-          <Quote l={700} t={3900} w={470}>{data.sec4Quote}</Quote>
-          <P l={950} t={4050} w={220}>{data.sec4Body4}</P>
+          <ImgBox id={data.sec4Image} sk="sec4Image" l={248} t={3387} w={499} h={616} />
+          <H2 l={763} t={3438} w={308}>{data.sec4Headline}</H2>
+          <SecNum n="04" l={1181} t={3438} />
+          <P l={763} t={3513} w={220}>{data.sec4Body1}</P>
+          <P l={1012} t={3513} w={220}>{data.sec4Body2}</P>
+          <div style={{ position: 'absolute', left: 763, top: 3723, width: 458, display: 'flex', flexDirection: 'column', gap: 12 }}>
+            <P w={458}>{data.sec4Body3}</P>
+            <Quote w={458}>{data.sec4Quote}</Quote>
+          </div>
+          <P l={1012} t={3859} w={220}>{data.sec4Body4}</P>
 
           {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
               SECTION 5 — large image right, text left
