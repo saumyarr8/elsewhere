@@ -230,9 +230,9 @@ export default function Template2Layout({
   function Quote({ children, l, t, w = 395 }: { children?: string; l?: number; t?: number; w?: number }) {
     if (!children) return null
     return (
-      <div style={{ 
+      <div style={{
         ...(l !== undefined && t !== undefined ? { position: 'absolute', left: l, top: t } : { position: 'relative' }),
-        width: w 
+        width: w
       }}>
         <svg width="30" height="26" viewBox="0 0 29.773 25.235" style={{ display: 'block', marginBottom: 8 }}>
           <path d="M0 25.235h12.95L19.427 0H6.477L0 25.235zm16.824 0H29.773L29.773 0H16.824L16.824 25.235z" fill="#1c1c1c" />
@@ -308,7 +308,7 @@ export default function Template2Layout({
           ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
           <ImgBox id={data.sec1Image} sk="sec1Image" l={259} t={1009} w={648} h={416} />
           <SecNum n="01" l={1359} t={1009} />
-          
+
           <div style={{ position: 'absolute', left: 928, top: 1050, width: 432, display: 'flex', flexDirection: 'column', gap: 24 }}>
             <H2 w={432}>{data.sec1Headline}</H2>
             <P w={432}>{data.sec1Body1}</P>
@@ -366,12 +366,12 @@ export default function Template2Layout({
           {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
               SECTION 5 — large image right, text left
           ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-          <SecNum n="05" l={392} t={4174} />
-          <H2 l={74} t={4230} w={335}>{data.sec5Headline}</H2>
-          <P l={74} t={4350} w={250}>{data.sec5Body1}</P>
-          <P l={354} t={4350} w={250}>{data.sec5Body2}</P>
-          <P l={74} t={4450} w={250}>{data.sec5Body3}</P>
-          <ImgBox id={data.sec5Image} sk="sec5Image" l={442} t={4015} w={520} h={588} />
+          <SecNum n="05" l={678.6} t={4263.62} />
+          <H2 l={248} t={4200} w={400}>{data.sec5Headline}</H2>
+          <P l={248} t={4320} w={220}>{data.sec5Body1}</P>
+          <P l={500} t={4320} w={220}>{data.sec5Body2}</P>
+          <P l={248} t={4470} w={220}>{data.sec5Body3}</P>
+          <ImgBox id={data.sec5Image} sk="sec5Image" l={744} t={4042.16} w={685} h={589} />
 
           {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
               SECTION 6 — image left, text right
