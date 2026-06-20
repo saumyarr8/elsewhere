@@ -37,6 +37,9 @@ export type Template4Data = {
   sec3Quote?: string
   sec3Body3?: string
   sec3Body4?: string
+  sec3Body5?: string
+  sec3Body6?: string
+  sec3ImageB?: string
   sec4Headline?: string
   sec4Body1?: string
   sec4Body2?: string
