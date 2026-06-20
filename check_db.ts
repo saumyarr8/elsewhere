@@ -1,16 +1,10 @@
-import { PrismaClient } from './src/generated/prisma/client'
-
+import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 
 async function main() {
-  const images = await prisma.galleryImage.findMany({
-    include: { image: true },
-    orderBy: { order: 'asc' },
+  const projects = await prisma.project.findMany({
+    select: { slug: true, title: true }
   })
-  console.log('--- GALLERY IMAGES ---')
-  console.log(JSON.stringify(images, null, 2))
+  console.log(projects)
 }
-
 main()
-  .catch(console.error)
-  .finally(() => prisma.$disconnect())
