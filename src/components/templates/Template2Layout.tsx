@@ -12,7 +12,10 @@ export type Template2Data = {
   camera?: string
   heroImage?: string     // 1352 × 671
   sec1Image?: string     // 579 × 475  — section 1 left
-  sec2Image?: string     // 588 × 492  — section 2 right
+  sec2Image1?: string
+  sec2Image2?: string
+  sec2Image3?: string
+  sec2Image4?: string
   sec3Image?: string     // 1062 × 575 — section 3 wide
   sec4Image?: string     // 575 × 620  — section 4 left
   sec5Image?: string     // 748 × 554  — section 5 large
@@ -70,17 +73,17 @@ export type Template2Data = {
 }
 
 export function hasContent(d: Partial<Template2Data>): boolean {
-  return !!(d.heroImage || d.sec1Image || d.sec2Image)
+  return !!(d.heroImage || d.sec1Image || d.sec2Image1)
 }
 
 // ─── Canvas constants (W=1512, H=7446) ───────────────────────────────────────
 
 const W = 1512
-const H = 7446
+const H = 7946
 
-const SECTION_STARTS = [1009, 1559, 2294, 3196, 4313, 5061, 5984]
+const SECTION_STARTS = [1009, 1559, 2794, 3696, 4813, 5561, 6484]
 
-const FOOTER_Y = 7042
+const FOOTER_Y = 7542
 const F_NAV    = 0
 const F_MARK   = 200
 const F_SOC    = 442
@@ -308,75 +311,78 @@ export default function Template2Layout({
           <P l={871} t={1425} w={255}>{data.sec1Body3}</P>
 
           {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-              SECTION 2 — image right, text left
+              SECTION 2
           ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-          <ImgBox id={data.sec2Image} sk="sec2Image" l={841} t={1559} w={588} h={492} />
-          <SecNum n="02" l={746} t={1635} />
-          <H2 l={354} t={1671} w={380}>{data.sec2Headline}</H2>
-          <P l={354} t={1756} w={220}>{data.sec2Body1}</P>
-          <P l={596} t={1756} w={220}>{data.sec2Body2}</P>
-          <P l={352} t={2055} w={227}>{data.sec2Body3}</P>
-          <Quote l={352} t={2088} w={220}>{data.sec2Quote}</Quote>
-          <P l={597} t={2055} w={220}>{data.sec2Body4}</P>
+          <ImgBox id={data.sec2Image1} sk="sec2Image1" l={80} t={1560} w={830} h={600} />
+          <SecNum n="02" l={1350} t={1560} />
+          <H2 l={950} t={1650} w={400}>{data.sec2Headline}</H2>
+          <P l={950} t={1750} w={400}>{data.sec2Body1}</P>
+
+          <ImgBox id={data.sec2Image3} sk="sec2Image3" l={1250} t={2050} w={200} h={300} />
+          <P l={950} t={2050} w={260}>{data.sec2Body2}</P>
+
+          <ImgBox id={data.sec2Image2} sk="sec2Image2" l={80} t={2220} w={550} h={550} />
+          <ImgBox id={data.sec2Image4} sk="sec2Image4" l={950} t={2950} w={220} h={330} />
+          <P l={680} t={2950} w={240}>{data.sec2Body3}</P>
 
           {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
               SECTION 3 — wide image, text right
           ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-          <ImgBox id={data.sec3Image} sk="sec3Image" l={249} t={2294} w={1062} h={575} />
-          <SecNum n="03" l={1279} t={2888} />
-          <H2 l={855} t={2934} w={380}>{data.sec3Headline}</H2>
-          <P l={855} t={3009} w={220}>{data.sec3Body1}</P>
-          <P l={1095} t={3009} w={220}>{data.sec3Body2}</P>
-          <P l={1095} t={3189} w={220}>{data.sec3Body3}</P>
-          <P l={855} t={3223} w={220}>{data.sec3Body4}</P>
-          <P l={1095} t={3321} w={220}>{data.sec3Body5}</P>
+          <ImgBox id={data.sec3Image} sk="sec3Image" l={249} t={2794} w={1062} h={575} />
+          <SecNum n="03" l={1279} t={3388} />
+          <H2 l={855} t={3434} w={380}>{data.sec3Headline}</H2>
+          <P l={855} t={3509} w={220}>{data.sec3Body1}</P>
+          <P l={1095} t={3509} w={220}>{data.sec3Body2}</P>
+          <P l={1095} t={3689} w={220}>{data.sec3Body3}</P>
+          <P l={855} t={3723} w={220}>{data.sec3Body4}</P>
+          <P l={1095} t={3821} w={220}>{data.sec3Body5}</P>
 
           {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
               SECTION 4 — image left, text blocks
           ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-          <ImgBox id={data.sec4Image} sk="sec4Image" l={249} t={3196} w={575} h={620} />
-          <SecNum n="04" l={1286} t={3560} />
-          <H2 l={855} t={3601} w={448}>{data.sec4Headline}</H2>
-          <Quote l={858} t={3761} w={518}>{data.sec4Quote}</Quote>
-          <P l={858} t={3897} w={255}>{data.sec4Body1}</P>
-          <P l={1138} t={3897} w={220}>{data.sec4Body2}</P>
-          <Quote l={858} t={4016} w={220}>{data.sec4Quote2}</Quote>
+          <ImgBox id={data.sec4Image} sk="sec4Image" l={249} t={3696} w={575} h={620} />
+          <SecNum n="04" l={1286} t={4060} />
+          <H2 l={855} t={4101} w={448}>{data.sec4Headline}</H2>
+          <Quote l={858} t={4261} w={518}>{data.sec4Quote}</Quote>
+          <P l={858} t={4397} w={255}>{data.sec4Body1}</P>
+          <P l={1138} t={4397} w={220}>{data.sec4Body2}</P>
+          <Quote l={858} t={4516} w={220}>{data.sec4Quote2}</Quote>
 
           {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
               SECTION 5 — large image right, text left
           ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-          <ImgBox id={data.sec5Image} sk="sec5Image" l={679} t={4313} w={748} h={554} />
-          <SecNum n="05" l={325} t={4454} />
-          <H2 l={247} t={4504} w={395} size={32}>{data.sec5Headline}</H2>
-          <P l={247} t={4672} w={395}>{data.sec5Body1}</P>
-          <Quote l={247} t={4705} w={395}>{data.sec5Quote}</Quote>
-          <P l={247} t={4894} w={220}>{data.sec5Body2}</P>
-          <P l={490} t={4894} w={220}>{data.sec5Body3}</P>
+          <ImgBox id={data.sec5Image} sk="sec5Image" l={679} t={4813} w={748} h={554} />
+          <SecNum n="05" l={325} t={4954} />
+          <H2 l={247} t={5004} w={395} size={32}>{data.sec5Headline}</H2>
+          <P l={247} t={5172} w={395}>{data.sec5Body1}</P>
+          <Quote l={247} t={5205} w={395}>{data.sec5Quote}</Quote>
+          <P l={247} t={5394} w={220}>{data.sec5Body2}</P>
+          <P l={490} t={5394} w={220}>{data.sec5Body3}</P>
 
           {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
               SECTION 6 — image left, text right
           ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-          <ImgBox id={data.sec6Image} sk="sec6Image" l={255} t={5061} w={705} h={589} />
-          <SecNum n="06" l={1075} t={5274} />
-          <H2 l={982} t={5320} w={418} size={32}>{data.sec6Headline}</H2>
-          <P l={982} t={5490} w={418}>{data.sec6Body1}</P>
-          <Quote l={982} t={5530} w={418}>{data.sec6Quote}</Quote>
+          <ImgBox id={data.sec6Image} sk="sec6Image" l={255} t={5561} w={705} h={589} />
+          <SecNum n="06" l={1075} t={5774} />
+          <H2 l={982} t={5820} w={418} size={32}>{data.sec6Headline}</H2>
+          <P l={982} t={5990} w={418}>{data.sec6Body1}</P>
+          <Quote l={982} t={6030} w={418}>{data.sec6Quote}</Quote>
 
           {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
               SECTION 7 — three text columns, then image + conclusion
           ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-          <P l={255} t={5676} w={214}>{data.sec7Col1}</P>
-          <P l={500} t={5676} w={213}>{data.sec7Col2}</P>
-          <P l={741} t={5676} w={220}>{data.sec7Col3}</P>
+          <P l={255} t={6176} w={214}>{data.sec7Col1}</P>
+          <P l={500} t={6176} w={213}>{data.sec7Col2}</P>
+          <P l={741} t={6176} w={220}>{data.sec7Col3}</P>
 
-          <SecNum n="07" l={769} t={5984} />
-          <ImgBox id={data.sec7Image} sk="sec7Image" l={833} t={6109} w={587} h={392} />
-          <H2 l={260} t={6033} w={509} size={32}>{data.sec7Headline}</H2>
-          <P l={260} t={6106} w={255}>{data.sec7Body1}</P>
-          <P l={546} t={6106} w={255}>{data.sec7Body2}</P>
-          <P l={260} t={6249} w={255}>{data.sec7Body3}</P>
-          <P l={546} t={6324} w={255}>{data.sec7Body4}</P>
-          <P l={255} t={6456} w={255}>{data.sec7Body5}</P>
+          <SecNum n="07" l={769} t={6484} />
+          <ImgBox id={data.sec7Image} sk="sec7Image" l={833} t={6609} w={587} h={392} />
+          <H2 l={260} t={6533} w={509} size={32}>{data.sec7Headline}</H2>
+          <P l={260} t={6606} w={255}>{data.sec7Body1}</P>
+          <P l={546} t={6606} w={255}>{data.sec7Body2}</P>
+          <P l={260} t={6749} w={255}>{data.sec7Body3}</P>
+          <P l={546} t={6824} w={255}>{data.sec7Body4}</P>
+          <P l={255} t={6956} w={255}>{data.sec7Body5}</P>
 
           {/* ━━ FOOTER ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
           {data.nextProjectTitle && (
