@@ -261,25 +261,21 @@ export default function Template4Layout({
           </div>
 
           {/* ━━━━ SECTION 1 — image left, text right */}
-          <ImgBox id={data.sec1Image} sk="sec1Image" l={259} t={1009} w={648} h={416} />
+          <ImgBox id={data.sec1Image} sk="sec1Image" l={254} t={1012} w={691} h={554} />
           <SecNum n="01" l={1332} t={1009} />
-          <H2 l={928} t={1050} w={432}>{data.sec1Headline}</H2>
-          <P l={928} t={1116} w={220}>{data.sec1Body1}</P>
-          <Quote l={928} t={1155} w={432}>{data.sec1Quote}</Quote>
-          <P l={928} t={1300} w={220}>{data.sec1Body2}</P>
-          <Quote l={928} t={1340} w={432}>{data.sec1Quote2}</Quote>
-          <P l={928} t={1830} w={220}>{data.sec1Body3}</P>
-
+          <H2 l={964.33} t={1239.12} w={398.58}>{data.sec1Headline}</H2>
+          <P l={964.33} t={1364.48} w={220}>{data.sec1Body1}</P>
+          <P l={1212.49} t={1364.48} w={220}>{data.sec1Body2}</P>
           {/* ━━━━ SECTION 2 — images + text */}
-          <ImgBox id={data.sec2Image} sk="sec2Image" l={253} t={1973} w={695} h={492} />
-          <SecNum n="02" l={1144} t={2037} />
-          <H2 l={961} t={2102} w={215}>{data.sec2Headline}</H2>
-          <P l={961} t={2171} w={220}>{data.sec2Body1}</P>
-          <ImgBox id={data.sec2ImageC} sk="sec2ImageC" l={1132} t={2367} w={193} h={354} />
-          <P l={963} t={2367} w={160}>{data.sec2Body2}</P>
-          <ImgBox id={data.sec2ImageB} sk="sec2ImageB" l={253} t={2512} w={487} h={575} />
+          <ImgBox id={data.sec2Image} sk="sec2Image" l={80} t={1676} w={600} h={800} />
+          <SecNum n="02" l={1320} t={1676} />
+          <H2 l={720} t={1740} w={640}>{data.sec2Headline}</H2>
+          <P l={720} t={1880} w={300}>{data.sec2Body1}</P>
+          <P l={1060} t={1880} w={300}>{data.sec2Body2}</P>
+          <ImgBox id={data.sec2ImageC} sk="sec2ImageC" l={1060} t={2230} w={300} h={200} />
+          <ImgBox id={data.sec2ImageB} sk="sec2ImageB" l={720} t={2480} w={550} h={400} />
+          <P l={1300} t={2480} w={180}>{data.sec2Body3}</P>
           <ImgBox id={data.sec3ImageSmall} sk="sec3ImageSmall" l={990} t={2733} w={193} h={354} />
-          <P l={754} t={2885} w={220}>{data.sec2Body3}</P>
 
           {/* ━━━━ SECTION 3 — landscape + text */}
           <ImgBox id={data.sec3Image} sk="sec3Image" l={259} t={3178} w={684} h={520} />
