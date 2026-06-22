@@ -154,9 +154,9 @@ export default function SiteNav() {
                   
                   <div className="flex gap-6 text-[11px] text-[var(--color-ink-muted)] uppercase tracking-[0.1em] font-sans font-medium items-center">
                     <span className="cursor-pointer hover:opacity-70 transition-opacity">Open Rolls</span>
-                    <span className="flex items-center gap-2 cursor-pointer hover:opacity-70 transition-opacity">
+                    <Link href="/about" onClick={() => setMenuOpen(false)} className="flex items-center gap-2 cursor-pointer hover:opacity-70 transition-opacity no-underline text-current">
                       The Author <span className="w-1.5 h-1.5 bg-current"></span>
-                    </span>
+                    </Link>
                   </div>
                 </div>
                 
