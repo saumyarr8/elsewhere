@@ -13,31 +13,31 @@ export default async function HomePage() {
       title: true,
       template: true,
       templateData: true,
+      category: true,
       heroImage: { select: { cloudinaryId: true } },
     },
     orderBy: { publishedAt: 'asc' },
-    take: 11,
   }).catch(() => [])
 
   const mapped: HomeProject[] = projects.map((p) => {
     let heroImageId: string | null = null
 
-    if (p.template === 'TEMPLATE_1' && p.templateData) {
+    if (p.templateData) {
       const data = typeof p.templateData === 'string'
         ? JSON.parse(p.templateData)
         : p.templateData as Record<string, unknown>
-      heroImageId = (data.heroImage as string | undefined) ?? null
+      heroImageId = (data.heroImage as string | undefined) ?? p.heroImage?.cloudinaryId ?? null
     } else {
       heroImageId = p.heroImage?.cloudinaryId ?? null
     }
 
-    return { slug: p.slug, title: p.title, heroImageId }
+    return { slug: p.slug, title: p.title, heroImageId, category: p.category }
   })
 
   return (
     <>
       <SiteNav />
-      <HomeCanvas projects={[]} />
+      <HomeCanvas projects={mapped} />
     </>
   )
 }
