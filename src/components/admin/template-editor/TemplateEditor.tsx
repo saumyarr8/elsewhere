@@ -127,6 +127,9 @@ export default function TemplateEditor({ project, patterns, Layout, showTitleLig
 
   const [title, setTitle] = useState(project.title)
   const [slug, setSlug] = useState(project.slug)
+  const [category, setCategory] = useState<'CULTURE' | 'ADVENTURE' | ''>(
+    (project as Record<string, unknown>).category as 'CULTURE' | 'ADVENTURE' | '' ?? ''
+  )
   const [templateData, setTemplateData] = useState<Partial<TemplateData>>(() => {
     const raw = project.templateData
       ? (typeof project.templateData === 'string'
@@ -177,7 +180,7 @@ export default function TemplateEditor({ project, patterns, Layout, showTitleLig
 
   function handleSave() {
     startSave(async () => {
-      const res = await updateProject(project.id, { title, slug, templateData })
+      const res = await updateProject(project.id, { title, slug, templateData, category: category || null })
       if (res?.error) setError(res.error)
       else { setError(null); setSaved(true); setTimeout(() => setSaved(false), 2000) }
     })
@@ -252,6 +255,18 @@ export default function TemplateEditor({ project, patterns, Layout, showTitleLig
                 <div className="space-y-1">
                   <label className="text-[10px] uppercase tracking-widest text-gray-400">URL Slug</label>
                   <input value={slug} onChange={e => setSlug(e.target.value)} className={`${inputCls} font-mono text-xs`} placeholder="my-project" />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-[10px] uppercase tracking-widest text-gray-400">Category</label>
+                  <select
+                    value={category}
+                    onChange={e => setCategory(e.target.value as 'CULTURE' | 'ADVENTURE' | '')}
+                    className={`${inputCls} bg-transparent`}
+                  >
+                    <option value="">None</option>
+                    <option value="CULTURE">Culture</option>
+                    <option value="ADVENTURE">Adventure</option>
+                  </select>
                 </div>
                 {showTitleLight && (
                   <div className="space-y-1">

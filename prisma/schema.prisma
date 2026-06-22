@@ -29,6 +29,7 @@ model Project {
 
   template    ProjectTemplate @default(CUSTOM)
   templateData Json?
+  category    ProjectCategory?
 
   heroImageId String?
   heroImage   MediaAsset? @relation("ProjectHero", fields: [heroImageId], references: [id], onDelete: SetNull)
@@ -57,6 +58,11 @@ enum ProjectTemplate {
   TEMPLATE_2
   TEMPLATE_3
   TEMPLATE_4
+}
+
+enum ProjectCategory {
+  CULTURE
+  ADVENTURE
 }
 
 // ─── Content Blocks ───────────────────────────────────────────────────────────
