@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { prisma } from '@/lib/prisma'
-import { deleteProject, duplicateProject, publishProject, unpublishProject } from '@/actions/project.actions'
+import { deleteProject, publishProject, unpublishProject } from '@/actions/project.actions'
 import DeleteButton from './DeleteButton'
 
 export const metadata = { title: 'Projects' }
@@ -68,12 +68,6 @@ export default async function ProjectsPage() {
                     </button>
                   </form>
                 )}
-
-                <form action={duplicateProject.bind(null, p.id)}>
-                  <button type="submit" className="text-xs text-[var(--color-ink-muted)] hover:text-[var(--color-ink)] transition-colors">
-                    Duplicate
-                  </button>
-                </form>
 
                 {p.published && (
                   <Link
