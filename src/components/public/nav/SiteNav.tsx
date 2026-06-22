@@ -7,7 +7,6 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { getNavProjects } from '@/actions/nav.actions'
 
 const PAGE_LABELS: Record<string, string> = {
-  '/': 'Projects',
   '/gallery': 'Gallery',
   '/about': 'About Me',
 }
