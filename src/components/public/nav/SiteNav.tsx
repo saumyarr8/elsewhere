@@ -99,16 +99,19 @@ export default function SiteNav() {
       <AnimatePresence>
         {menuOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-30 flex items-center justify-center bg-[var(--color-paper)]/95 backdrop-blur-2xl"
+            className="fixed inset-0 z-30 backdrop-blur-xl"
             id="site-menu"
+            onClick={() => setMenuOpen(false)}
           >
-            <div className="w-full max-w-6xl mx-auto px-10 grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-32">
-              {/* Left Column: Menu */}
-              <div className="flex flex-col items-start md:pl-20">
+            <div
+              className="absolute right-0 top-0 pt-20 pr-10 md:pr-20 pl-10 pb-10 max-w-md w-full h-full overflow-y-auto"
+              onClick={e => e.stopPropagation()}
+            >
+              <div className="flex items-center justify-between mb-6">
                 <h2 style={{
                   fontFamily: 'var(--font-sans)',
                   fontSize: 14,
@@ -116,62 +119,47 @@ export default function SiteNav() {
                   textTransform: 'uppercase',
                   color: 'var(--color-ink)',
                   letterSpacing: '0.05em',
-                  marginBottom: '2rem'
-                }}>Menu</h2>
-                {/* The main links have been removed per the user's request */}
+                  margin: 0,
+                }}>Stories</h2>
+
+                <div className="flex gap-6 text-[11px] text-[var(--color-ink-muted)] uppercase tracking-[0.1em] font-sans font-medium items-center">
+                  <span className="cursor-pointer hover:opacity-70 transition-opacity">Open Rolls</span>
+                  <Link href="/about" onClick={() => setMenuOpen(false)} className="flex items-center gap-2 cursor-pointer hover:opacity-70 transition-opacity no-underline text-current">
+                    The Author <span className="w-1.5 h-1.5 bg-current"></span>
+                  </Link>
+                </div>
               </div>
 
-              {/* Right Column: Stories */}
-              <div className="flex flex-col items-start w-full md:pr-10">
-                <div className="flex items-center justify-between w-full mb-8">
-                  <h2 style={{
-                    fontFamily: 'var(--font-sans)',
-                    fontSize: 14,
-                    fontWeight: 700,
-                    textTransform: 'uppercase',
-                    color: 'var(--color-ink)',
-                    letterSpacing: '0.05em',
-                  }}>Stories</h2>
-                  
-                  <div className="flex gap-6 text-[11px] text-[var(--color-ink-muted)] uppercase tracking-[0.1em] font-sans font-medium items-center">
-                    <span className="cursor-pointer hover:opacity-70 transition-opacity">Open Rolls</span>
-                    <Link href="/about" onClick={() => setMenuOpen(false)} className="flex items-center gap-2 cursor-pointer hover:opacity-70 transition-opacity no-underline text-current">
-                      The Author <span className="w-1.5 h-1.5 bg-current"></span>
+              <nav className="flex flex-col space-y-3">
+                {isLoading ? (
+                  <p style={{ fontFamily: 'var(--font-sans)', fontSize: '18px', color: 'var(--color-ink-muted)' }}>
+                    Loading stories...
+                  </p>
+                ) : stories.length === 0 ? (
+                  <p style={{ fontFamily: 'var(--font-sans)', fontSize: '18px', color: 'var(--color-ink-muted)' }}>
+                    No stories found.
+                  </p>
+                ) : (
+                  stories.map((story) => (
+                    <Link
+                      key={story.slug}
+                      href={`/${story.slug}`}
+                      onClick={() => setMenuOpen(false)}
+                      className="hover:opacity-50 transition-opacity group flex items-center gap-3"
+                      style={{
+                        fontFamily: 'var(--font-sans)',
+                        fontSize: '18px',
+                        color: 'var(--color-ink-muted)',
+                        textDecoration: 'none',
+                        fontWeight: 400,
+                      }}
+                    >
+                      <span className="w-2 h-2 border border-current flex-shrink-0 group-hover:bg-current transition-colors"></span>
+                      <span className="truncate">{story.title}</span>
                     </Link>
-                  </div>
-                </div>
-                
-                <nav className="flex flex-col space-y-3 w-full">
-                  {isLoading ? (
-                    <p style={{ fontFamily: 'var(--font-sans)', fontSize: '18px', color: 'var(--color-ink-muted)' }}>
-                      Loading stories...
-                    </p>
-                  ) : stories.length === 0 ? (
-                    <p style={{ fontFamily: 'var(--font-sans)', fontSize: '18px', color: 'var(--color-ink-muted)' }}>
-                      No stories found.
-                    </p>
-                  ) : (
-                    stories.map((story) => (
-                      <Link
-                        key={story.slug}
-                        href={`/${story.slug}`}
-                        onClick={() => setMenuOpen(false)}
-                        className="block hover:opacity-50 transition-opacity group flex items-center gap-3 w-full"
-                        style={{
-                          fontFamily: 'var(--font-sans)',
-                          fontSize: '18px',
-                          color: 'var(--color-ink-muted)',
-                          textDecoration: 'none',
-                          fontWeight: 400
-                        }}
-                      >
-                        <span className="w-2 h-2 border border-current flex-shrink-0 group-hover:bg-current transition-colors"></span>
-                        <span className="truncate">{story.title}</span>
-                      </Link>
-                    ))
-                  )}
-                </nav>
-              </div>
+                  ))
+                )}
+              </nav>
             </div>
           </motion.div>
         )}
