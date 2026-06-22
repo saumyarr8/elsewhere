@@ -66,7 +66,7 @@ export default function SiteNav() {
             style={{
               fontFamily: 'var(--font-sans)',
               fontSize: 16,
-              fontWeight: 500,
+              fontWeight: menuOpen ? 700 : 500,
               textTransform: 'uppercase',
               color: 'var(--color-ink)',
               letterSpacing: '0.01em',
@@ -76,21 +76,22 @@ export default function SiteNav() {
               display: 'flex',
               alignItems: 'center',
               gap: 6,
+              transition: 'font-weight 0.2s',
             }}
             aria-label="Toggle menu"
             aria-expanded={menuOpen}
             aria-controls="site-menu"
           >
-            {menuOpen ? 'Close' : 'Menu'}
-            {!menuOpen && (
-              <span style={{
-                display: 'inline-block',
-                width: 8,
-                height: 8,
-                border: '1px solid var(--color-ink)',
-                flexShrink: 0,
-              }} aria-hidden="true" />
-            )}
+            Menu
+            <span style={{
+              display: 'inline-block',
+              width: 8,
+              height: 8,
+              border: '1px solid var(--color-ink)',
+              background: menuOpen ? 'var(--color-ink)' : 'transparent',
+              flexShrink: 0,
+              transition: 'background 0.2s',
+            }} aria-hidden="true" />
           </button>
         </div>
       </header>
@@ -105,25 +106,6 @@ export default function SiteNav() {
             className="fixed inset-0 z-30 flex items-center justify-center bg-[var(--color-paper)]/95 backdrop-blur-2xl"
             id="site-menu"
           >
-            <button
-              onClick={() => setMenuOpen(false)}
-              style={{
-                position: 'absolute',
-                top: 20,
-                right: 40,
-                fontFamily: 'var(--font-sans)',
-                fontSize: 16,
-                fontWeight: 500,
-                textTransform: 'uppercase',
-                color: 'var(--color-ink-muted)',
-                background: 'none',
-                border: 'none',
-                cursor: 'pointer',
-              }}
-            >
-              Close
-            </button>
-
             <div className="w-full max-w-6xl mx-auto px-10 grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-32">
               {/* Left Column: Menu */}
               <div className="flex flex-col items-start md:pl-20">
