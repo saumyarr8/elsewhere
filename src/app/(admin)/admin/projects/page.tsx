@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { prisma } from '@/lib/prisma'
 import { deleteProject, duplicateProject, publishProject, unpublishProject } from '@/actions/project.actions'
+import DeleteButton from './DeleteButton'
 
 export const metadata = { title: 'Projects' }
 
@@ -23,7 +24,7 @@ export default async function ProjectsPage() {
         </h1>
         <Link
           href="/admin/projects/new"
-          className="px-4 py-2 bg-[var(--color-ink)] text-[var(--color-paper)] text-xs uppercase tracking-widest hover:opacity-80 transition-opacity"
+          className="px-4 py-2 bg-black text-white text-xs uppercase tracking-widest hover:bg-gray-800 transition-colors"
         >
           New Project
         </Link>
@@ -90,6 +91,8 @@ export default async function ProjectsPage() {
                 >
                   Edit
                 </Link>
+
+                <DeleteButton projectId={p.id} />
               </div>
             </div>
           ))}
