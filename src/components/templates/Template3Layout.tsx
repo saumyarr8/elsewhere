@@ -392,7 +392,7 @@ export default function Template3Layout({
       </div>
 
       {viewMode === 'photos' && (
-        <CanvasPhotosView imageIds={allImageIds} />
+        <CanvasPhotosView imageIds={allImageIds} nextProject={data.nextProjectSlug ? { slug: data.nextProjectSlug, title: '' } : null} />
       )}
 
       {/* ━━ SIDEBAR ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}

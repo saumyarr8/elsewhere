@@ -458,7 +458,7 @@ export default function Template1Layout({ data, isEditing, onImageSelect }: Prop
     </div>
 
     {viewMode === 'photos' && (
-      <CanvasPhotosView imageIds={allImageIds} />
+      <CanvasPhotosView imageIds={allImageIds} nextProject={d?.nextProjectSlug ? { slug: d.nextProjectSlug, title: '' } : null} />
     )}
 
     {!isEditing && viewMode === 'story' && (

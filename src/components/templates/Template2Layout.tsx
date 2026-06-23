@@ -403,7 +403,7 @@ export default function Template2Layout({
       </div>
 
       {viewMode === 'photos' && (
-        <CanvasPhotosView imageIds={allImageIds} />
+        <CanvasPhotosView imageIds={allImageIds} nextProject={data.nextProjectSlug ? { slug: data.nextProjectSlug, title: '' } : null} />
       )}
 
       {/* ━━ SIDEBAR (public mode only) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
