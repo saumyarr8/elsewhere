@@ -4,7 +4,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { type Section, type TemplateData } from '@/components/admin/template-editor/shared'
 import CanvasFooter from './CanvasFooter'
 import CanvasSidebar from './CanvasSidebar'
-import CanvasPhotosView, { photosViewHeight } from './CanvasPhotosView'
+import CanvasPhotosView from './CanvasPhotosView'
 
 export type Template2Data = TemplateData
 
@@ -81,9 +81,8 @@ export default function Template2Layout({
     data.sec6Image, data.sec6Image2, data.sec7Image, data.sec8Image,
   ].filter((id): id is string => !!id)
 
-  const CONTENT_TOP = SECTION_STARTS[0]
-  const photosFooterY = CONTENT_TOP + photosViewHeight(allImageIds.length, W) + 60
-  const effectiveH = viewMode === 'photos' ? photosFooterY + 580 : H
+  const HEADER_END = 996
+  const effectiveH = viewMode === 'photos' ? HEADER_END : H
 
   const handleScrollTo = useCallback((y: number) => {
     if (isEditing && wrapperRef.current) {
@@ -299,9 +298,7 @@ export default function Template2Layout({
             >Story</span>
           </div>
 
-          {viewMode === 'photos' ? (
-            <CanvasPhotosView imageIds={allImageIds} canvasWidth={W} startY={CONTENT_TOP} />
-          ) : (
+          {viewMode === 'story' && (
             <>
           {sectionCount > 0 && <>
           <ImgBox id={data.sec1Image} si="0" field="image1" l={259} t={1009} w={648} h={416} />
@@ -391,19 +388,23 @@ export default function Template2Layout({
           <P l={1200.92} t={6244.3} w={220}>{data.sec8Body3}</P>
           <P l={1200.92} t={6413.11} w={220}>{data.sec8Body4}</P>
           </>}
-            </>
-          )}
 
           {/* ━━ FOOTER ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
           <CanvasFooter
-            footerY={(viewMode === 'photos' ? photosFooterY : FOOTER_Y) + F_NAV}
+            footerY={FOOTER_Y + F_NAV}
             markOffset={F_MARK}
             canvasWidth={W}
             nextProjectSlug={data.nextProjectSlug}
           />
+            </>
+          )}
 
         </div>
       </div>
+
+      {viewMode === 'photos' && (
+        <CanvasPhotosView imageIds={allImageIds} />
+      )}
 
       {/* ━━ SIDEBAR (public mode only) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
       {!isEditing && viewMode === 'story' && (

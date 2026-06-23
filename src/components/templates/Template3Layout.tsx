@@ -6,7 +6,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react'
 
 import { type Section, type TemplateData } from '@/components/admin/template-editor/shared'
 import CanvasFooter from './CanvasFooter'
-import CanvasPhotosView, { photosViewHeight } from './CanvasPhotosView'
+import CanvasPhotosView from './CanvasPhotosView'
 import CanvasSidebar from './CanvasSidebar'
 export type Template3Data = TemplateData
 
@@ -71,8 +71,8 @@ export default function Template3Layout({
     data.sec5Image, data.sec6Image, data.sec6ImageB, data.sec7Image, data.sec7ImageWide,
   ].filter((id): id is string => !!id)
 
-  const CONTENT_TOP = SECTION_STARTS[0]
-  const photosFooterY = CONTENT_TOP + photosViewHeight(allImageIds.length, W) + 60
+  const HEADER_END = 996
+  const effectiveH = viewMode === 'photos' ? HEADER_END : H
 
   const SECTION_HEADINGS = [
     data.sec1Headline?.slice(0, 50) || 'Section 01',
@@ -220,8 +220,6 @@ export default function Template3Layout({
     )
   }
 
-  const effectiveH = viewMode === 'photos' ? photosFooterY + 580 : H
-
   return (
     <>
       <div
@@ -273,9 +271,7 @@ export default function Template3Layout({
             <span onClick={() => setViewMode('story')} style={{ fontFamily: 'var(--font-sans, Montserrat)', fontWeight: 800, fontSize: 14, textTransform: 'uppercase', color: viewMode === 'story' ? '#1c1c1c' : '#ccc', cursor: 'pointer' }}>Story</span>
           </div>
 
-          {viewMode === 'photos' ? (
-            <CanvasPhotosView imageIds={allImageIds} canvasWidth={W} startY={CONTENT_TOP} />
-          ) : (
+          {viewMode === 'story' && (
             <>
               {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
                   SECTION 1 — image left, text right
@@ -381,19 +377,23 @@ export default function Template3Layout({
               <P l={963} t={6445} w={220}>{data.sec8Body3}</P>
               <P l={1210} t={6445} w={220}>{data.sec8Body4}</P>
               </>}
+
+              {/* ━━ FOOTER ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+              <CanvasFooter
+                footerY={FOOTER_Y + F_NAV}
+                markOffset={F_MARK}
+                canvasWidth={W}
+                nextProjectSlug={data.nextProjectSlug}
+              />
             </>
           )}
 
-          {/* ━━ FOOTER ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-          <CanvasFooter
-            footerY={viewMode === 'photos' ? photosFooterY + F_NAV : FOOTER_Y + F_NAV}
-            markOffset={F_MARK}
-            canvasWidth={W}
-            nextProjectSlug={data.nextProjectSlug}
-          />
-
         </div>
       </div>
+
+      {viewMode === 'photos' && (
+        <CanvasPhotosView imageIds={allImageIds} />
+      )}
 
       {/* ━━ SIDEBAR ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
       {!isEditing && viewMode === 'story' && (

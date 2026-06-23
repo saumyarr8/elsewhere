@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState, useCallback } from 'react'
 import { hasContent, type Section, type TemplateData } from '@/components/admin/template-editor/shared'
 import CanvasFooter from './CanvasFooter'
 import CanvasSidebar from './CanvasSidebar'
-import CanvasPhotosView, { photosViewHeight } from './CanvasPhotosView'
+import CanvasPhotosView from './CanvasPhotosView'
 
 export type T1Section = Section
 export type Template1Data = TemplateData
@@ -90,10 +90,11 @@ export default function Template1Layout({ data, isEditing, onImageSelect }: Prop
     [s.image1, s.image2, s.image3, s.image4].filter((id): id is string => !!id)
   )
 
+  const HEADER_END = 996
   const storyFooterY = lastContentBottom + 60
-  const photosFooterY = CONTENT_TOP + photosViewHeight(allImageIds.length, W) + 60
-  const footerY = viewMode === 'photos' ? photosFooterY : storyFooterY
-  const canvasH = footerY + FOOTER_HEIGHT
+  const storyCanvasH = storyFooterY + FOOTER_HEIGHT
+  const canvasH = viewMode === 'photos' ? HEADER_END : storyCanvasH
+  const footerY = storyFooterY
 
   const handleScrollTo = useCallback((y: number) => {
     if (!wrapperRef.current) return
@@ -440,22 +441,25 @@ export default function Template1Layout({ data, isEditing, onImageSelect }: Prop
           >Story</span>
         </div>
 
-        {/* ━━━ CONTENT ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-        {viewMode === 'photos' ? (
-          <CanvasPhotosView imageIds={allImageIds} canvasWidth={W} startY={CONTENT_TOP} />
-        ) : (
-          activeSections.map((s, i) => renderSection(s, i))
+        {/* ━━━ STORY CONTENT ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+        {viewMode === 'story' && (
+          <>
+            {activeSections.map((s, i) => renderSection(s, i))}
+            <CanvasFooter
+              footerY={footerY + F_NAV}
+              markOffset={F_MARK}
+              canvasWidth={W}
+              nextProjectSlug={d?.nextProjectSlug}
+            />
+          </>
         )}
-
-        <CanvasFooter
-          footerY={footerY + F_NAV}
-          markOffset={F_MARK}
-          canvasWidth={W}
-          nextProjectSlug={d?.nextProjectSlug}
-        />
 
       </div>
     </div>
+
+    {viewMode === 'photos' && (
+      <CanvasPhotosView imageIds={allImageIds} />
+    )}
 
     {!isEditing && viewMode === 'story' && (
       <CanvasSidebar
