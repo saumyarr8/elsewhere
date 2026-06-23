@@ -28,6 +28,23 @@ export default function MusicPlayer({ style }: { style?: React.CSSProperties }) 
 
   useEffect(() => {
     setMounted(true);
+    const tryAutoplay = () => {
+      if (!audioRef.current) return;
+      audioRef.current.play().then(() => {
+        setIsPlaying(true);
+      }).catch(() => {
+        const resume = () => {
+          audioRef.current?.play().then(() => setIsPlaying(true)).catch(() => {});
+          document.removeEventListener('click', resume);
+          document.removeEventListener('keydown', resume);
+          document.removeEventListener('scroll', resume);
+        };
+        document.addEventListener('click', resume, { once: true });
+        document.addEventListener('keydown', resume, { once: true });
+        document.addEventListener('scroll', resume, { once: true });
+      });
+    };
+    tryAutoplay();
   }, []);
 
   useEffect(() => {
