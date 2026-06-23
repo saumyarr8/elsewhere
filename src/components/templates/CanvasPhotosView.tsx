@@ -14,10 +14,10 @@ export default function CanvasPhotosView({ imageIds, nextProject }: Props) {
 
   return (
     <>
-      <div style={{ padding: '20px 120px 60px' }}>
+      <div style={{ padding: '60px 200px 80px' }}>
         {filtered.map((id, i) => {
           const url = cloudName
-            ? `https://res.cloudinary.com/${cloudName}/image/upload/w_1000,h_660,c_fill,q_auto,f_auto/${id}`
+            ? `https://res.cloudinary.com/${cloudName}/image/upload/w_900,h_600,c_fill,q_auto,f_auto/${id}`
             : ''
           return (
             <div
