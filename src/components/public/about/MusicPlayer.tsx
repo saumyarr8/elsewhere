@@ -17,11 +17,21 @@ const playlist = [
     title: 'Boiler Room NYC Live Set',
     artist: 'DARKSIDE . Boiler Room',
     src: '/audio/DARKSIDE Boiler Room NYC Live Set - ALBEGX.mp3'
-  }
+  },
+  {
+    title: 'From Here To Eternity',
+    artist: 'Giorgio Moroder',
+    src: '/audio/Giorgio Moroder - From Here To Eternity [Remastered] (HD)_128k.mp3'
+  },
+  {
+    title: 'Kashmir (Live O2 Arena)',
+    artist: 'Led Zeppelin',
+    src: '/audio/Kashmir (Live_ O2 Arena, London - December 10, 2007)_128k.mp3'
+  },
 ];
 
 export default function MusicPlayer({ style }: { style?: React.CSSProperties }) {
-  const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
+  const [currentTrackIndex, setCurrentTrackIndex] = useState(() => Math.floor(Math.random() * playlist.length));
   const [isPlaying, setIsPlaying] = useState(false);
   const [mounted, setMounted] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
