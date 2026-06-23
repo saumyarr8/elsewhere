@@ -24,7 +24,7 @@ export default async function ProjectsPage() {
         </h1>
         <Link
           href="/admin/projects/new"
-          className="px-4 py-2 bg-black text-white text-xs uppercase tracking-widest hover:bg-gray-800 transition-colors"
+          className="px-4 py-2 bg-black !text-white text-xs uppercase tracking-widest hover:bg-gray-800 transition-colors"
         >
           New Project
         </Link>
