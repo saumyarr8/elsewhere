@@ -7,21 +7,25 @@ type Props = {
 export default function SiteFooter({ nextProject }: Props) {
   return (
     <footer className="pt-24 pb-10">
-      {nextProject && (
-        <Link
-          href={`/${nextProject.slug}`}
-          className="flex items-center justify-center gap-6 mb-16 hover:opacity-60 transition-opacity"
-          style={{ textDecoration: 'none' }}
-        >
+      <div className="flex items-center justify-center mb-16">
+        <div className="flex items-center justify-between" style={{ width: 769 }}>
           <span style={{ fontFamily: 'var(--font-sans, Montserrat)', fontWeight: 700, fontSize: 16, color: '#ccc', textTransform: 'uppercase' }}>
             Take me elsewhere
           </span>
-          <span style={{ fontFamily: 'var(--font-sans, Montserrat)', fontWeight: 700, fontSize: 16, color: '#ccc', textTransform: 'uppercase' }}>
-            Next project
-          </span>
-          <span style={{ color: '#1c1c1c', fontSize: 10 }}>▶</span>
-        </Link>
-      )}
+          {nextProject && (
+            <Link
+              href={`/${nextProject.slug}`}
+              className="flex items-center gap-1.5 hover:opacity-60 transition-opacity"
+              style={{ textDecoration: 'none' }}
+            >
+              <span style={{ fontFamily: 'var(--font-sans, Montserrat)', fontWeight: 700, fontSize: 16, color: '#ccc', textTransform: 'uppercase' }}>
+                Next project
+              </span>
+              <span style={{ color: '#1c1c1c', fontSize: 10 }}>▶</span>
+            </Link>
+          )}
+        </div>
+      </div>
 
       <img
         src="/t1-wordmark.svg"
