@@ -10,26 +10,32 @@ export default function CanvasPhotosView({ imageIds }: Props) {
   if (filtered.length === 0) return null
 
   return (
-    <div style={{ background: '#fff' }}>
+    <div style={{ padding: '40px 80px', background: '#fff' }}>
       {filtered.map((id, i) => {
         const url = cloudName
-          ? `https://res.cloudinary.com/${cloudName}/image/upload/q_auto,f_auto/${id}`
+          ? `https://res.cloudinary.com/${cloudName}/image/upload/w_1200,h_800,c_fill,q_auto,f_auto/${id}`
           : ''
         return (
           <div
             key={`${id}-${i}`}
             style={{
               position: 'sticky',
-              top: 0,
+              top: 40,
               zIndex: i,
-              background: '#fff',
+              marginBottom: 40,
             }}
           >
             {url && (
               <img
                 src={url}
                 alt=""
-                style={{ width: '100%', height: 'auto', display: 'block' }}
+                style={{
+                  width: '100%',
+                  height: 'auto',
+                  display: 'block',
+                  borderRadius: 12,
+                  boxShadow: '0 8px 30px rgba(0,0,0,0.15)',
+                }}
               />
             )}
           </div>
