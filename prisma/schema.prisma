@@ -46,7 +46,6 @@ model Project {
   updatedAt DateTime @updatedAt
 
   blocks      ContentBlock[]
-  canvasItems HomepageCanvasItem[]
 
   @@index([slug])
   @@index([published, publishedAt])
@@ -95,29 +94,6 @@ enum BlockType {
   SPACER
 }
 
-// ─── Homepage Canvas ──────────────────────────────────────────────────────────
-
-model HomepageCanvasItem {
-  id        String  @id @default(cuid())
-  projectId String?
-  imageId   String
-
-  xPercent      Float @default(0)
-  yPercent      Float @default(0)
-  widthPercent  Float @default(20)
-  heightPercent Float @default(20)
-  rotation      Float @default(0)
-  zIndex        Int   @default(0)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  project Project?   @relation(fields: [projectId], references: [id], onDelete: SetNull)
-  image   MediaAsset @relation(fields: [imageId], references: [id], onDelete: Cascade)
-
-  @@index([zIndex])
-}
-
 // ─── Media ────────────────────────────────────────────────────────────────────
 
 model MediaAsset {
@@ -135,7 +111,6 @@ model MediaAsset {
 
   heroProjects  Project[]            @relation("ProjectHero")
   ogProjects    Project[]            @relation("ProjectOg")
-  canvasItems   HomepageCanvasItem[]
   galleryImages GalleryImage[]       @relation("GalleryImageAsset")
   noteHeaders   Note[]               @relation("NoteHeader")
   noteFooters   Note[]               @relation("NoteFooter")

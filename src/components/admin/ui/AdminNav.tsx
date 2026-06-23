@@ -9,7 +9,6 @@ const links = [
   { href: '/admin/projects', label: 'Projects', exact: false },
   { href: '/admin/gallery', label: 'Gallery', exact: false },
   { href: '/admin/notes', label: 'Notes', exact: false },
-  { href: '/admin/canvas', label: 'Canvas', exact: false },
   { href: '/admin/media', label: 'Media', exact: false },
   { href: '/admin/settings', label: 'Settings', exact: false },
 ]
