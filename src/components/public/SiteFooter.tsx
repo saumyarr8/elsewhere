@@ -17,7 +17,7 @@ export default function SiteFooter({ nextProject }: Props) {
             className="flex items-center gap-1.5 hover:opacity-60 transition-opacity"
           >
             <span style={{ fontFamily: 'var(--font-sans, Montserrat)', fontWeight: 700, fontSize: 16, color: '#ccc', textTransform: 'uppercase' }}>
-              {nextProject.title}
+              Next project
             </span>
             <span style={{ color: '#1c1c1c', fontSize: 10 }}>▶</span>
           </Link>

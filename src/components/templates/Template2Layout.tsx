@@ -399,7 +399,6 @@ export default function Template2Layout({
             footerY={(viewMode === 'photos' ? photosFooterY : FOOTER_Y) + F_NAV}
             markOffset={F_MARK}
             canvasWidth={W}
-            nextProjectTitle={data.nextProjectTitle}
             nextProjectSlug={data.nextProjectSlug}
           />
 

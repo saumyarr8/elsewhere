@@ -356,7 +356,6 @@ export default function Template4Layout({
             footerY={viewMode === 'photos' ? photosFooterY : FOOTER_Y}
             markOffset={136}
             canvasWidth={W}
-            nextProjectTitle={data.nextProjectTitle}
             nextProjectSlug={data.nextProjectSlug}
           />
 

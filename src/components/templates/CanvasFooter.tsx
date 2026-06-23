@@ -4,11 +4,10 @@ type Props = {
   footerY: number
   markOffset: number
   canvasWidth: number
-  nextProjectTitle?: string
   nextProjectSlug?: string
 }
 
-export default function CanvasFooter({ footerY, markOffset, canvasWidth, nextProjectTitle, nextProjectSlug }: Props) {
+export default function CanvasFooter({ footerY, markOffset, canvasWidth, nextProjectSlug }: Props) {
   return (
     <>
       <div style={{
@@ -21,7 +20,7 @@ export default function CanvasFooter({ footerY, markOffset, canvasWidth, nextPro
         {nextProjectSlug && (
           <a href={`/${nextProjectSlug}`} style={{ display: 'flex', alignItems: 'center', gap: 4, textDecoration: 'none' }}>
             <span style={{ fontFamily: 'var(--font-sans, Montserrat)', fontWeight: 700, fontSize: 16, color: '#ccc', textTransform: 'uppercase' }}>
-              {nextProjectTitle || 'Next project'}
+              Next project
             </span>
             <span style={{ color: '#1c1c1c', fontSize: 10 }}>▶</span>
           </a>

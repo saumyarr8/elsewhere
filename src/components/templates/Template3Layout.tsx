@@ -389,7 +389,6 @@ export default function Template3Layout({
             footerY={viewMode === 'photos' ? photosFooterY + F_NAV : FOOTER_Y + F_NAV}
             markOffset={F_MARK}
             canvasWidth={W}
-            nextProjectTitle={data.nextProjectTitle}
             nextProjectSlug={data.nextProjectSlug}
           />
 

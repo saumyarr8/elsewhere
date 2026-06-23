@@ -451,7 +451,6 @@ export default function Template1Layout({ data, isEditing, onImageSelect }: Prop
           footerY={footerY + F_NAV}
           markOffset={F_MARK}
           canvasWidth={W}
-          nextProjectTitle={d?.nextProjectTitle}
           nextProjectSlug={d?.nextProjectSlug}
         />
 

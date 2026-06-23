@@ -90,11 +90,9 @@ export default async function ProjectPage({ params }: Props) {
     return (
       <>
         <SiteNav />
-        {project.template === 'TEMPLATE_1' ? (
-          <div className="pt-14"><Template project={enrichedProject} /></div>
-        ) : (
+        <div className="pt-14">
           <Template project={enrichedProject} />
-        )}
+        </div>
       </>
     )
   }
