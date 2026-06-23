@@ -199,7 +199,7 @@ export default function MobileProjectLayout({ data, patterns, nextProject, desti
 
           {/* Footer */}
           <div className="px-5 py-8">
-            <div className="flex items-center justify-between mb-8" style={{
+            <div className="flex flex-col items-center gap-3 mb-8" style={{
               fontFamily: 'var(--font-sans, Montserrat)', fontWeight: 700, fontSize: 14, color: '#ccc', textTransform: 'uppercase',
             }}>
               <span>Take me elsewhere</span>
