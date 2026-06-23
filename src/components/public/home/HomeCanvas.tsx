@@ -172,28 +172,30 @@ export default function HomeCanvas({ projects }: { projects: HomeProject[] }) {
             )
           })}
 
-          {/* ── Take me elsewhere CTA ── */}
-          <Link
-            href="/about"
-            style={{
-              position: 'absolute',
-              left: '50%',
-              top: 796,
-              transform: 'translateX(-50%)',
-              fontFamily: font,
-              fontSize: 16,
-              fontWeight: 700,
-              textTransform: 'uppercase',
-              color: '#ccc',
-              textDecoration: 'none',
-              whiteSpace: 'nowrap',
-            }}
-          >
-            Take me elsewhere
-          </Link>
 
         </div>
       </div>
+
+      {/* ── Take me elsewhere CTA (fixed center) ── */}
+      <Link
+        href="/about"
+        style={{
+          position: 'fixed',
+          left: '50%',
+          bottom: 40,
+          transform: 'translateX(-50%)',
+          fontFamily: font,
+          fontSize: 16,
+          fontWeight: 700,
+          textTransform: 'uppercase',
+          color: '#ccc',
+          textDecoration: 'none',
+          whiteSpace: 'nowrap',
+          zIndex: 10,
+        }}
+      >
+        Take me elsewhere
+      </Link>
     </div>
   )
 }
