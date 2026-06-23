@@ -90,9 +90,7 @@ export default async function ProjectPage({ params }: Props) {
     return (
       <>
         <SiteNav />
-        <div className="pt-14">
-          <Template project={enrichedProject} />
-        </div>
+        <Template project={enrichedProject} />
       </>
     )
   }
