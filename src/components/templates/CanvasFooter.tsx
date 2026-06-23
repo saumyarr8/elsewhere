@@ -10,22 +10,23 @@ type Props = {
 export default function CanvasFooter({ footerY, markOffset, canvasWidth, nextProjectSlug }: Props) {
   return (
     <>
-      <div style={{
-        position: 'absolute', left: '50%', transform: 'translateX(-50%)', top: footerY, width: 769,
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+      <span style={{
+        position: 'absolute', left: '50%', transform: 'translateX(-50%)', top: footerY,
+        fontFamily: 'var(--font-sans, Montserrat)', fontWeight: 700, fontSize: 16, color: '#ccc', textTransform: 'uppercase',
       }}>
-        <span style={{ fontFamily: 'var(--font-sans, Montserrat)', fontWeight: 700, fontSize: 16, color: '#ccc', textTransform: 'uppercase' }}>
-          Take me elsewhere
-        </span>
-        {nextProjectSlug && (
-          <a href={`/${nextProjectSlug}`} style={{ display: 'flex', alignItems: 'center', gap: 4, textDecoration: 'none' }}>
-            <span style={{ fontFamily: 'var(--font-sans, Montserrat)', fontWeight: 700, fontSize: 16, color: '#ccc', textTransform: 'uppercase' }}>
-              Next project
-            </span>
-            <span style={{ color: '#1c1c1c', fontSize: 10 }}>▶</span>
-          </a>
-        )}
-      </div>
+        Take me elsewhere
+      </span>
+      {nextProjectSlug && (
+        <a href={`/${nextProjectSlug}`} style={{
+          position: 'absolute', right: 88, top: footerY,
+          display: 'flex', alignItems: 'center', gap: 4, textDecoration: 'none',
+        }}>
+          <span style={{ fontFamily: 'var(--font-sans, Montserrat)', fontWeight: 700, fontSize: 16, color: '#ccc', textTransform: 'uppercase' }}>
+            Next project
+          </span>
+          <span style={{ color: '#1c1c1c', fontSize: 10 }}>▶</span>
+        </a>
+      )}
 
       <img
         src="/t1-wordmark.svg"

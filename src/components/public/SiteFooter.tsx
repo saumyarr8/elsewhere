@@ -7,24 +7,22 @@ type Props = {
 export default function SiteFooter({ nextProject }: Props) {
   return (
     <footer className="pt-24 pb-10">
-      <div className="flex items-center justify-center mb-16">
-        <div className="flex items-center justify-between" style={{ width: 769 }}>
-          <span style={{ fontFamily: 'var(--font-sans, Montserrat)', fontWeight: 700, fontSize: 16, color: '#ccc', textTransform: 'uppercase' }}>
-            Take me elsewhere
-          </span>
-          {nextProject && (
-            <Link
-              href={`/${nextProject.slug}`}
-              className="flex items-center gap-1.5 hover:opacity-60 transition-opacity"
-              style={{ textDecoration: 'none' }}
-            >
-              <span style={{ fontFamily: 'var(--font-sans, Montserrat)', fontWeight: 700, fontSize: 16, color: '#ccc', textTransform: 'uppercase' }}>
-                Next project
-              </span>
-              <span style={{ color: '#1c1c1c', fontSize: 10 }}>▶</span>
-            </Link>
-          )}
-        </div>
+      <div className="relative mb-16 px-6 md:px-20" style={{ height: 20 }}>
+        <span className="absolute left-1/2 -translate-x-1/2 top-0" style={{ fontFamily: 'var(--font-sans, Montserrat)', fontWeight: 700, fontSize: 16, color: '#ccc', textTransform: 'uppercase' }}>
+          Take me elsewhere
+        </span>
+        {nextProject && (
+          <Link
+            href={`/${nextProject.slug}`}
+            className="absolute right-6 md:right-20 top-0 flex items-center gap-1.5 hover:opacity-60 transition-opacity"
+            style={{ textDecoration: 'none' }}
+          >
+            <span style={{ fontFamily: 'var(--font-sans, Montserrat)', fontWeight: 700, fontSize: 16, color: '#ccc', textTransform: 'uppercase' }}>
+              Next project
+            </span>
+            <span style={{ color: '#1c1c1c', fontSize: 10 }}>▶</span>
+          </Link>
+        )}
       </div>
 
       <img
