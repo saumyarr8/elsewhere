@@ -36,16 +36,8 @@ export default function SiteNav() {
         <Link
           href="/"
           className="pointer-events-auto hover:opacity-60 transition-opacity"
-          style={{
-            fontFamily: 'var(--font-heading)',
-            fontSize: 16,
-            fontWeight: 700,
-            color: 'var(--color-ink)',
-            letterSpacing: '-0.01em',
-            textDecoration: 'none',
-          }}
         >
-          .elsewhere
+          <img src="/t1-wordmark.svg" alt=".elsewhere" style={{ height: 18, width: 'auto', display: 'block' }} />
         </Link>
 
         <div className="pointer-events-auto flex items-center gap-10">
