@@ -1,11 +1,13 @@
 import { prisma } from '@/lib/prisma'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
+import Image from 'next/image'
 import type { Metadata } from 'next'
 import SiteNav from '@/components/public/nav/SiteNav'
 import SiteFooter from '@/components/public/SiteFooter'
 import { getNextProject } from '@/lib/utils/next-project'
 import { getAllDestinations } from '@/lib/utils/random-destination'
+import { cloudinaryUrl, cloudinaryBlur } from '@/lib/utils/cloudinary-url'
 
 export const revalidate = 300
 
@@ -39,6 +41,10 @@ export default async function NotePage({ params }: Props) {
   const { slug } = await params
   const note = await prisma.note.findUnique({
     where: { slug, published: true },
+    include: {
+      headerImage: true,
+      footerImage: true,
+    },
   })
 
   if (!note) notFound()
@@ -74,10 +80,39 @@ export default async function NotePage({ params }: Props) {
         </div>
       </header>
 
-      <div 
+      {note.headerImage && (
+        <div className="mb-12">
+          <Image
+            src={cloudinaryUrl(note.headerImage.cloudinaryId, { width: 1200, quality: 'auto' })}
+            alt={note.headerImage.altText ?? note.title}
+            width={note.headerImage.width}
+            height={note.headerImage.height}
+            className="w-full h-auto"
+            placeholder="blur"
+            blurDataURL={cloudinaryBlur(note.headerImage.cloudinaryId)}
+            priority
+          />
+        </div>
+      )}
+
+      <div
         className="prose prose-neutral max-w-none font-sans text-base leading-relaxed text-[var(--color-ink)] space-y-6"
         dangerouslySetInnerHTML={{ __html: note.content }}
       />
+
+      {note.footerImage && (
+        <div className="mt-12">
+          <Image
+            src={cloudinaryUrl(note.footerImage.cloudinaryId, { width: 1200, quality: 'auto' })}
+            alt={note.footerImage.altText ?? ''}
+            width={note.footerImage.width}
+            height={note.footerImage.height}
+            className="w-full h-auto"
+            placeholder="blur"
+            blurDataURL={cloudinaryBlur(note.footerImage.cloudinaryId)}
+          />
+        </div>
+      )}
 
     </article>
     <SiteFooter nextProject={nextProject} destinations={destinations} />

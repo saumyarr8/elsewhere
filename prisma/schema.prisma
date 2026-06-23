@@ -137,6 +137,8 @@ model MediaAsset {
   ogProjects    Project[]            @relation("ProjectOg")
   canvasItems   HomepageCanvasItem[]
   galleryImages GalleryImage[]       @relation("GalleryImageAsset")
+  noteHeaders   Note[]               @relation("NoteHeader")
+  noteFooters   Note[]               @relation("NoteFooter")
 
   @@index([createdAt])
 }
@@ -179,6 +181,12 @@ model Note {
   content   String   @db.Text
   readTime  String   @default("2 min read")
   published Boolean  @default(true)
+
+  headerImageId String?
+  headerImage   MediaAsset? @relation("NoteHeader", fields: [headerImageId], references: [id], onDelete: SetNull)
+
+  footerImageId String?
+  footerImage   MediaAsset? @relation("NoteFooter", fields: [footerImageId], references: [id], onDelete: SetNull)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

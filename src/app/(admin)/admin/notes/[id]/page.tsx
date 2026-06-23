@@ -15,6 +15,10 @@ export default async function NoteEditorPage({ params }: Props) {
 
   const note = await prisma.note.findUnique({
     where: { id },
+    include: {
+      headerImage: { select: { cloudinaryId: true, altText: true } },
+      footerImage: { select: { cloudinaryId: true, altText: true } },
+    },
   })
 
   if (!note) notFound()

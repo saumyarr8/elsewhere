@@ -2,11 +2,14 @@
 
 import { useState, useTransition } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { useEditor, EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import TiptapLink from '@tiptap/extension-link'
 import Placeholder from '@tiptap/extension-placeholder'
 import { updateNote, publishNote, unpublishNote, deleteNote, type Note } from '@/actions/note.actions'
+import MediaPicker from '@/components/admin/media/MediaPicker'
+import { cloudinaryUrl } from '@/lib/utils/cloudinary-url'
 
 type Props = { note: Note }
 
@@ -14,6 +17,12 @@ export default function NoteEditor({ note }: Props) {
   const [title, setTitle] = useState(note.title)
   const [slug, setSlug] = useState(note.slug)
   const [readTime, setReadTime] = useState(note.readTime)
+  const [headerImageId, setHeaderImageId] = useState(note.headerImageId)
+  const [headerImageCid, setHeaderImageCid] = useState(note.headerImage?.cloudinaryId ?? null)
+  const [footerImageId, setFooterImageId] = useState(note.footerImageId)
+  const [footerImageCid, setFooterImageCid] = useState(note.footerImage?.cloudinaryId ?? null)
+  const [headerPickerOpen, setHeaderPickerOpen] = useState(false)
+  const [footerPickerOpen, setFooterPickerOpen] = useState(false)
   const [saving, startSave] = useTransition()
   const [publishing, startPublish] = useTransition()
   const [error, setError] = useState<string | null>(null)
@@ -42,6 +51,8 @@ export default function NoteEditor({ note }: Props) {
         slug,
         readTime,
         content: editor.getHTML(),
+        headerImageId,
+        footerImageId,
       })
       if (res?.error) setError(res.error)
       else setError(null)
@@ -163,6 +174,60 @@ export default function NoteEditor({ note }: Props) {
           />
         </div>
 
+        {/* Header Image */}
+        <div className="space-y-1">
+          <label className="text-xs uppercase tracking-widest text-[var(--color-ink-muted)]">Header Image</label>
+          {headerImageCid ? (
+            <div className="relative group">
+              <Image
+                src={cloudinaryUrl(headerImageCid, { width: 400, height: 200, crop: 'fill' })}
+                alt=""
+                width={400}
+                height={200}
+                className="w-full h-32 object-cover"
+              />
+              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                <button onClick={() => setHeaderPickerOpen(true)} className="text-white text-xs underline">Change</button>
+                <button onClick={() => { setHeaderImageId(null); setHeaderImageCid(null) }} className="text-white text-xs underline">Remove</button>
+              </div>
+            </div>
+          ) : (
+            <button
+              onClick={() => setHeaderPickerOpen(true)}
+              className="w-full h-20 border-2 border-dashed border-[var(--color-border)] flex items-center justify-center text-xs text-[var(--color-ink-muted)] hover:border-[var(--color-ink)] transition-colors"
+            >
+              Select Image
+            </button>
+          )}
+        </div>
+
+        {/* Footer Image */}
+        <div className="space-y-1">
+          <label className="text-xs uppercase tracking-widest text-[var(--color-ink-muted)]">Footer Image</label>
+          {footerImageCid ? (
+            <div className="relative group">
+              <Image
+                src={cloudinaryUrl(footerImageCid, { width: 400, height: 200, crop: 'fill' })}
+                alt=""
+                width={400}
+                height={200}
+                className="w-full h-32 object-cover"
+              />
+              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                <button onClick={() => setFooterPickerOpen(true)} className="text-white text-xs underline">Change</button>
+                <button onClick={() => { setFooterImageId(null); setFooterImageCid(null) }} className="text-white text-xs underline">Remove</button>
+              </div>
+            </div>
+          ) : (
+            <button
+              onClick={() => setFooterPickerOpen(true)}
+              className="w-full h-20 border-2 border-dashed border-[var(--color-border)] flex items-center justify-center text-xs text-[var(--color-ink-muted)] hover:border-[var(--color-ink)] transition-colors"
+            >
+              Select Image
+            </button>
+          )}
+        </div>
+
         {/* Danger zone */}
         <div className="pt-4 border-t border-[var(--color-border)]">
           <form action={deleteNote.bind(null, note.id)}>
@@ -176,6 +241,19 @@ export default function NoteEditor({ note }: Props) {
           </form>
         </div>
       </aside>
+
+      {headerPickerOpen && (
+        <MediaPicker
+          onSelect={(asset) => { setHeaderImageId(asset.id); setHeaderImageCid(asset.cloudinaryId) }}
+          onClose={() => setHeaderPickerOpen(false)}
+        />
+      )}
+      {footerPickerOpen && (
+        <MediaPicker
+          onSelect={(asset) => { setFooterImageId(asset.id); setFooterImageCid(asset.cloudinaryId) }}
+          onClose={() => setFooterPickerOpen(false)}
+        />
+      )}
     </div>
   )
 }

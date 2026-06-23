@@ -14,6 +14,10 @@ export type Note = {
   content: string
   readTime: string
   published: boolean
+  headerImageId?: string | null
+  headerImage?: { cloudinaryId: string; altText: string | null } | null
+  footerImageId?: string | null
+  footerImage?: { cloudinaryId: string; altText: string | null } | null
   createdAt: Date
   updatedAt: Date
 }
@@ -55,6 +59,8 @@ export async function updateNote(id: string, data: {
   slug?: string
   content?: string
   readTime?: string
+  headerImageId?: string | null
+  footerImageId?: string | null
 }) {
   await requireAdmin()
 
