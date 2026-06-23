@@ -395,6 +395,7 @@ export default function Template2Layout({
             markOffset={F_MARK}
             canvasWidth={W}
             nextProjectSlug={data.nextProjectSlug}
+            destinations={(rawData as Record<string, unknown>).destinations as { slug: string }[] ?? []}
           />
             </>
           )}
@@ -403,7 +404,7 @@ export default function Template2Layout({
       </div>
 
       {viewMode === 'photos' && (
-        <CanvasPhotosView imageIds={allImageIds} nextProject={data.nextProjectSlug ? { slug: data.nextProjectSlug, title: '' } : null} />
+        <CanvasPhotosView imageIds={allImageIds} nextProject={data.nextProjectSlug ? { slug: data.nextProjectSlug, title: '' } : null} destinations={(rawData as Record<string, unknown>).destinations as { slug: string }[] ?? []} />
       )}
 
       {/* ━━ SIDEBAR (public mode only) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}

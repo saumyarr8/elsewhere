@@ -352,6 +352,7 @@ export default function Template4Layout({
                 markOffset={136}
                 canvasWidth={W}
                 nextProjectSlug={data.nextProjectSlug}
+                destinations={(rawData as Record<string, unknown>).destinations as { slug: string }[] ?? []}
               />
             </>
           )}
@@ -360,7 +361,7 @@ export default function Template4Layout({
       </div>
 
       {viewMode === 'photos' && (
-        <CanvasPhotosView imageIds={allImageIds} nextProject={data.nextProjectSlug ? { slug: data.nextProjectSlug, title: '' } : null} />
+        <CanvasPhotosView imageIds={allImageIds} nextProject={data.nextProjectSlug ? { slug: data.nextProjectSlug, title: '' } : null} destinations={(rawData as Record<string, unknown>).destinations as { slug: string }[] ?? []} />
       )}
 
       {/* ━━ SIDEBAR */}

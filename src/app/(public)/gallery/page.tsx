@@ -3,6 +3,7 @@ import { prisma } from '@/lib/prisma'
 import SiteNav from '@/components/public/nav/SiteNav'
 import GalleryClient from '@/components/public/gallery/GalleryClient'
 import { getNextProject } from '@/lib/utils/next-project'
+import { getAllDestinations } from '@/lib/utils/random-destination'
 
 export const revalidate = 60
 
@@ -31,12 +32,15 @@ export default async function GalleryPage() {
     new Set(images.map((i) => i.category).filter((c): c is string => Boolean(c)))
   )
 
-  const nextProject = await getNextProject()
+  const [nextProject, destinations] = await Promise.all([
+    getNextProject(),
+    getAllDestinations(),
+  ])
 
   return (
     <>
       <SiteNav />
-      <GalleryClient items={images} categories={categories} notes={notes} nextProject={nextProject} />
+      <GalleryClient items={images} categories={categories} notes={notes} nextProject={nextProject} destinations={destinations} />
     </>
   )
 }

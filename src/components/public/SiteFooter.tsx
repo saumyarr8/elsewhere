@@ -1,16 +1,20 @@
 import Link from 'next/link'
+import TakeMeElsewhere from './TakeMeElsewhere'
 
 type Props = {
   nextProject?: { slug: string; title: string } | null
+  destinations?: { slug: string }[]
 }
 
-export default function SiteFooter({ nextProject }: Props) {
+export default function SiteFooter({ nextProject, destinations = [] }: Props) {
   return (
     <footer className="pt-24 pb-10">
       <div className="relative mb-16 px-6 md:px-20" style={{ height: 20 }}>
-        <span className="absolute left-1/2 -translate-x-1/2 top-0" style={{ fontFamily: 'var(--font-sans, Montserrat)', fontWeight: 700, fontSize: 16, color: '#ccc', textTransform: 'uppercase' }}>
-          Take me elsewhere
-        </span>
+        <TakeMeElsewhere
+          destinations={destinations}
+          className="absolute left-1/2 -translate-x-1/2 top-0 hover:opacity-60 transition-opacity"
+          style={{ fontFamily: 'var(--font-sans, Montserrat)', fontWeight: 700, fontSize: 16, color: '#ccc', textTransform: 'uppercase' }}
+        />
         {nextProject && (
           <Link
             href={`/${nextProject.slug}`}

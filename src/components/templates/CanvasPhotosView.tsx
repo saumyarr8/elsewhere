@@ -5,9 +5,10 @@ import SiteFooter from '@/components/public/SiteFooter'
 type Props = {
   imageIds: string[]
   nextProject?: { slug: string; title: string } | null
+  destinations?: { slug: string }[]
 }
 
-export default function CanvasPhotosView({ imageIds, nextProject }: Props) {
+export default function CanvasPhotosView({ imageIds, nextProject, destinations = [] }: Props) {
   const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME
   const filtered = imageIds.filter(Boolean)
   if (filtered.length === 0) return null
@@ -46,7 +47,7 @@ export default function CanvasPhotosView({ imageIds, nextProject }: Props) {
           )
         })}
       </div>
-      <SiteFooter nextProject={nextProject} />
+      <SiteFooter nextProject={nextProject} destinations={destinations} />
     </>
   )
 }

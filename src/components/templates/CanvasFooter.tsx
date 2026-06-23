@@ -1,21 +1,25 @@
 'use client'
 
+import TakeMeElsewhere from '@/components/public/TakeMeElsewhere'
+
 type Props = {
   footerY: number
   markOffset: number
   canvasWidth: number
   nextProjectSlug?: string
+  destinations?: { slug: string }[]
 }
 
-export default function CanvasFooter({ footerY, markOffset, canvasWidth, nextProjectSlug }: Props) {
+export default function CanvasFooter({ footerY, markOffset, canvasWidth, nextProjectSlug, destinations = [] }: Props) {
   return (
     <>
-      <span style={{
-        position: 'absolute', left: '50%', transform: 'translateX(-50%)', top: footerY,
-        fontFamily: 'var(--font-sans, Montserrat)', fontWeight: 700, fontSize: 16, color: '#ccc', textTransform: 'uppercase',
-      }}>
-        Take me elsewhere
-      </span>
+      <TakeMeElsewhere
+        destinations={destinations}
+        style={{
+          position: 'absolute', left: '50%', transform: 'translateX(-50%)', top: footerY,
+          fontFamily: 'var(--font-sans, Montserrat)', fontWeight: 700, fontSize: 16, color: '#ccc', textTransform: 'uppercase',
+        }}
+      />
       {nextProjectSlug && (
         <a href={`/${nextProjectSlug}`} style={{
           position: 'absolute', right: 88, top: footerY,

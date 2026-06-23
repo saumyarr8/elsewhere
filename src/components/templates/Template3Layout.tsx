@@ -384,6 +384,7 @@ export default function Template3Layout({
                 markOffset={F_MARK}
                 canvasWidth={W}
                 nextProjectSlug={data.nextProjectSlug}
+                destinations={(rawData as Record<string, unknown>).destinations as { slug: string }[] ?? []}
               />
             </>
           )}
@@ -392,7 +393,7 @@ export default function Template3Layout({
       </div>
 
       {viewMode === 'photos' && (
-        <CanvasPhotosView imageIds={allImageIds} nextProject={data.nextProjectSlug ? { slug: data.nextProjectSlug, title: '' } : null} />
+        <CanvasPhotosView imageIds={allImageIds} nextProject={data.nextProjectSlug ? { slug: data.nextProjectSlug, title: '' } : null} destinations={(rawData as Record<string, unknown>).destinations as { slug: string }[] ?? []} />
       )}
 
       {/* ━━ SIDEBAR ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}

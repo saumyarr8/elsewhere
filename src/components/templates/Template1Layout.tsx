@@ -450,6 +450,7 @@ export default function Template1Layout({ data, isEditing, onImageSelect }: Prop
               markOffset={F_MARK}
               canvasWidth={W}
               nextProjectSlug={d?.nextProjectSlug}
+              destinations={(d as Record<string, unknown>)?.destinations as { slug: string }[] ?? []}
             />
           </>
         )}
@@ -458,7 +459,7 @@ export default function Template1Layout({ data, isEditing, onImageSelect }: Prop
     </div>
 
     {viewMode === 'photos' && (
-      <CanvasPhotosView imageIds={allImageIds} nextProject={d?.nextProjectSlug ? { slug: d.nextProjectSlug, title: '' } : null} />
+      <CanvasPhotosView imageIds={allImageIds} nextProject={d?.nextProjectSlug ? { slug: d.nextProjectSlug, title: '' } : null} destinations={(d as Record<string, unknown>)?.destinations as { slug: string }[] ?? []} />
     )}
 
     {!isEditing && viewMode === 'story' && (

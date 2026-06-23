@@ -5,6 +5,7 @@ import type { Metadata } from 'next'
 import SiteNav from '@/components/public/nav/SiteNav'
 import SiteFooter from '@/components/public/SiteFooter'
 import { getNextProject } from '@/lib/utils/next-project'
+import { getAllDestinations } from '@/lib/utils/random-destination'
 
 export const revalidate = 300
 
@@ -42,7 +43,10 @@ export default async function NotePage({ params }: Props) {
 
   if (!note) notFound()
 
-  const nextProject = await getNextProject()
+  const [nextProject, destinations] = await Promise.all([
+    getNextProject(),
+    getAllDestinations(),
+  ])
 
   return (
     <>
@@ -76,7 +80,7 @@ export default async function NotePage({ params }: Props) {
       />
 
     </article>
-    <SiteFooter nextProject={nextProject} />
+    <SiteFooter nextProject={nextProject} destinations={destinations} />
     </>
   )
 }

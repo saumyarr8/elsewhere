@@ -7,6 +7,7 @@ import ProjectHero from '@/components/public/project/ProjectHero'
 import BlockRenderer from '@/components/public/project/BlockRenderer'
 import type { BlockPayload } from '@/lib/types/blocks'
 import { getNextProject } from '@/lib/utils/next-project'
+import { getAllDestinations } from '@/lib/utils/random-destination'
 
 export const revalidate = 300
 
@@ -64,7 +65,10 @@ export default async function ProjectPage({ params }: Props) {
 
   if (!project) notFound()
 
-  const nextProject = await getNextProject(slug)
+  const [nextProject, destinations] = await Promise.all([
+    getNextProject(slug),
+    getAllDestinations(),
+  ])
 
   const TEMPLATE_IMPORTS = {
     TEMPLATE_1: () => import('@/components/templates/Template1'),
@@ -85,6 +89,7 @@ export default async function ProjectPage({ params }: Props) {
           : (project.templateData as Record<string, unknown>) ?? {}),
         nextProjectTitle: nextProject?.title,
         nextProjectSlug: nextProject?.slug,
+        destinations,
       },
     }
     return (
@@ -111,7 +116,7 @@ export default async function ProjectPage({ params }: Props) {
           ))}
         </div>
       </article>
-      <SiteFooter nextProject={nextProject} />
+      <SiteFooter nextProject={nextProject} destinations={destinations} />
     </>
   )
 }
