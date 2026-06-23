@@ -3,22 +3,22 @@
 import { useState, useRef, useEffect, useMemo, useCallback } from 'react'
 import Link from 'next/link'
 
-const CANVAS_W = 2500
+const CANVAS_W = 3200
 const CANVAS_H = 900
 const CLOUD = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME
 
 const SLOTS = [
-  { l: 69,   t: 160, w: 236, h: 114 },
-  { l: 69,   t: 426, w: 226, h: 231 },
-  { l: 381,  t: 595, w: 150, h: 231 },
-  { l: 507,  t: 325, w: 118, h: 171 },
-  { l: 768,  t: 145, w: 353, h: 191 },
-  { l: 957,  t: 496, w: 186, h: 254 },
-  { l: 1344, t: 284, w: 316, h: 180 },
-  { l: 1432, t: 623, w: 273, h: 151 },
-  { l: 1826, t: 194, w: 158, h: 314 },
-  { l: 2040, t: 552, w: 302, h: 206 },
-  { l: 2258, t: 141, w: 217, h: 210 },
+  { l: 80,    t: 160, w: 280, h: 140 },
+  { l: 80,    t: 440, w: 260, h: 260 },
+  { l: 480,   t: 560, w: 190, h: 260 },
+  { l: 600,   t: 300, w: 160, h: 200 },
+  { l: 900,   t: 150, w: 380, h: 220 },
+  { l: 1120,  t: 480, w: 220, h: 280 },
+  { l: 1550,  t: 270, w: 340, h: 200 },
+  { l: 1680,  t: 590, w: 300, h: 180 },
+  { l: 2150,  t: 180, w: 200, h: 340 },
+  { l: 2450,  t: 520, w: 320, h: 230 },
+  { l: 2850,  t: 150, w: 250, h: 240 },
 ]
 
 const CATEGORIES = ['CULTURE', 'ADVENTURE'] as const
@@ -96,7 +96,7 @@ export default function HomeCanvas({ projects }: { projects: HomeProject[] }) {
         }}>
 
           {/* ── Filter bar ── */}
-          <div style={{ position: 'absolute', left: 80, top: 115, display: 'flex', alignItems: 'center', gap: 48 }}>
+          <div style={{ position: 'absolute', left: 80, top: 100, display: 'flex', alignItems: 'center', gap: 48 }}>
             <p
               onClick={() => setFilterOpen(v => !v)}
               style={{

@@ -37,7 +37,7 @@ export default function SiteNav() {
           href="/"
           className="pointer-events-auto hover:opacity-60 transition-opacity"
         >
-          <img src="/t1-wordmark.svg" alt=".elsewhere" className="h-3 md:h-[18px] w-auto block" />
+          <img src="/t1-wordmark.svg" alt=".elsewhere" className="h-[14px] md:h-[18px] w-auto block" />
         </Link>
 
         <div className="pointer-events-auto flex items-center gap-4 md:gap-10">
