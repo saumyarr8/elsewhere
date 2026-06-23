@@ -10,22 +10,33 @@ type Props = {
 export default function CanvasFooter({ footerY, markOffset, canvasWidth, nextProjectSlug }: Props) {
   return (
     <>
-      <div style={{
-        position: 'absolute', left: 663, top: footerY, width: 769,
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-      }}>
-        <span style={{ fontFamily: 'var(--font-sans, Montserrat)', fontWeight: 700, fontSize: 16, color: '#ccc', textTransform: 'uppercase' }}>
-          Take me elsewhere
-        </span>
-        {nextProjectSlug && (
-          <a href={`/${nextProjectSlug}`} style={{ display: 'flex', alignItems: 'center', gap: 4, textDecoration: 'none' }}>
-            <span style={{ fontFamily: 'var(--font-sans, Montserrat)', fontWeight: 700, fontSize: 16, color: '#ccc', textTransform: 'uppercase' }}>
-              Next project
-            </span>
-            <span style={{ color: '#1c1c1c', fontSize: 10 }}>▶</span>
-          </a>
-        )}
-      </div>
+      {nextProjectSlug ? (
+        <a
+          href={`/${nextProjectSlug}`}
+          style={{
+            position: 'absolute', left: 0, top: footerY, width: canvasWidth,
+            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 24,
+            textDecoration: 'none',
+          }}
+        >
+          <span style={{ fontFamily: 'var(--font-sans, Montserrat)', fontWeight: 700, fontSize: 16, color: '#ccc', textTransform: 'uppercase' }}>
+            Take me elsewhere
+          </span>
+          <span style={{ fontFamily: 'var(--font-sans, Montserrat)', fontWeight: 700, fontSize: 16, color: '#ccc', textTransform: 'uppercase' }}>
+            Next project
+          </span>
+          <span style={{ color: '#1c1c1c', fontSize: 10 }}>▶</span>
+        </a>
+      ) : (
+        <div style={{
+          position: 'absolute', left: 0, top: footerY, width: canvasWidth,
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+        }}>
+          <span style={{ fontFamily: 'var(--font-sans, Montserrat)', fontWeight: 700, fontSize: 16, color: '#ccc', textTransform: 'uppercase' }}>
+            Take me elsewhere
+          </span>
+        </div>
+      )}
 
       <img
         src="/t1-wordmark.svg"
@@ -34,7 +45,7 @@ export default function CanvasFooter({ footerY, markOffset, canvasWidth, nextPro
       />
 
       <div style={{
-        position: 'absolute', left: 88, top: footerY + markOffset + 290, width: 1344,
+        position: 'absolute', left: 88, top: footerY + markOffset + 290, width: canvasWidth - 176,
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
       }}>
         <div style={{ display: 'flex', gap: 40, alignItems: 'center' }}>
