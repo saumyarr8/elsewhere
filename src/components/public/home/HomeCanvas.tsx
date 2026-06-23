@@ -79,12 +79,8 @@ export default function HomeCanvas({ projects }: { projects: HomeProject[] }) {
   return (
     <div
       ref={scrollRef}
-      style={{
-        width: '100vw',
-        height: '100vh',
-        overflowX: 'auto',
-        overflowY: 'hidden',
-      }}
+      className="w-screen h-screen overflow-x-auto overflow-y-hidden"
+      style={{ WebkitOverflowScrolling: 'touch' }}
     >
       <div style={{
         width: CANVAS_W * scale,
@@ -171,7 +167,6 @@ export default function HomeCanvas({ projects }: { projects: HomeProject[] }) {
               </Link>
             )
           })}
-
 
         </div>
       </div>

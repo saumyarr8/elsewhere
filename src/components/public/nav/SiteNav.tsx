@@ -37,12 +37,12 @@ export default function SiteNav() {
           href="/"
           className="pointer-events-auto hover:opacity-60 transition-opacity"
         >
-          <img src="/t1-wordmark.svg" alt=".elsewhere" style={{ height: 18, width: 'auto', display: 'block' }} />
+          <img src="/t1-wordmark.svg" alt=".elsewhere" className="h-3 md:h-[18px] w-auto block" />
         </Link>
 
-        <div className="pointer-events-auto flex items-center gap-10">
+        <div className="pointer-events-auto flex items-center gap-4 md:gap-10">
           {label && (
-            <span style={{
+            <span className="hidden md:inline" style={{
               fontFamily: 'var(--font-sans)',
               fontSize: 16,
               fontWeight: 700,
@@ -57,7 +57,7 @@ export default function SiteNav() {
             onClick={() => setMenuOpen((v) => !v)}
             style={{
               fontFamily: 'var(--font-sans)',
-              fontSize: 16,
+              fontSize: 14,
               fontWeight: menuOpen ? 700 : 500,
               textTransform: 'uppercase',
               color: 'var(--color-ink)',
@@ -100,7 +100,7 @@ export default function SiteNav() {
             onClick={() => setMenuOpen(false)}
           >
             <div
-              className="absolute right-0 top-0 pt-20 pr-10 md:pr-20 pl-10 pb-10 max-w-md w-full h-full overflow-y-auto"
+              className="absolute inset-0 md:left-auto md:right-0 md:max-w-md md:w-full pt-20 px-6 md:px-10 pb-10 h-full overflow-y-auto"
               onClick={e => e.stopPropagation()}
             >
               <div className="flex items-center justify-between mb-6">
@@ -114,7 +114,7 @@ export default function SiteNav() {
                   margin: 0,
                 }}>Stories</h2>
 
-                <div className="flex gap-6 text-[11px] text-[var(--color-ink-muted)] uppercase tracking-[0.1em] font-sans font-medium items-center">
+                <div className="flex gap-4 md:gap-6 text-[10px] md:text-[11px] text-[var(--color-ink-muted)] uppercase tracking-[0.1em] font-sans font-medium items-center">
                   <span className="cursor-pointer hover:opacity-70 transition-opacity">Open Rolls</span>
                   <Link href="/about" onClick={() => setMenuOpen(false)} className="flex items-center gap-2 cursor-pointer hover:opacity-70 transition-opacity no-underline text-current">
                     The Author <span className="w-1.5 h-1.5 bg-current"></span>
@@ -124,11 +124,11 @@ export default function SiteNav() {
 
               <nav className="flex flex-col space-y-3">
                 {isLoading ? (
-                  <p style={{ fontFamily: 'var(--font-sans)', fontSize: '18px', color: 'var(--color-ink-muted)' }}>
+                  <p className="text-base md:text-lg" style={{ fontFamily: 'var(--font-sans)', color: 'var(--color-ink-muted)' }}>
                     Loading stories...
                   </p>
                 ) : stories.length === 0 ? (
-                  <p style={{ fontFamily: 'var(--font-sans)', fontSize: '18px', color: 'var(--color-ink-muted)' }}>
+                  <p className="text-base md:text-lg" style={{ fontFamily: 'var(--font-sans)', color: 'var(--color-ink-muted)' }}>
                     No stories found.
                   </p>
                 ) : (
@@ -137,10 +137,9 @@ export default function SiteNav() {
                       key={story.slug}
                       href={`/${story.slug}`}
                       onClick={() => setMenuOpen(false)}
-                      className="hover:opacity-50 transition-opacity group flex items-center gap-3"
+                      className="hover:opacity-50 transition-opacity group flex items-center gap-3 text-base md:text-lg"
                       style={{
                         fontFamily: 'var(--font-sans)',
-                        fontSize: '18px',
                         color: 'var(--color-ink-muted)',
                         textDecoration: 'none',
                         fontWeight: 400,
