@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect, useMemo, useCallback } from 'react'
 import Link from 'next/link'
+import TakeMeElsewhere from '@/components/public/TakeMeElsewhere'
 
 const CANVAS_W = 3200
 const CANVAS_H = 900
@@ -31,7 +32,7 @@ export type HomeProject = {
   category?: Category | null
 }
 
-export default function HomeCanvas({ projects }: { projects: HomeProject[] }) {
+export default function HomeCanvas({ projects, destinations = [] }: { projects: HomeProject[]; destinations?: { slug: string }[] }) {
   const scrollRef = useRef<HTMLDivElement>(null)
   const [scale, setScale] = useState(1)
   const [filterOpen, setFilterOpen] = useState(false)
@@ -172,8 +173,8 @@ export default function HomeCanvas({ projects }: { projects: HomeProject[] }) {
       </div>
 
       {/* ── Take me elsewhere CTA (fixed center) ── */}
-      <Link
-        href="/about"
+      <TakeMeElsewhere
+        destinations={destinations}
         style={{
           position: 'fixed',
           left: '50%',
@@ -188,9 +189,7 @@ export default function HomeCanvas({ projects }: { projects: HomeProject[] }) {
           whiteSpace: 'nowrap',
           zIndex: 10,
         }}
-      >
-        Take me elsewhere
-      </Link>
+      />
     </div>
   )
 }

@@ -17,5 +17,6 @@ export async function getAllDestinations(): Promise<Destination[]> {
   return [
     ...projects.map(p => ({ slug: p.slug, type: 'project' as const })),
     ...notes.map(n => ({ slug: `notes/${n.slug}`, type: 'note' as const })),
+    { slug: 'gallery', type: 'project' as const },
   ]
 }

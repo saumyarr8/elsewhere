@@ -6,14 +6,52 @@ import { sendContactForm } from '@/app/(public)/about/actions'
 const mont: React.CSSProperties = { fontFamily: 'Montserrat, sans-serif' }
 const dm: React.CSSProperties = { fontFamily: "'DM Sans', sans-serif", fontVariationSettings: "'opsz' 14" }
 
-export default function ContactForm() {
+export default function ContactForm({ mobile }: { mobile?: boolean }) {
   const [state, formAction, pending] = useActionState(sendContactForm, null)
 
   if (state?.ok) {
     return (
-      <p style={{ fontWeight: 500, fontStyle: 'italic', fontSize: 24, color: '#000', lineHeight: 'normal', margin: 0, ...dm }}>
+      <p style={{ fontWeight: 500, fontStyle: 'italic', fontSize: mobile ? 18 : 24, color: '#000', lineHeight: 'normal', margin: 0, ...dm }}>
         {state.message}
       </p>
+    )
+  }
+
+  if (mobile) {
+    return (
+      <form action={formAction} style={{ display: 'flex', flexDirection: 'column', gap: 32, width: '100%' }}>
+        <p style={{ fontWeight: 500, fontStyle: 'italic', fontSize: 22, color: '#000', textTransform: 'uppercase', lineHeight: 1.2, margin: 0, ...dm }}>
+          Tell us what you&apos;re working on and why it matters to you.
+        </p>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 28, width: '100%' }}>
+          <FormField name="name" label="your name" placeholder="How shall we address you" />
+          <FormField name="email" label="your email" placeholder="Where we can write back" type="email" />
+          <FormField name="organisation" label="organisation or project" placeholder="Optional — what you're part of" />
+          <FormField name="message" label="your message" placeholder="What you're working on and why it matters to you" textarea />
+        </div>
+
+        {state && !state.ok && (
+          <p style={{ fontSize: 13, color: '#b8292f', margin: 0, ...mont }}>
+            {state.message}
+          </p>
+        )}
+
+        <button
+          type="submit"
+          disabled={pending}
+          style={{
+            display: 'flex', alignItems: 'center', gap: 6, alignSelf: 'flex-end',
+            cursor: pending ? 'wait' : 'pointer',
+            background: 'none', border: 'none', padding: 0,
+            opacity: pending ? 0.5 : 1,
+          }}
+        >
+          <span style={{ fontWeight: 700, fontSize: 14, color: '#ccc', textTransform: 'uppercase', ...mont }}>
+            {pending ? 'sending...' : 'send'}
+          </span>
+          <img alt="" style={{ width: 4, height: 7 }} src="/icons/send-arrow.svg" />
+        </button>
+      </form>
     )
   }
 

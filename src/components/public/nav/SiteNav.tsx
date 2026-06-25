@@ -115,7 +115,7 @@ export default function SiteNav() {
                 }}>Stories</h2>
 
                 <div className="flex gap-4 md:gap-6 text-[10px] md:text-[11px] text-[var(--color-ink-muted)] uppercase tracking-[0.1em] font-sans font-medium items-center">
-                  <span className="cursor-pointer hover:opacity-70 transition-opacity">Open Rolls</span>
+                  <Link href="/gallery" onClick={() => setMenuOpen(false)} className="cursor-pointer hover:opacity-70 transition-opacity no-underline text-current">Open Rolls</Link>
                   <Link href="/about" onClick={() => setMenuOpen(false)} className="flex items-center gap-2 cursor-pointer hover:opacity-70 transition-opacity no-underline text-current">
                     The Author <span className="w-1.5 h-1.5 bg-current"></span>
                   </Link>
