@@ -86,7 +86,7 @@ export default function GalleryAdminClient({ initialItems }: { initialItems: Ite
         disabled={adding}
         className="w-full py-2.5 border border-dashed border-[var(--color-border)] text-xs uppercase tracking-widest text-[var(--color-ink-muted)] hover:border-[var(--color-ink)] hover:text-[var(--color-ink)] transition-colors disabled:opacity-40"
       >
-        {adding ? 'Adding…' : '+ Add Image'}
+        {adding ? 'Adding…' : '+ Add Image / Video'}
       </button>
 
       {pickerOpen && (

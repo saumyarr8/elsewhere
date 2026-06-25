@@ -25,7 +25,8 @@ export default async function NotesPage() {
         </h1>
         <Link
           href="/admin/notes/new"
-          className="px-4 py-2 bg-[var(--color-ink)] text-[var(--color-paper)] text-xs uppercase tracking-widest hover:opacity-80 transition-opacity"
+          className="px-4 py-2 bg-[var(--color-ink)] text-xs uppercase tracking-widest hover:opacity-80 transition-opacity"
+          style={{ color: 'var(--color-paper)' }}
         >
           New Note
         </Link>

@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { cloudinaryUrl } from '@/lib/utils/cloudinary-url'
+import { cloudinaryUrl, cloudinaryVideoUrl, cloudinaryVideoThumbnail } from '@/lib/utils/cloudinary-url'
 import type { GalleryMediaType } from '@prisma/client'
 import type { Note } from '@/actions/note.actions'
 
@@ -102,6 +102,26 @@ function MusicWidget() {
 }
 
 function renderImage(item: GalleryItemData, aspectClass: string) {
+  if (item.mediaType === 'VIDEO') {
+    return (
+      <div className={`relative w-full ${aspectClass} group`}>
+        <video
+          src={cloudinaryVideoUrl(item.image.cloudinaryId, { quality: 'auto' })}
+          poster={cloudinaryVideoThumbnail(item.image.cloudinaryId, { width: 1200 })}
+          muted
+          loop
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover"
+          onMouseEnter={e => (e.target as HTMLVideoElement).play()}
+          onMouseLeave={e => { const v = e.target as HTMLVideoElement; v.pause(); v.currentTime = 0 }}
+        />
+        <span className="absolute top-3 left-3 text-[11px] uppercase tracking-widest text-white bg-black/50 px-2 py-1 pointer-events-none">
+          Video
+        </span>
+      </div>
+    )
+  }
+
   return (
     <div className={`relative w-full ${aspectClass}`}>
       <Image
@@ -111,11 +131,6 @@ function renderImage(item: GalleryItemData, aspectClass: string) {
         className="object-cover"
         sizes="(max-width: 768px) 100vw, 50vw"
       />
-      {item.mediaType === 'VIDEO' && (
-        <span className="absolute top-3 left-3 text-[11px] uppercase tracking-widest text-white bg-black/50 px-2 py-1">
-          Video
-        </span>
-      )}
     </div>
   )
 }

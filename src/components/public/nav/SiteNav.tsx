@@ -96,7 +96,7 @@ export default function SiteNav() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-30 backdrop-blur-xl"
+            className="fixed inset-0 z-30 backdrop-blur-xl bg-white/70"
             id="site-menu"
             onClick={() => setMenuOpen(false)}
           >

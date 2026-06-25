@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import { useState } from 'react'
 import { deleteMediaAsset, updateMediaAsset } from '@/actions/media.actions'
-import { cloudinaryUrl } from '@/lib/utils/cloudinary-url'
+import { cloudinaryUrl, cloudinaryVideoThumbnail } from '@/lib/utils/cloudinary-url'
 import type { MediaAsset } from '@prisma/client'
 
 type Props = {
@@ -37,7 +37,10 @@ export default function MediaGrid({ assets, selectable, onSelect }: Props) {
   return (
     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2">
       {assets.map((asset) => {
-        const thumb = cloudinaryUrl(asset.cloudinaryId, { width: 300, height: 300, crop: 'fill' })
+        const isVideo = ['mp4', 'mov', 'webm', 'avi', 'mkv', 'ogv'].includes(asset.format)
+        const thumb = isVideo
+          ? cloudinaryVideoThumbnail(asset.cloudinaryId, { width: 300, height: 300 })
+          : cloudinaryUrl(asset.cloudinaryId, { width: 300, height: 300, crop: 'fill' })
         return (
           <div
             key={asset.id}

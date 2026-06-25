@@ -9,7 +9,7 @@ export async function POST(req: NextRequest) {
   const { folder = 'elsewhere' } = await req.json().catch(() => ({}))
 
   const timestamp = Math.round(Date.now() / 1000)
-  const paramsToSign = { folder, timestamp }
+  const paramsToSign: Record<string, string | number> = { folder, timestamp }
 
   const signature = cloudinary.utils.api_sign_request(
     paramsToSign,

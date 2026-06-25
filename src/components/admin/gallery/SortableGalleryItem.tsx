@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { deleteGalleryImage, updateGalleryImage } from '@/actions/gallery.actions'
-import { cloudinaryUrl } from '@/lib/utils/cloudinary-url'
+import { cloudinaryUrl, cloudinaryVideoThumbnail } from '@/lib/utils/cloudinary-url'
 import type { GalleryImage, MediaAsset } from '@prisma/client'
 
 type Item = GalleryImage & { image: MediaAsset }
@@ -65,7 +65,9 @@ export default function SortableGalleryItem({ item, onDeleted, onUpdated }: Prop
 
         <div className="relative w-12 h-12 flex-shrink-0 bg-[var(--color-admin-bg)] overflow-hidden">
           <Image
-            src={cloudinaryUrl(item.image.cloudinaryId, { width: 100, height: 100, crop: 'fill' })}
+            src={item.mediaType === 'VIDEO'
+              ? cloudinaryVideoThumbnail(item.image.cloudinaryId, { width: 100, height: 100 })
+              : cloudinaryUrl(item.image.cloudinaryId, { width: 100, height: 100, crop: 'fill' })}
             alt={item.altText}
             fill
             className="object-cover"

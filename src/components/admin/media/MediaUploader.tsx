@@ -2,7 +2,13 @@
 
 import { useRef, useState } from 'react'
 import { saveMediaAsset } from '@/actions/media.actions'
-import { cloudinaryUrl } from '@/lib/utils/cloudinary-url'
+
+const VIDEO_EXTENSIONS = new Set(['mp4', 'mov', 'webm', 'avi', 'mkv', 'ogv'])
+
+function isVideoFile(file: File): boolean {
+  const ext = file.name.split('.').pop()?.toLowerCase() ?? ''
+  return file.type.startsWith('video/') || VIDEO_EXTENSIONS.has(ext)
+}
 
 type Props = { onUploaded?: (asset: { id: string; cloudinaryId: string }) => void }
 
@@ -17,23 +23,26 @@ export default function MediaUploader({ onUploaded }: Props) {
 
     for (let i = 0; i < files.length; i++) {
       const file = files[i]
+      const isVideo = isVideoFile(file)
+      const resourceType = isVideo ? 'video' : 'image'
+      const folder = isVideo ? 'elsewhere/videos' : 'elsewhere/photos'
 
       const sigRes = await fetch('/api/cloudinary/sign', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ folder: 'elsewhere/photos' }),
+        body: JSON.stringify({ folder }),
       })
-      const { signature, timestamp, folder, cloudName, apiKey } = await sigRes.json()
+      const { signature, timestamp, folder: signedFolder, cloudName, apiKey } = await sigRes.json()
 
       const form = new FormData()
       form.append('file', file)
       form.append('api_key', apiKey)
       form.append('timestamp', String(timestamp))
       form.append('signature', signature)
-      form.append('folder', folder)
+      form.append('folder', signedFolder)
 
       const uploadRes = await fetch(
-        `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
+        `https://api.cloudinary.com/v1_1/${cloudName}/${resourceType}/upload`,
         { method: 'POST', body: form }
       )
       const data = await uploadRes.json()
@@ -47,8 +56,8 @@ export default function MediaUploader({ onUploaded }: Props) {
         cloudinaryId: data.public_id,
         cloudinaryUrl: data.secure_url,
         format: data.format,
-        width: data.width,
-        height: data.height,
+        width: data.width ?? 0,
+        height: data.height ?? 0,
         bytes: data.bytes,
       })
 
@@ -66,7 +75,7 @@ export default function MediaUploader({ onUploaded }: Props) {
       <input
         ref={inputRef}
         type="file"
-        accept="image/*"
+        accept="image/*,video/*"
         multiple
         className="sr-only"
         id="media-upload"
@@ -76,7 +85,7 @@ export default function MediaUploader({ onUploaded }: Props) {
         htmlFor="media-upload"
         className={`inline-flex items-center gap-2 px-4 py-2 bg-[var(--color-ink)] text-[var(--color-paper)] text-xs uppercase tracking-widest cursor-pointer hover:opacity-80 transition-opacity ${uploading ? 'opacity-50 pointer-events-none' : ''}`}
       >
-        {uploading ? `Uploading… ${progress}%` : 'Upload Images'}
+        {uploading ? `Uploading… ${progress}%` : 'Upload'}
       </label>
     </div>
   )
