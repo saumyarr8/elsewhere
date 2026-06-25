@@ -17,6 +17,7 @@ export default function SiteNav() {
   const [isLoading, setIsLoading] = useState(true)
   const pathname = usePathname()
   const label = PAGE_LABELS[pathname]
+  const isAbout = pathname === '/about'
 
   useEffect(() => {
     getNavProjects()
@@ -107,16 +108,16 @@ export default function SiteNav() {
                 <h2 style={{
                   fontFamily: 'var(--font-sans)',
                   fontSize: 14,
-                  fontWeight: 700,
+                  fontWeight: isAbout ? 500 : 700,
                   textTransform: 'uppercase',
-                  color: 'var(--color-ink)',
+                  color: isAbout ? 'var(--color-ink-muted)' : 'var(--color-ink)',
                   letterSpacing: '0.05em',
                   margin: 0,
                 }}>Stories</h2>
 
-                <div className="flex gap-4 md:gap-6 text-[10px] md:text-[11px] text-[var(--color-ink-muted)] uppercase tracking-[0.1em] font-sans font-medium items-center">
-                  <Link href="/gallery" onClick={() => setMenuOpen(false)} className="cursor-pointer hover:opacity-70 transition-opacity no-underline text-current">Open Rolls</Link>
-                  <Link href="/about" onClick={() => setMenuOpen(false)} className="flex items-center gap-2 cursor-pointer hover:opacity-70 transition-opacity no-underline text-current">
+                <div className="flex gap-4 md:gap-6 text-[10px] md:text-[11px] uppercase tracking-[0.1em] font-sans items-center">
+                  <Link href="/gallery" onClick={() => setMenuOpen(false)} className="cursor-pointer hover:opacity-70 transition-opacity no-underline text-[var(--color-ink-muted)] font-medium">Open Rolls</Link>
+                  <Link href="/about" onClick={() => setMenuOpen(false)} className="flex items-center gap-2 cursor-pointer hover:opacity-70 transition-opacity no-underline" style={{ color: isAbout ? 'var(--color-ink)' : 'var(--color-ink-muted)', fontWeight: isAbout ? 700 : 500 }}>
                     The Author <span className="w-1.5 h-1.5 bg-current"></span>
                   </Link>
                 </div>
