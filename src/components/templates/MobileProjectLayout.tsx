@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import type { Section, TemplateData, Pattern } from '@/components/admin/template-editor/shared'
+import { renderInlineMarkdown } from '@/lib/utils/inline-markdown'
 import CanvasPhotosView from './CanvasPhotosView'
 
 type Props = {
@@ -148,7 +149,7 @@ export default function MobileProjectLayout({ data, patterns, nextProject, desti
                         fontFamily: 'var(--font-sans, Montserrat)', fontSize: 13, color: '#505050',
                         lineHeight: 1.5, textAlign: 'justify', margin: 0,
                         gridColumn: texts.length === 1 || j === texts.length - 1 && texts.length % 2 !== 0 ? '1 / -1' : undefined,
-                      }}>{t.value}</p>
+                      }}>{renderInlineMarkdown(t.value)}</p>
                     ))}
                   </div>
                 </div>

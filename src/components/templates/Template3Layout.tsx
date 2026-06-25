@@ -5,6 +5,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react'
 // ─── Data type ────────────────────────────────────────────────────────────────
 
 import { type Section, type TemplateData } from '@/components/admin/template-editor/shared'
+import { renderInlineMarkdown } from '@/lib/utils/inline-markdown'
 import CanvasFooter from './CanvasFooter'
 import CanvasPhotosView from './CanvasPhotosView'
 import CanvasSidebar from './CanvasSidebar'
@@ -201,7 +202,7 @@ export default function Template3Layout({
         fontFamily: 'var(--font-sans, Montserrat)', fontWeight: 400, fontSize: size,
         color: '#505050', textAlign: 'justify', lineHeight: 'normal',
         whiteSpace: 'pre-wrap', overflowWrap: 'break-word',
-      }}>{children}</div>
+      }}>{renderInlineMarkdown(children)}</div>
     )
   }
 

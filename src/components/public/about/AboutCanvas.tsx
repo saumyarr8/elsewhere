@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from 'react'
 import ContactForm from './ContactForm'
 
 const W = 1512
-const H = 4930
+const H = 5080
 
 const mont: React.CSSProperties = { fontFamily: 'Montserrat, sans-serif' }
 const dm: React.CSSProperties = { fontFamily: "'DM Sans', sans-serif", fontVariationSettings: "'opsz' 14" }
@@ -54,7 +54,7 @@ export default function AboutCanvas() {
         </p>
 
         {/* ── Intro paragraph ── */}
-        <p style={{ position: 'absolute', left: 984, top: 220, width: 448, color: '#505050', fontSize: 16, fontWeight: 400, textAlign: 'left', lineHeight: '1.6', margin: 0, ...mont }}>
+        <p style={{ position: 'absolute', left: 984, top: 220, width: 448, color: '#505050', fontSize: 16, fontWeight: 400, textAlign: 'justify', lineHeight: '1.6', margin: 0, ...mont }}>
           I work at the intersection of movement, culture, and human experience. Slowly, staying long enough for a place to reveal itself.
         </p>
 
@@ -63,15 +63,15 @@ export default function AboutCanvas() {
           <img alt="Arjun portrait" style={{ position: 'absolute', inset: 0, maxWidth: 'none', objectFit: 'cover', width: '100%', height: '100%' }} src="/images/arjun-portrait.png" />
         </div>
 
-        {/* ── Bio text 1 ── */}
-        <p style={{ position: 'absolute', left: 750, top: 480, width: 380, color: '#505050', fontSize: 16, fontWeight: 400, textAlign: 'left', lineHeight: '1.6', margin: 0, ...mont }}>
-          {`For over fifteen years, I've used photography, film, sound, and writing to follow people whose lives are closely tied to land, craft, and the quiet rituals that hold things together. People in India's hinterlands, and beyond — those whose knowledge lives in hands, in engines, in the dust of a road, in the weave of a fabric.`}
-        </p>
-
         {/* ── Moto photo ── */}
         <div style={{ position: 'absolute', height: 326, left: 1216, top: 315, width: 216, overflow: 'hidden' }}>
           <img alt="" style={{ position: 'absolute', inset: 0, maxWidth: 'none', objectFit: 'cover', width: '100%', height: '100%' }} src="/images/arjun-moto.png" />
         </div>
+
+        {/* ── Bio text 1 ── */}
+        <p style={{ position: 'absolute', left: 730, top: 706, width: 502, color: '#505050', fontSize: 16, fontWeight: 400, textAlign: 'justify', lineHeight: '1.6', margin: 0, ...mont }}>
+          {`For over fifteen years, I've used photography, film, sound, and writing to follow people whose lives are closely tied to land, craft, and the quiet rituals that hold things together. People in India's hinterlands, and beyond — those whose knowledge lives in hands, in engines, in the dust of a road, in the weave of a fabric.`}
+        </p>
 
         {/* ── Arjun sitting image ── */}
         <div style={{ position: 'absolute', height: 579, left: 80, top: 1150, width: 453, overflow: 'hidden' }}>
@@ -79,7 +79,7 @@ export default function AboutCanvas() {
         </div>
 
         {/* ── Bio text 2 ── */}
-        <p style={{ position: 'absolute', left: 613, top: 1350, width: 285, color: '#505050', fontSize: 16, fontWeight: 400, textAlign: 'left', lineHeight: '1.6', margin: 0, ...mont }}>
+        <p style={{ position: 'absolute', left: 613, top: 1350, width: 285, color: '#505050', fontSize: 16, fontWeight: 400, textAlign: 'justify', lineHeight: '1.6', margin: 0, ...mont }}>
           {`I find myself drawn to stories of risk, repair, and survival. The kind that rarely travel far from where they were made. Stories that live in local governance, in biodiversity, in the oral traditions passed between generations in languages that don't always have a written form. Everywhere I go, I am humbled by the trust placed in me — to listen carefully enough, and to carry what I hear without breaking it.`}
         </p>
 
@@ -104,55 +104,55 @@ export default function AboutCanvas() {
         </div>
 
         {/* ── Elsewhere section ── */}
-        <div style={{ position: 'absolute', left: 80, top: 2150, width: 373, color: '#505050', fontSize: 16 }}>
+        <div style={{ position: 'absolute', left: 80, top: 2300, width: 373, color: '#505050', fontSize: 16 }}>
           <p style={{ fontWeight: 700, lineHeight: 'normal', margin: 0, marginBottom: 12, ...mont }}>Elsewhere</p>
-          <p style={{ fontWeight: 400, lineHeight: 1.6, textAlign: 'left', margin: 0, ...mont }}>
+          <p style={{ fontWeight: 400, lineHeight: 1.6, textAlign: 'justify', margin: 0, ...mont }}>
             Elsewhere sits at the intersection of culture, movement, and human experience. It began as a question: what happens when you stay in a place long enough for it to stop performing for you?
           </p>
           <br />
-          <p style={{ fontWeight: 400, lineHeight: 1.6, textAlign: 'left', margin: 0, ...mont }}>
+          <p style={{ fontWeight: 400, lineHeight: 1.6, textAlign: 'justify', margin: 0, ...mont }}>
             What you find there — in the margins, in the repetition, in the things people reach for without thinking — is where the real stories live.
           </p>
         </div>
 
         {/* ── Malnad days wide image ── */}
-        <div style={{ position: 'absolute', height: 518, left: 533, top: 2150, width: 899, overflow: 'hidden' }}>
+        <div style={{ position: 'absolute', height: 518, left: 533, top: 2300, width: 899, overflow: 'hidden' }}>
           <img alt="Malnad days" style={{ position: 'absolute', height: '103.41%', left: '-1.81%', maxWidth: 'none', top: 0, width: '101.81%' }} src="/images/malnad-days.png" />
         </div>
 
         {/* ── Consulting Section (Image + Text) ── */}
-        <div style={{ position: 'absolute', height: 320, left: 80, top: 2750, width: 450, overflow: 'hidden' }}>
+        <div style={{ position: 'absolute', height: 320, left: 80, top: 2900, width: 450, overflow: 'hidden' }}>
           <img alt="Taste of Konkan" style={{ position: 'absolute', inset: 0, maxWidth: 'none', objectFit: 'cover', width: '100%', height: '100%' }} src="/images/taste-of-konkan.png" />
         </div>
 
-        <div style={{ position: 'absolute', left: 580, top: 2750, width: 550, color: '#505050', fontSize: 16, lineHeight: 1.6, ...mont }}>
+        <div style={{ position: 'absolute', left: 580, top: 2900, width: 550, color: '#505050', fontSize: 16, lineHeight: 1.6, ...mont }}>
           <p style={{ fontWeight: 700, lineHeight: 'normal', margin: 0, marginBottom: 12, color: '#000' }}>Consulting</p>
-          <p style={{ fontWeight: 400, textAlign: 'left', margin: 0 }}>
+          <p style={{ fontWeight: 400, textAlign: 'justify', margin: 0 }}>
             Cultural intelligence and narrative strategy for organizations navigating complex terrain. We help foundations, corporations, and institutions tell stories that respect nuance, honor context, and resist simplification.
           </p>
           <br />
-          <p style={{ fontWeight: 400, textAlign: 'left', margin: 0 }}>
+          <p style={{ fontWeight: 400, textAlign: 'justify', margin: 0 }}>
             This includes: cultural research, narrative development, brand storytelling that&apos;s rooted in place and practice, and strategic guidance for organizations working across cultures or entering new markets.
           </p>
         </div>
 
         {/* ── Shaped by Time Section (Text + Portrait) ── */}
-        <div style={{ position: 'absolute', left: 580, top: 3200, width: 520, color: '#505050', fontSize: 16, lineHeight: 1.6, ...mont }}>
-          <p style={{ fontWeight: 400, textAlign: 'left', margin: 0 }}>
+        <div style={{ position: 'absolute', left: 580, top: 3350, width: 520, color: '#505050', fontSize: 16, lineHeight: 1.6, ...mont }}>
+          <p style={{ fontWeight: 400, textAlign: 'justify', margin: 0 }}>
             Shaped by time on the ground — through travel, observation, and making. Working across film, photography, writing, and sound. The work that comes out of it is not designed to explain or persuade. It is made to remain present as the world shifts around it.
           </p>
           <br />
-          <p style={{ fontWeight: 400, textAlign: 'left', margin: 0 }}>
+          <p style={{ fontWeight: 400, textAlign: 'justify', margin: 0 }}>
             Elsewhere works with organisations and individuals who understand what that means.
           </p>
         </div>
 
-        <div style={{ position: 'absolute', height: 420, left: 1150, top: 3050, width: 280, overflow: 'hidden' }}>
+        <div style={{ position: 'absolute', height: 420, left: 1150, top: 3200, width: 280, overflow: 'hidden' }}>
           <img alt="Elderly Woman" style={{ position: 'absolute', inset: 0, maxWidth: 'none', objectFit: 'cover', width: '100%', height: '100%' }} src="/images/elderly-woman.png" />
         </div>
 
         {/* ── Contact CTA ── */}
-        <div style={{ position: 'absolute', left: 80, top: 3600, display: 'flex', flexDirection: 'column', gap: 40 }}>
+        <div style={{ position: 'absolute', left: 80, top: 3750, display: 'flex', flexDirection: 'column', gap: 40 }}>
           <p style={{ fontWeight: 500, fontSize: 28, color: '#000', width: 796, margin: 0, lineHeight: 1.4, ...dm }}>
             If something here has slowed you down, if you recognise the kind of work this is and it resonates with you- write to us.
           </p>
@@ -175,7 +175,7 @@ export default function AboutCanvas() {
         </div>
 
         {/* ── Photo + Contact form ── */}
-        <div style={{ position: 'absolute', left: 80, top: 3850, display: 'flex', gap: 118, alignItems: 'flex-start' }}>
+        <div style={{ position: 'absolute', left: 80, top: 4000, display: 'flex', gap: 118, alignItems: 'flex-start' }}>
           <div style={{ height: 565, width: 469, flexShrink: 0, position: 'relative', overflow: 'hidden' }}>
             <img alt="" style={{ position: 'absolute', inset: 0, maxWidth: 'none', objectFit: 'cover', width: '100%', height: '100%' }} src="/images/neeruganti-landscape.png" />
           </div>
@@ -183,7 +183,7 @@ export default function AboutCanvas() {
         </div>
 
         {/* ── .elsewhere footer wordmark ── */}
-        <div style={{ position: 'absolute', left: 0, top: 4550, width: W, display: 'flex', flexDirection: 'column', gap: 64, alignItems: 'center', paddingBottom: 52 }}>
+        <div style={{ position: 'absolute', left: 0, top: 4700, width: W, display: 'flex', flexDirection: 'column', gap: 64, alignItems: 'center', paddingBottom: 52 }}>
           <div style={{ height: 241.71, position: 'relative', flexShrink: 0, width: '100%' }}>
             <div style={{ position: 'absolute', height: 179.461, left: 1337.16, top: 62.25, width: 174.839 }}>
               <img alt="" style={{ display: 'block', position: 'absolute', inset: 0, maxWidth: 'none', width: '100%', height: '100%' }} src="/footer/e.svg" />

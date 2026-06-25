@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState, useCallback } from 'react'
 import { hasContent, type Section, type TemplateData } from '@/components/admin/template-editor/shared'
+import { renderInlineMarkdown } from '@/lib/utils/inline-markdown'
 import CanvasFooter from './CanvasFooter'
 import CanvasSidebar from './CanvasSidebar'
 import CanvasPhotosView from './CanvasPhotosView'
@@ -215,24 +216,13 @@ export default function Template1Layout({ data, isEditing, onImageSelect }: Prop
   }
 
   function P({ children, l, t, w = 220 }: { children?: string; l: number; t: number; w?: number }) {
-    const renderContent = (text: string) => {
-      if (!text) return null;
-      const parts = text.split(/(\*\*.*?\*\*)/g);
-      return parts.map((part, i) => {
-        if (part.startsWith('**') && part.endsWith('**') && part.length >= 4) {
-          return <strong key={i} style={{ fontWeight: 700 }}>{part.slice(2, -2)}</strong>;
-        }
-        return part;
-      });
-    };
-
     return (
       <div style={{
         position: 'absolute', left: l, top: t, width: w,
         fontFamily: 'var(--font-sans, Montserrat)', fontWeight: 400,
         fontSize: 14, color: '#505050', textAlign: 'justify', lineHeight: 'normal',
         whiteSpace: 'pre-wrap', overflowWrap: 'break-word',
-      }}>{renderContent(children || '')}</div>
+      }}>{renderInlineMarkdown(children || '')}</div>
     )
   }
 

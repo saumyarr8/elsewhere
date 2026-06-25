@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useTransition, type ComponentType } from 'react'
+import { useState, useRef, useTransition, type ComponentType } from 'react'
 import Link from 'next/link'
 import { updateProject, publishProject, unpublishProject } from '@/actions/project.actions'
 import MediaPicker from '@/components/admin/media/MediaPicker'
@@ -146,6 +146,27 @@ export default function TemplateEditor({ project, patterns, Layout, showTitleLig
   const [publishing, startPublish] = useTransition()
   const [error, setError] = useState<string | null>(null)
   const [saved, setSaved] = useState(false)
+  const lastFocusedRef = useRef<HTMLInputElement | HTMLTextAreaElement | null>(null)
+
+  function wrapSelection(marker: string) {
+    const el = lastFocusedRef.current
+    if (!el) return
+    const start = el.selectionStart ?? 0
+    const end = el.selectionEnd ?? 0
+    const val = el.value
+    const selected = val.slice(start, end)
+    if (!selected) return
+    const wrapped = `${marker}${selected}${marker}`
+    const next = val.slice(0, start) + wrapped + val.slice(end)
+    const nativeSet = Object.getOwnPropertyDescriptor(
+      el instanceof HTMLTextAreaElement ? HTMLTextAreaElement.prototype : HTMLInputElement.prototype,
+      'value'
+    )?.set
+    nativeSet?.call(el, next)
+    el.dispatchEvent(new Event('input', { bubbles: true }))
+    el.focus()
+    el.setSelectionRange(start + marker.length, end + marker.length)
+  }
 
   const sections = templateData.sections ?? []
 
@@ -235,9 +256,37 @@ export default function TemplateEditor({ project, patterns, Layout, showTitleLig
               View live ↗
             </Link>
           )}
+
+          {/* ── Bold / Italic toolbar ── */}
+          <div className="flex items-center gap-1 mt-3 pt-3 border-t border-gray-100">
+            <span className="text-[10px] uppercase tracking-widest text-gray-400 mr-2">Format</span>
+            <button
+              type="button"
+              onMouseDown={e => { e.preventDefault(); wrapSelection('**') }}
+              className="w-7 h-7 flex items-center justify-center border border-gray-200 hover:border-black hover:bg-gray-50 transition-colors text-sm font-bold text-gray-700"
+              title="Bold — wrap selection with **"
+            >
+              B
+            </button>
+            <button
+              type="button"
+              onMouseDown={e => { e.preventDefault(); wrapSelection('*') }}
+              className="w-7 h-7 flex items-center justify-center border border-gray-200 hover:border-black hover:bg-gray-50 transition-colors text-sm italic text-gray-700"
+              title="Italic — wrap selection with *"
+            >
+              I
+            </button>
+            <span className="text-[9px] text-gray-300 ml-2">Select text first</span>
+          </div>
         </div>
 
-        <div className="flex-1 px-5 py-4 overflow-y-auto">
+        {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
+        <div className="flex-1 px-5 py-4 overflow-y-auto" onFocusCapture={e => {
+          const t = e.target
+          if (t instanceof HTMLInputElement || t instanceof HTMLTextAreaElement) {
+            lastFocusedRef.current = t
+          }
+        }}>
           {/* Meta */}
           <div className="border-b border-gray-100">
             <button className="w-full flex items-center justify-between py-3 text-left"

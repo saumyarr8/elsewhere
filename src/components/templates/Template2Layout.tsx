@@ -2,6 +2,7 @@
 
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { type Section, type TemplateData } from '@/components/admin/template-editor/shared'
+import { renderInlineMarkdown } from '@/lib/utils/inline-markdown'
 import CanvasFooter from './CanvasFooter'
 import CanvasSidebar from './CanvasSidebar'
 import CanvasPhotosView from './CanvasPhotosView'
@@ -204,7 +205,7 @@ export default function Template2Layout({
         fontFamily: 'var(--font-sans, Montserrat)', fontWeight: 400, fontSize: size,
         color: '#505050', textAlign: 'justify', lineHeight: 'normal',
         whiteSpace: 'pre-wrap', overflowWrap: 'break-word',
-      }}>{children}</div>
+      }}>{renderInlineMarkdown(children)}</div>
     )
   }
 
