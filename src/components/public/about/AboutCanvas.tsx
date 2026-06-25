@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
+import ContactForm from './ContactForm'
 
 const W = 1512
 const H = 4930
@@ -169,25 +170,7 @@ export default function AboutCanvas() {
           <div style={{ height: 565, width: 469, flexShrink: 0, position: 'relative', overflow: 'hidden' }}>
             <img alt="" style={{ position: 'absolute', inset: 0, maxWidth: 'none', objectFit: 'cover', width: '100%', height: '100%' }} src="/images/neeruganti-landscape.png" />
           </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 47, alignItems: 'flex-end', width: 765 }}>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 93, width: '100%' }}>
-              <p style={{ fontWeight: 500, fontStyle: 'italic', fontSize: 32, color: '#000', textTransform: 'uppercase', width: 571, lineHeight: 'normal', margin: 0, ...dm }}>
-                Tell us what you&apos;re working on and why it matters to you.
-              </p>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 50, width: '100%' }}>
-                <div style={{ display: 'flex', gap: 24, alignItems: 'center', width: '100%' }}>
-                  <FormField label="your name" placeholder="How shall we address you" style={{ width: 370 }} />
-                  <FormField label="your email" placeholder="Where we can write back" style={{ width: 371 }} />
-                </div>
-                <FormField label="organisation or project" placeholder="Optional - what you're part of" style={{ width: '100%' }} />
-                <FormField label="your message" placeholder="What you're working on and why it matters to you. No brief message is necessary just the thing itself" style={{ width: '100%' }} />
-              </div>
-            </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 6, cursor: 'pointer' }}>
-              <p style={{ fontWeight: 700, fontSize: 16, color: '#ccc', textTransform: 'uppercase', margin: 0, ...mont }}>send</p>
-              <img alt="" style={{ width: 4, height: 7 }} src="/icons/send-arrow.svg" />
-            </div>
-          </div>
+          <ContactForm />
         </div>
 
         {/* ── .elsewhere footer wordmark ── */}
@@ -245,13 +228,3 @@ export default function AboutCanvas() {
   )
 }
 
-function FormField({ label, placeholder, style }: { label: string; placeholder: string; style?: React.CSSProperties }) {
-  return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 2, ...style }}>
-      <p style={{ fontSize: 14, color: '#585858', textTransform: 'uppercase', fontWeight: 400, margin: 0, ...mont }}>{label}</p>
-      <div style={{ borderBottom: '1px solid #585858', display: 'flex', alignItems: 'center', paddingRight: 8, paddingTop: 12, paddingBottom: 12 }}>
-        <p style={{ fontSize: 14, color: '#cdcdcd', fontStyle: 'italic', fontWeight: 300, margin: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', ...mont }}>{placeholder}</p>
-      </div>
-    </div>
-  )
-}
